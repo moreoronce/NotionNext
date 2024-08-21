@@ -233,7 +233,7 @@ const LayoutBase = props => {
                 </div>
 
                 <AdSlot type='in-article' />
-                <Live2D />
+                {/*<Live2D />*/}
               </div>
             </div>
           )}
