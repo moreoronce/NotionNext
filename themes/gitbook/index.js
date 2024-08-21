@@ -2,7 +2,7 @@
 
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
+// import Live2D from '@/components/Live2D'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -216,7 +216,8 @@ const LayoutBase = props => {
                   <Catalog {...props} />
                   {slotRight}
                   {router.route === '/' && (
-                    <>
+                    {/*
+                      <>
                       <InfoCard {...props} />
                       {siteConfig(
                         'GITBOOK_WIDGET_REVOLVER_MAPS',
@@ -225,6 +226,7 @@ const LayoutBase = props => {
                       ) === 'true' && <RevolverMaps />}
                       <Live2D />
                     </>
+                    */}
                   )}
                   {/* gitbook主题首页只显示公告 */}
                   <Announcement {...props} />
