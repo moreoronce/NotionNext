@@ -2,7 +2,7 @@
 
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
-// import Live2D from '@/components/Live2D'
+import Live2D from '@/components/Live2D'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -25,7 +25,7 @@ import CatalogDrawerWrapper from './components/CatalogDrawerWrapper'
 import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
-// import InfoCard from './components/InfoCard'
+import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
@@ -216,8 +216,7 @@ const LayoutBase = props => {
                   <Catalog {...props} />
                   {slotRight}
                   {router.route === '/' && (
-                    {/*
-                      <>
+                    <>
                       <InfoCard {...props} />
                       {siteConfig(
                         'GITBOOK_WIDGET_REVOLVER_MAPS',
@@ -226,14 +225,13 @@ const LayoutBase = props => {
                       ) === 'true' && <RevolverMaps />}
                       <Live2D />
                     </>
-                    */}
                   )}
                   {/* gitbook主题首页只显示公告 */}
                   <Announcement {...props} />
                 </div>
 
                 <AdSlot type='in-article' />
-                {/*<Live2D />*/}
+                <Live2D />
               </div>
             </div>
           )}
