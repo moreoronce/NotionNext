@@ -17,7 +17,7 @@ export default function LogoBar(props) {
         className='flex text-md md:text-xl dark:text-gray-200'>
         <LazyImage
           src={siteInfo?.icon}
-          width={24}
+          width={28}
           height={24}
           alt={siteConfig('AUTHOR')}
           className='mr-2 hidden md:block'
