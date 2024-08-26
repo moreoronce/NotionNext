@@ -13,13 +13,14 @@ const PaginationSimple = ({ page, totalPage }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
+  const showPrev = currentPage !== 1
   const showNext = currentPage < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
+  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
     <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
-      {currentPage !== 1 && (
+      {showPrev ? (
         <Link
           href={{
             pathname:
@@ -33,8 +34,8 @@ const PaginationSimple = ({ page, totalPage }) => {
           className="block text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold">
           ←{locale.PAGINATION.PREV}
         </Link>
-      )}
-      {showNext && (
+      ) : <div></div>}
+      {showNext ? (
         <Link
           href={{
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
@@ -45,7 +46,7 @@ const PaginationSimple = ({ page, totalPage }) => {
           className="block text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold">
           {locale.PAGINATION.NEXT}→
         </Link>
-      )}
+      ) : <div></div>}
     </div>
   )
 }
