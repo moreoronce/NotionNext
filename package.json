@@ -39,6 +39,7 @@
     "react-hotkeys-hook": "^4.5.0",
     "react-notion-x": "6.16.0",
     "react-share": "^4.4.1",
+    "next-sitemap": "^1.6.203", 
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
