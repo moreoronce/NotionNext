@@ -18,35 +18,33 @@ const PaginationSimple = ({ page, totalPage }) => {
 
   return (
     <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
-      <Link
-        href={{
-          pathname:
-            currentPage === 2
-              ? `${pagePrefix}/`
-              : `${pagePrefix}/page/${currentPage - 1}`,
-          query: router.query.s ? { s: router.query.s } : {}
-        }}
-        passHref
-        rel="prev"
-        className={`${
-          currentPage === 1 ? 'invisible' : 'block'
-        } text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold`}>
-        ←{locale.PAGINATION.PREV}
-
-      </Link>
-      <Link
-        href={{
-          pathname: `${pagePrefix}/page/${currentPage + 1}`,
-          query: router.query.s ? { s: router.query.s } : {}
-        }}
-        passHref
-        rel="next"
-        className={`${
-          +showNext ? 'block' : 'invisible'
-        } text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold`}>
-
-        {locale.PAGINATION.NEXT}→
-      </Link>
+      {currentPage !== 1 && (
+        <Link
+          href={{
+            pathname:
+              currentPage === 2
+                ? `${pagePrefix}/`
+                : `${pagePrefix}/page/${currentPage - 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          passHref
+          rel="prev"
+          className="block text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold">
+          ←{locale.PAGINATION.PREV}
+        </Link>
+      )}
+      {showNext && (
+        <Link
+          href={{
+            pathname: `${pagePrefix}/page/${currentPage + 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          passHref
+          rel="next"
+          className="block text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold">
+          {locale.PAGINATION.NEXT}→
+        </Link>
+      )}
     </div>
   )
 }
