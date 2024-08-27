@@ -9,7 +9,6 @@ module.exports = {
   priority: 0.7,
   generateRobotsTxt: true,
   sitemapSize: 7000,
-  outDir: './public',
   // ...other options
   // https://github.com/iamvishnusankar/next-sitemap#configuration-options
 }
