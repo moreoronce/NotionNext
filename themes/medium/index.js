@@ -2,7 +2,6 @@ import CONFIG from './config'
 import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
-import RevolverMaps from './components/RevolverMaps'
 import Tabs from '@/components/Tabs'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
@@ -117,7 +116,6 @@ const LayoutBase = props => {
                                     <div key={locale.NAV.ABOUT}>
                                         {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
                                         {showInfoCard && <InfoCard {...props} />}
-                                        {siteConfig('MEDIUM_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
                                     </div>
                                 </Tabs>
                                 <Announcement post={notice} />
