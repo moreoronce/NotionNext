@@ -8,7 +8,6 @@ import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import Live2D from '@/components/Live2D'
 import Announcement from './components/Announcement'
 import JumpToTopButton from './components/JumpToTopButton'
 import BlogPostListPage from './components/BlogPostListPage'
@@ -119,7 +118,7 @@ const LayoutBase = props => {
                                     </div>
                                 </Tabs>
                                 <Announcement post={notice} />
-                                <Live2D />
+                                {/* <Live2D /> */}
                             </div>
                         </div>}
 
