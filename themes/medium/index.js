@@ -274,7 +274,7 @@ const LayoutArchive = props => {
   return (
         <>
             <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
-            <h1 class="pt-16 text-3xl dark:text-gray-300>归档</h1>
+                <h3>归档</>
                 {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
                 )}
             </div>
