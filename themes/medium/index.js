@@ -317,7 +317,7 @@ const LayoutCategoryIndex = (props) => {
                                 legacyBehavior>
                                 <div
                                     className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
-                                    <i className='mr-4 fas fa-folder' />{category.name}({category.count})
+                                    <h1><i className='mr-4 fas fa-folder' />{category.name}({category.count})</h1>
                                 </div>
                             </Link>
                       )
@@ -347,7 +347,7 @@ const LayoutTagIndex = props => {
                     {tagOptions?.map(tag => {
                       return (
                             <div key={tag.name} className="p-2">
-                                <TagItemMini key={tag.name} tag={tag} />
+                                <h1><TagItemMini key={tag.name} tag={tag} /></h1>
                             </div>
                       )
                     })}
