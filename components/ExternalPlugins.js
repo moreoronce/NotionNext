@@ -26,14 +26,8 @@ const ExternalPlugin = props => {
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID')
-  const FIREWORKS = siteConfig('FIREWORKS')
-  const SAKURA = siteConfig('SAKURA')
-  const STARRY_SKY = siteConfig('STARRY_SKY')
-  const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER')
   const NEST = siteConfig('NEST')
-  const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
-  const RIBBON = siteConfig('RIBBON')
   const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig(
     'CUSTOM_RIGHT_CLICK_CONTEXT_MENU'
   )
@@ -60,7 +54,6 @@ const ExternalPlugin = props => {
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
-  const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
 
@@ -122,7 +115,6 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
-      {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
       {ANALYTICS_ACKEE_TRACKER && <Ackee />}
@@ -130,14 +122,8 @@ const ExternalPlugin = props => {
       {ANALYTICS_VERCEL && <Analytics />}
       {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
       {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
-      {FIREWORKS && <Fireworks />}
-      {SAKURA && <Sakura />}
-      {STARRY_SKY && <StarrySky />}
-      {MUSIC_PLAYER && <MusicPlayer />}
       {NEST && <Nest />}
-      {FLUTTERINGRIBBON && <FlutteringRibbon />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
-      {RIBBON && <Ribbon />}
       {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
       {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}
       {!CAN_COPY && <DisableCopy />}
@@ -345,22 +331,7 @@ const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
 const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
   ssr: false
 })
-const Fireworks = dynamic(() => import('@/components/Fireworks'), {
-  ssr: false
-})
-const MouseFollow = dynamic(() => import('@/components/MouseFollow'), {
-  ssr: false
-})
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const FlutteringRibbon = dynamic(
-  () => import('@/components/FlutteringRibbon'),
-  { ssr: false }
-)
-const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
-const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
-const StarrySky = dynamic(() => import('@/components/StarrySky'), {
-  ssr: false
-})
 const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
   ssr: false
 })
@@ -371,7 +342,6 @@ const Analytics = dynamic(
     }),
   { ssr: false }
 )
-const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
