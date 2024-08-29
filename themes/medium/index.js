@@ -347,7 +347,7 @@ const LayoutTagIndex = props => {
                     {tagOptions?.map(tag => {
                       return (
                             <div key={tag.name} className="p-2">
-                                <h1><TagItemMini key={tag.name} tag={tag} /></h1>
+                                <TagItemMini key={tag.name} tag={tag} />
                             </div>
                       )
                     })}
