@@ -9,6 +9,7 @@ const Footer = ({ title }) => {
   return (
     <footer className='z-10 dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 relative'>
       <DarkModeButton/>
+      <br/>
       <div className="flex justify-center">
         <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
           <img src="https://www.travellings.cn/assets/logo.gif" alt="开往-友链接力" width="120" />

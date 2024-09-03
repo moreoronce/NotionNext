@@ -1,7 +1,7 @@
 const CONFIG = {
 
   // Style
-  MEDIUM_RIGHT_PANEL_DARK: process.env.NEXT_PUBLIC_MEDIUM_RIGHT_DARK || false, // 右侧面板深色模式
+  MEDIUM_RIGHT_PANEL_DARK: process.env.NEXT_PUBLIC_MEDIUM_RIGHT_DARK || true, // 右侧面板深色模式
 
   MEDIUM_POST_LIST_COVER: false, // 文章列表显示图片封面
   MEDIUM_POST_LIST_PREVIEW: true, // 列表显示文章预览
@@ -18,7 +18,6 @@ const CONFIG = {
   MEDIUM_MENU_SEARCH: true, // 显示搜索
 
   // Widget
-  MEDIUM_WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
   MEDIUM_WIDGET_TO_TOP: true // 跳回顶部
 }
 export default CONFIG
