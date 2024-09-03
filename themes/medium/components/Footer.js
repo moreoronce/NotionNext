@@ -1,4 +1,3 @@
-import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ title }) => {
@@ -8,7 +7,6 @@ const Footer = ({ title }) => {
   const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
   return (
     <footer className='z-10 dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 relative'>
-      <DarkModeButton/>
       <br/>
       <div className="flex justify-center">
         <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
