@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import DarkModeButton from '@/components/DarkModeButton'
 
 /**
  * 社交联系方式按钮组
@@ -99,7 +98,6 @@ const SocialButton = () => {
           <i className='fab fa-youtube transform hover:scale-125 duration-150 hover:text-green-600' />
         </a>
       )}
-      <DarkModeButton/>
     </div>
   )
 }

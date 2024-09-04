@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { siteConfig } from '@/lib/config'
+import DarkModeButton from '@/components/DarkModeButton'
 
 export default function LogoBar (props) {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function LogoBar (props) {
           {siteConfig('TITLE')}
         </Link>
       )}
+      <DarkModeButton/>
     </div>
   );
 }
