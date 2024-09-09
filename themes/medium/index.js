@@ -249,7 +249,7 @@ const LayoutSearch = (props) => {
 
         {/* 搜索导航栏 */}
         <div className='py-12'>
-            <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
+            <div className='pb-4 w-full'><h1>{locale.NAV.SEARCH}</h1></div>
             <SearchInput currentSearch={currentSearch} {...props} />
             {!currentSearch && <>
                 <TagGroups {...props} />
