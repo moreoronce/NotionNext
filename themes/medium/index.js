@@ -1,5 +1,4 @@
 import Comment from '@/components/Comment'
-import Live2D from '@/components/Live2D'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -26,7 +25,6 @@ import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
-import RevolverMaps from './components/RevolverMaps'
 import SearchInput from './components/SearchInput'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
@@ -126,8 +124,6 @@ const LayoutBase = props => {
                       <SearchInput className='mt-6  mb-12' />
                     )}
                     {showInfoCard && <InfoCard {...props} />}
-                    {siteConfig('MEDIUM_WIDGET_REVOLVER_MAPS', null, CONFIG) ===
-                      'true' && <RevolverMaps />}
                   </div>
                 </Tabs>
                 <Announcement post={notice} />
