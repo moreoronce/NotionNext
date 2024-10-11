@@ -63,6 +63,8 @@ export async function getStaticProps(req) {
   generateRobotsTxt(props)
   // 生成Feed订阅
   generateRss(props)
+  // 生成
+  generateSitemapXml(props)
 
   // 生成Sitemap
   generateSitemapXml(props)
