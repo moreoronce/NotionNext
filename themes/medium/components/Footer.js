@@ -12,6 +12,8 @@ const Footer = ({ title }) => {
         <i className='fas fa-copyright' /> {`${copyrightDate}`} <span><i className='mx-1 animate-pulse fas fa-heart'/> <a href={siteConfig('LINK')} className='underline font-bold text-gray-500 dark:text-gray-300 '>{siteConfig('AUTHOR')}</a>. On Vercel<br/>
         <span className='text-xs font-serif'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='underline text-gray-500 dark:text-gray-300' rel='nofollow'>NotionNext {siteConfig('VERSION')}</a>. Support IPv4 & IPv6</span></span>
       </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8456010811017790"
+     crossorigin="anonymous"></script>
     </footer>
   )
 }
