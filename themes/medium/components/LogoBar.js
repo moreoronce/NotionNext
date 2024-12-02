@@ -1,5 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import DarkModeButton from '@/components/DarkModeButton'
+import Link from 'next/link'
+
 
 export default function LogoBar(props) {
   return (
