@@ -39,7 +39,6 @@ const Footer = ({ title }) => {
           <i className='fas fa-users' />
           <span className='px-1 busuanzi_value_site_uv'> </span>
         </span>
-        {title}
         <span className='text-xs font-serif'>
           Powered by
           <a
