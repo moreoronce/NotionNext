@@ -130,6 +130,7 @@ const SEO = props => {
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
       <link rel='icon' href={BLOG_FAVICON} />
+      <meta name="msvalidate.01" content="16DB3849D5A67E075BC7A1CDB1754984" />
 
       {COMMENT_WEBMENTION_ENABLE && (
         <>
