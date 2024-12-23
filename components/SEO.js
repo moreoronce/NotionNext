@@ -111,12 +111,6 @@ const SEO = props => {
           content={SEO_GOOGLE_SITE_VERIFICATION}
         />
       )}
-      {SEO_BAIDU_SITE_VERIFICATION && (
-        <meta
-          name='baidu-site-verification'
-          content={SEO_BAIDU_SITE_VERIFICATION}
-        />
-      )}
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta property='og:locale' content={lang} />
@@ -130,7 +124,6 @@ const SEO = props => {
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
       <link rel='icon' href={BLOG_FAVICON} />
-      <meta name="msvalidate.01" content="16DB3849D5A67E075BC7A1CDB1754984" />
 
       {COMMENT_WEBMENTION_ENABLE && (
         <>
