@@ -128,9 +128,6 @@ const LayoutBase = props => {
             </div>
           )}
         </main>
-
-        {/* 移动端底部导航栏 */}
-        <BottomMenuBar {...props} className='block md:hidden' />
       </div>
     </ThemeGlobalMedium.Provider>
   )
