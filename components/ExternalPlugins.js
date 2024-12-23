@@ -22,7 +22,6 @@ const ExternalPlugin = props => {
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
 
   const CAN_COPY = siteConfig('CAN_COPY')
-  const AD_WWADS_BLOCK_DETECT = siteConfig('AD_WWADS_BLOCK_DETECT')
   const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
@@ -98,7 +97,6 @@ const ExternalPlugin = props => {
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {!CAN_COPY && <DisableCopy />}
-      {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
       <VConsole />
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
@@ -146,9 +144,6 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
 })
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
-  ssr: false
-})
-const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), {
   ssr: false
 })
 const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
