@@ -30,7 +30,7 @@ export async function getStaticProps({ params: { keyword }, locale }) {
     'Page',
     props?.NOTION_CONFIG
   )
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 5, props?.NOTION_CONFIG)
 
   // 处理分页
   if (POST_LIST_STYLE === 'scroll') {

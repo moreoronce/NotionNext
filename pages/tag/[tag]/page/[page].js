@@ -17,7 +17,7 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
     .filter(post => post && post?.tags && post?.tags.includes(tag))
   // 处理文章数
   props.postCount = props.posts.length
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 5, props?.NOTION_CONFIG)
   // 处理分页
   props.posts = props.posts.slice(
     POSTS_PER_PAGE * (page - 1),
