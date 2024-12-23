@@ -16,8 +16,6 @@ const ExternalPlugin = props => {
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
   const DEBUG = siteConfig('DEBUG')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
-  const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
-  const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID')
   const NEST = siteConfig('NEST')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
 
@@ -91,7 +89,6 @@ const ExternalPlugin = props => {
       {/* 全局样式嵌入 */}
       <GlobalStyle />
       {DEBUG && <DebugPanel />}
-      {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {!CAN_COPY && <DisableCopy />}
@@ -112,9 +109,6 @@ const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
   ssr: false
 })
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
-  ssr: false
-})
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
   ssr: false
@@ -125,6 +119,5 @@ const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
   ssr: false
 })
-
 
 export default ExternalPlugin
