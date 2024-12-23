@@ -22,7 +22,6 @@ const ExternalPlugin = props => {
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
 
   const CAN_COPY = siteConfig('CAN_COPY')
-  const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
@@ -92,7 +91,6 @@ const ExternalPlugin = props => {
       {/* 全局样式嵌入 */}
       <GlobalStyle />
       {DEBUG && <DebugPanel />}
-      {ANALYTICS_GOOGLE_ID && <Gtag />}
       {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
@@ -102,30 +100,6 @@ const ExternalPlugin = props => {
       <AosAnimation />
 
       {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
-
-
-      {/* 谷歌统计 */}
-      {ANALYTICS_GOOGLE_ID && (
-        <>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_GOOGLE_ID}`}
-          />
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${ANALYTICS_GOOGLE_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `
-            }}
-          />
-        </>
-      )}
     </>
   )
 }
@@ -138,7 +112,6 @@ const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
   ssr: false
 })
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
   ssr: false
 })
