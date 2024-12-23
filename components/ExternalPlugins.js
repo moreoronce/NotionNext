@@ -7,8 +7,6 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
-import WebWhiz from './Webwhiz'
-
 /**
  * 各种插件脚本
  * @param {*} props
@@ -17,31 +15,22 @@ import WebWhiz from './Webwhiz'
 const ExternalPlugin = props => {
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
   const DEBUG = siteConfig('DEBUG')
-  const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID')
   const NEST = siteConfig('NEST')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
-  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig(
-    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU'
-  )
+
   const CAN_COPY = siteConfig('CAN_COPY')
-  const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED')
   const AD_WWADS_BLOCK_DETECT = siteConfig('AD_WWADS_BLOCK_DETECT')
-  const CHATBASE_ID = siteConfig('CHATBASE_ID')
   const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
-  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
-  const TIANLI_KEY = siteConfig('TianliGPT_KEY')
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
-  const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
-  const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -105,66 +94,14 @@ const ExternalPlugin = props => {
       <GlobalStyle />
       {DEBUG && <DebugPanel />}
       {ANALYTICS_GOOGLE_ID && <Gtag />}
-      {ANALYTICS_VERCEL && <Analytics />}
       {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
-      {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
-      {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}
       {!CAN_COPY && <DisableCopy />}
-      {WEB_WHIZ_ENABLED && <WebWhiz />}
       {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
-      {TIANLI_KEY && <TianliGPT />}
       <VConsole />
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
-      {COZE_BOT_ID && <Coze />}
-
-      {CHATBASE_ID && (
-        <>
-          <script
-            id={CHATBASE_ID}
-            src='https://www.chatbase.co/embed.min.js'
-            defer
-          />
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-                    window.chatbaseConfig = {
-                        chatbotId: "${CHATBASE_ID}",
-                        }
-                    `
-            }}
-          />
-        </>
-      )}
-
-      {CLARITY_ID && (
-        <>
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(c, l, a, r, i, t, y) {
-                  c[a] = c[a] || function() {
-                    (c[a].q = c[a].q || []).push(arguments);
-                  };
-                  t = l.createElement(r);
-                  t.async = 1;
-                  t.src = "https://www.clarity.ms/tag/" + i;
-                  y = l.getElementsByTagName(r)[0];
-                  if (y && y.parentNode) {
-                    y.parentNode.insertBefore(t, y);
-                  } else {
-                    l.head.appendChild(t);
-                  }
-                })(window, document, "clarity", "script", "${CLARITY_ID}");
-                `
-            }}
-          />
-        </>
-      )}
 
       {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
 
@@ -202,29 +139,12 @@ const TwikooCommentCounter = dynamic(
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
   ssr: false
 })
-const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
-  ssr: false
-})
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
-  ssr: false
-})
-const Analytics = dynamic(
-  () =>
-    import('@vercel/analytics/react').then(async m => {
-      return m.Analytics
-    }),
-  { ssr: false }
-)
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
   ssr: false
 })
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
-const CustomContextMenu = dynamic(
-  () => import('@/components/CustomContextMenu'),
-  { ssr: false }
-)
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
   ssr: false
 })
@@ -238,12 +158,5 @@ const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
   ssr: false
 })
 
-const Coze = dynamic(() => import('@/components/Coze'), {
-  ssr: false
-})
-
-const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
-  ssr: false
-})
 
 export default ExternalPlugin
