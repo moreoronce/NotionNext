@@ -21,9 +21,6 @@ export default function ArticleInfo(props) {
                 <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{post?.publishDay}</span>
                 <span className='mx-1'>|</span>
                 <span className='whitespace-nowrap mr-2'><i className='far fa-calendar-check mr-2' />{post?.lastEditedDay}</span>
-                <div className="hidden busuanzi_container_page_pv font-light mr-2 whitespace-nowrap">
-                    <i className="mr-1 fas fa-eye" /><span className="busuanzi_value_page_pv" />
-                </div>
             </div>
             <Link href="/about" passHref legacyBehavior>
                 <div className='flex pt-2'>
