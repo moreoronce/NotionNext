@@ -88,7 +88,6 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
-      {DEBUG && <DebugPanel />}
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {!CAN_COPY && <DisableCopy />}
@@ -105,9 +104,6 @@ const TwikooCommentCounter = dynamic(
   () => import('@/components/TwikooCommentCounter'),
   { ssr: false }
 )
-const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
-  ssr: false
-})
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
