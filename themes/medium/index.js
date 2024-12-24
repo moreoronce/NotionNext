@@ -45,6 +45,7 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
+  const { onLoading, fullWidth } = useGlobal()
   const [slotRight, setSlotRight] = useState(null)
 
   useEffect(() => {
