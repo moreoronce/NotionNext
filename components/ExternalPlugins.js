@@ -13,8 +13,6 @@ import { initGoogleAdsense } from './GoogleAdsense'
  * @returns
  */
 const ExternalPlugin = props => {
-  const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
-  const DEBUG = siteConfig('DEBUG')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const NEST = siteConfig('NEST')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
@@ -23,8 +21,6 @@ const ExternalPlugin = props => {
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
-  const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
-  const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
 
@@ -42,20 +38,6 @@ const ExternalPlugin = props => {
 
     if (ANIMATE_CSS_URL) {
       loadExternalResource(ANIMATE_CSS_URL, 'css')
-    }
-
-    // 导入外部自定义脚本
-    if (CUSTOM_EXTERNAL_JS && CUSTOM_EXTERNAL_JS.length > 0) {
-      for (const url of CUSTOM_EXTERNAL_JS) {
-        loadExternalResource(url, 'js')
-      }
-    }
-
-    // 导入外部自定义样式
-    if (CUSTOM_EXTERNAL_CSS && CUSTOM_EXTERNAL_CSS.length > 0) {
-      for (const url of CUSTOM_EXTERNAL_CSS) {
-        loadExternalResource(url, 'css')
-      }
     }
   }
 
@@ -91,7 +73,6 @@ const ExternalPlugin = props => {
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {!CAN_COPY && <DisableCopy />}
-      <VConsole />
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
 
@@ -105,7 +86,6 @@ const TwikooCommentCounter = dynamic(
   { ssr: false }
 )
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
   ssr: false
 })
