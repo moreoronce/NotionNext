@@ -17,7 +17,6 @@ const ExternalPlugin = props => {
   const NEST = siteConfig('NEST')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
 
-  const CAN_COPY = siteConfig('CAN_COPY')
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
@@ -68,10 +67,8 @@ const ExternalPlugin = props => {
       <GlobalStyle />
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
-      {!CAN_COPY && <DisableCopy />}
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
-
       {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
     </>
   )
@@ -82,9 +79,6 @@ const TwikooCommentCounter = dynamic(
   { ssr: false }
 )
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
-  ssr: false
-})
 const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
   ssr: false
 })
