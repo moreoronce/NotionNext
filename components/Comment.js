@@ -15,7 +15,10 @@ const Comment = ({ frontMatter, className }) => {
   const router = useRouter()
   const [shouldLoad, setShouldLoad] = useState(false)
   const commentRef = useRef(null)
+
   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
+  const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
+
 
   useEffect(() => {
     // Check if the component is visible in the viewport
@@ -38,6 +41,20 @@ const Comment = ({ frontMatter, className }) => {
       }
     }
   }, [frontMatter])
+
+  // 当连接中有特殊参数时跳转到评论区
+  if (
+    isBrowser &&
+    ('giscus' in router.query || router.query.target === 'comment')
+  ) {
+    setTimeout(() => {
+      const url = router.asPath.replace('?target=comment', '')
+      history.replaceState({}, '', url)
+      document
+        ?.getElementById('comment')
+        ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    }, 1000)
+  }
 
   if (!frontMatter) {
     return null
@@ -73,6 +90,13 @@ const Comment = ({ frontMatter, className }) => {
               <TwikooCompenent />
             </div>
           )}
+
+
+          {COMMENT_GISCUS_REPO && (
+            <div key='Giscus'>
+              <GiscusComponent className='px-2' />
+            </div>
+          )}
         </Tabs>
       )}
     </div>
@@ -82,6 +106,13 @@ const Comment = ({ frontMatter, className }) => {
 const TwikooCompenent = dynamic(
   () => {
     return import('@/components/Twikoo')
+  },
+  { ssr: false }
+)
+
+const GiscusComponent = dynamic(
+  () => {
+    return import('@/components/Giscus')
   },
   { ssr: false }
 )
