@@ -18,16 +18,16 @@ const BLOG = {
     process.env.NEXT_PUBLIC_IS_TAG_COLOR_DISTINGUISHED === 'true' || true, // 对于名称相同的tag是否区分tag的颜色
 
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
-/*   GREETING_WORDS:
+  GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
     '',
- */
+
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
-/*   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '', // 您的昵称 例如 tangly1024
+  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || '', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '', // 网站关键词 英文逗号隔开 */
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '', // 网站关键词 英文逗号隔开
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
