@@ -6,7 +6,6 @@ import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -46,7 +45,6 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
-  const { onLoading, fullWidth } = useGlobal()
   const [slotRight, setSlotRight] = useState(null)
 
   useEffect(() => {
