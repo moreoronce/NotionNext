@@ -102,7 +102,6 @@ const SEO = props => {
           <meta property='article:published_time' content={meta.publishDay} />
           <meta property='article:author' content={siteConfig('AUTHOR')} />
           <meta property='article:section' content={keywords} />
-          <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
       )}
       {children}

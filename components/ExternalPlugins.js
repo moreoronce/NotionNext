@@ -7,10 +7,6 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
-import Head from 'next/head'
-import ExternalScript from './ExternalScript'
-import WebWhiz from './Webwhiz'
-
 /**
  * 各种插件脚本
  * @param {*} props
