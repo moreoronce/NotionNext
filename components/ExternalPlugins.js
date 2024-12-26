@@ -79,10 +79,6 @@ const ExternalPlugin = props => {
     eval(GLOBAL_JS)
   }, [])
 
-  if (DISABLE_PLUGIN) {
-    return null
-  }
-
   return (
     <>
       {/* 全局样式嵌入 */}

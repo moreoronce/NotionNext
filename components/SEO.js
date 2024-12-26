@@ -53,14 +53,7 @@ const SEO = props => {
   const type = meta?.type || 'website'
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
-  const favicon = siteConfig('BLOG_FAVICON')
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
-
-  const SEO_BAIDU_SITE_VERIFICATION = siteConfig(
-    'SEO_BAIDU_SITE_VERIFICATION',
-    null,
-    NOTION_CONFIG
-  )
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
     'SEO_GOOGLE_SITE_VERIFICATION',
@@ -70,51 +63,21 @@ const SEO = props => {
 
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
 
-  const COMMENT_WEBMENTION_ENABLE = siteConfig(
-    'COMMENT_WEBMENTION_ENABLE',
-    null,
-    NOTION_CONFIG
-  )
-
-  const COMMENT_WEBMENTION_HOSTNAME = siteConfig(
-    'COMMENT_WEBMENTION_HOSTNAME',
-    null,
-    NOTION_CONFIG
-  )
-  const COMMENT_WEBMENTION_AUTH = siteConfig(
-    'COMMENT_WEBMENTION_AUTH',
-    null,
-    NOTION_CONFIG
-  )
-  const ANALYTICS_BUSUANZI_ENABLE = siteConfig(
-    'ANALYTICS_BUSUANZI_ENABLE',
-    null,
-    NOTION_CONFIG
-  )
-
-  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
-
   return (
     <Head>
-      <link rel='icon' href={favicon} />
+      <meta charSet='UTF-8' />
       <title>{title}</title>
+      <link rel="canonical" href={url} />
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
       <meta name='robots' content='follow, index' />
-      <meta charSet='UTF-8' />
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
           name='google-site-verification'
           content={SEO_GOOGLE_SITE_VERIFICATION}
-        />
-      )}
-      {SEO_BAIDU_SITE_VERIFICATION && (
-        <meta
-          name='baidu-site-verification'
-          content={SEO_BAIDU_SITE_VERIFICATION}
         />
       )}
       <meta name='keywords' content={keywords} />
@@ -130,32 +93,15 @@ const SEO = props => {
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
       <link rel='icon' href={BLOG_FAVICON} />
-      <meta name="msvalidate.01" content="16DB3849D5A67E075BC7A1CDB1754984" />
+      <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+      <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+      <link rel="dns-prefetch" href="https://npm.elemecdn.com" />
 
-      {COMMENT_WEBMENTION_ENABLE && (
-        <>
-          <link
-            rel='webmention'
-            href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/webmention`}
-          />
-          <link
-            rel='pingback'
-            href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/xmlrpc`}
-          />
-          {COMMENT_WEBMENTION_AUTH && (
-            <link href={COMMENT_WEBMENTION_AUTH} rel='me' />
-          )}
-        </>
-      )}
-
-      {ANALYTICS_BUSUANZI_ENABLE && (
-        <meta name='referrer' content='no-referrer-when-downgrade' />
-      )}
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={meta.publishDay} />
           <meta property='article:author' content={siteConfig('AUTHOR')} />
-          <meta property='article:section' content={category} />
+          <meta property='article:section' content={keywords} />
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
       )}
@@ -185,7 +131,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/archive':
       return {
         title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
@@ -201,7 +147,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -209,7 +155,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -218,7 +164,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
@@ -248,7 +194,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag':
       return {
         title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.COMMON.TAGS} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag',
         type: 'website'
@@ -256,7 +202,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category':
       return {
         title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
         type: 'website'
