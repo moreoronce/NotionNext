@@ -4,7 +4,6 @@ import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import Artalk from './Artalk'
 
 /**
  * 评论组件
@@ -17,15 +16,8 @@ const Comment = ({ frontMatter, className }) => {
   const [shouldLoad, setShouldLoad] = useState(false)
   const commentRef = useRef(null)
 
-  const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
-  const COMMENT_WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL')
-  const COMMENT_VALINE_APP_ID = siteConfig('COMMENT_VALINE_APP_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
-  const COMMENT_CUSDIS_APP_ID = siteConfig('COMMENT_CUSDIS_APP_ID')
-  const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
-  const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
-  const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   useEffect(() => {
     // Check if the component is visible in the viewport
@@ -92,27 +84,9 @@ const Comment = ({ frontMatter, className }) => {
 
       {shouldLoad && (
         <Tabs>
-          {COMMENT_ARTALK_SERVER && (
-            <div key='Artalk'>
-              <Artalk />
-            </div>
-          )}
-
           {COMMENT_TWIKOO_ENV_ID && (
             <div key='Twikoo'>
               <TwikooCompenent />
-            </div>
-          )}
-
-          {COMMENT_WALINE_SERVER_URL && (
-            <div key='Waline'>
-              <WalineComponent />
-            </div>
-          )}
-
-          {COMMENT_VALINE_APP_ID && (
-            <div key='Valine' name='reply'>
-              <ValineComponent path={frontMatter.id} />
             </div>
           )}
 
@@ -121,52 +95,11 @@ const Comment = ({ frontMatter, className }) => {
               <GiscusComponent className='px-2' />
             </div>
           )}
-
-          {COMMENT_CUSDIS_APP_ID && (
-            <div key='Cusdis'>
-              <CusdisComponent frontMatter={frontMatter} />
-            </div>
-          )}
-
-          {COMMENT_UTTERRANCES_REPO && (
-            <div key='Utterance'>
-              <UtterancesComponent
-                issueTerm={frontMatter.id}
-                className='px-2'
-              />
-            </div>
-          )}
-
-          {COMMENT_GITALK_CLIENT_ID && (
-            <div key='GitTalk'>
-              <GitalkComponent frontMatter={frontMatter} />
-            </div>
-          )}
-
-          {COMMENT_WEBMENTION_ENABLE && (
-            <div key='WebMention'>
-              <WebMentionComponent frontMatter={frontMatter} className='px-2' />
-            </div>
-          )}
         </Tabs>
       )}
     </div>
   )
 }
-
-const WalineComponent = dynamic(
-  () => {
-    return import('@/components/WalineComponent')
-  },
-  { ssr: false }
-)
-
-const CusdisComponent = dynamic(
-  () => {
-    return import('@/components/CusdisComponent')
-  },
-  { ssr: false }
-)
 
 const TwikooCompenent = dynamic(
   () => {
@@ -175,33 +108,11 @@ const TwikooCompenent = dynamic(
   { ssr: false }
 )
 
-const GitalkComponent = dynamic(
-  () => {
-    return import('@/components/Gitalk')
-  },
-  { ssr: false }
-)
-const UtterancesComponent = dynamic(
-  () => {
-    return import('@/components/Utterances')
-  },
-  { ssr: false }
-)
 const GiscusComponent = dynamic(
   () => {
     return import('@/components/Giscus')
   },
   { ssr: false }
 )
-const WebMentionComponent = dynamic(
-  () => {
-    return import('@/components/WebMention')
-  },
-  { ssr: false }
-)
-
-const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
-  ssr: false
-})
 
 export default Comment
