@@ -1,12 +1,10 @@
 import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -18,14 +16,12 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostBar from './components/BlogPostBar'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import BottomMenuBar from './components/BottomMenuBar'
 import Catalog from './components/Catalog'
 import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
-import SearchInput from './components/SearchInput'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
@@ -118,9 +114,6 @@ const LayoutBase = props => {
             </div>
           )}
         </main>
-
-        {/* 移动端底部导航栏 */}
-        <BottomMenuBar {...props} className='block md:hidden' />
       </div>
     </ThemeGlobalMedium.Provider>
   )
