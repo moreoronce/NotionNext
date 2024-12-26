@@ -19,6 +19,7 @@ const ExternalPlugin = props => {
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
+  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
