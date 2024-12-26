@@ -91,20 +91,10 @@ const LayoutBase = props => {
             <div
               id='container-inner'
               className={`px-7 ${fullWidth ? '' : 'max-w-5xl'} justify-center mx-auto min-h-screen`}>
-              <Transition
-                show={!onLoading}
-                appear={true}
-                enter='transition ease-in-out duration-700 transform order-first'
-                enterFrom='opacity-0 translate-y-16'
-                enterTo='opacity-100'
-                leave='transition ease-in-out duration-300 transform'
-                leaveFrom='opacity-100'
-                leaveTo='opacity-0 -translate-y-16'
-                unmount={false}>
+              <>
                 {slotTop}
                 {children}
-              </Transition>
-
+              </>
               <JumpToTopButton />
             </div>
 
@@ -215,8 +205,6 @@ const LayoutSlug = props => {
 
           {/* 文章底部区域  */}
           <section>
-            {/* 分享 */}
-            <ShareBar post={post} />
             {/* 文章分类和标签信息 */}
             <div className='flex justify-between'>
               {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
