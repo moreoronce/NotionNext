@@ -21,7 +21,7 @@ const Footer = ({ title }) => {
         </a>
         .<br />
         <span className='text-xs font-serif'>
-          Powered by 
+          Powered by @
           <a
             href='https://github.com/tangly1024/NotionNext'
             className='underline text-gray-500 dark:text-gray-300'>
