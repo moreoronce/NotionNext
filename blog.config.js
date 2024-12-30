@@ -26,7 +26,6 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '', // 作者简介
-  SUBDESCRIPTION: process.env.NEXT_PUBLIC_SUBDESCRIPTION || '',
   LINK: process.env.NEXT_PUBLIC_LINK || '', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '', // 网站关键词 英文逗号隔开
 

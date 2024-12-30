@@ -50,7 +50,6 @@ const SEO = props => {
   }
   const title = meta?.title || siteConfig('TITLE')
   const description = meta?.description || `${siteInfo?.description}`
-  const subdescription = siteConfig('SUBDESCRIPTION')
   const type = meta?.type || 'website'
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
@@ -131,7 +130,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/archive':
       return {
         title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.subdescription}`,
+        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
@@ -147,7 +146,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -155,7 +154,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -164,7 +163,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.subdescription}`,
+        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
@@ -172,7 +171,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.subdescription}`,
+        description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
         type: 'website'
@@ -181,7 +180,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search/[keyword]/page/[page]':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.subdescription}`,
+        description: siteConfig('TITLE'),
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
         type: 'website'
@@ -189,13 +188,12 @@ const getSEOMeta = (props, router, locale) => {
     case '/404':
       return {
         title: `${siteInfo?.title} | 页面找不到啦`,
-        description: `404 | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`
       }
     case '/tag':
       return {
         title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.TAGS} | ${siteInfo?.subdescription}`,
+        description: `${locale.COMMON.TAGS} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag',
         type: 'website'
@@ -203,7 +201,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category':
       return {
         title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
+        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
         type: 'website'
