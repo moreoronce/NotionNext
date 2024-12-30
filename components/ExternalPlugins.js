@@ -21,6 +21,7 @@ const ExternalPlugin = props => {
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
 
@@ -83,7 +84,31 @@ const ExternalPlugin = props => {
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {ENABLE_NPROGRSS && <LoadingProgress />}
+      {ANALYTICS_GOOGLE_ID && <Gtag />}
       <AosAnimation />
+
+      {/* 谷歌统计 */}
+      {ANALYTICS_GOOGLE_ID && (
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_GOOGLE_ID}`}
+          />
+          <script
+            async
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${ANALYTICS_GOOGLE_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `
+            }}
+          />
+        </>
+      )}
     </>
   )
 }

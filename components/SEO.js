@@ -96,16 +96,6 @@ const SEO = props => {
       <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
       <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
       <link rel="dns-prefetch" href="https://npm.elemecdn.com" />
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHSBBFYN1E"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-VHSBBFYN1E');
-      </script>
-
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={meta.publishDay} />

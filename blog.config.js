@@ -194,7 +194,6 @@ const BLOG = {
   POST_DISABLE_GALLERY_CLICK:
     process.env.NEXT_PUBLIC_POST_DISABLE_GALLERY_CLICK || true, // 画册视图禁止点击，方便在友链页面的画册插入链接
 
-  //   ********挂件组件相关********
   // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
 
   COMMENT_HIDE_SINGLE_TAB:
@@ -211,7 +210,7 @@ const BLOG = {
   // <---- 评论插件
 
   // ----> 站点统计
-  
+  ANALYTICS_GOOGLE_ID: process.env.NEXT_PUBLIC_ANALYTICS_GOOGLE_ID || '',
   // <---- 站点统计
 
   // START---->营收相关
