@@ -130,7 +130,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/archive':
       return {
         title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.description}`,
+        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
@@ -146,7 +146,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -154,7 +154,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
+        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -163,7 +163,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.description}`,
+        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
@@ -171,7 +171,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
         type: 'website'
@@ -180,7 +180,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search/[keyword]/page/[page]':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: siteConfig('TITLE'),
+        description: `${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
         type: 'website'
@@ -188,12 +188,13 @@ const getSEOMeta = (props, router, locale) => {
     case '/404':
       return {
         title: `${siteInfo?.title} | 页面找不到啦`,
+        description: `404 | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`
       }
     case '/tag':
       return {
         title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.TAGS} | ${siteInfo?.description}`,
+        description: `${locale.COMMON.TAGS} | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag',
         type: 'website'
@@ -201,7 +202,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category':
       return {
         title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
+        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.subdescription}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
         type: 'website'
