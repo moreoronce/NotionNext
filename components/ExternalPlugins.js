@@ -117,6 +117,7 @@ const TwikooCommentCounter = dynamic(
   () => import('@/components/TwikooCommentCounter'),
   { ssr: false }
 )
+const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
 const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
   ssr: false
