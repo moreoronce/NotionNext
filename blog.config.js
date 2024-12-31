@@ -210,7 +210,6 @@ const BLOG = {
   // <---- 评论插件
 
   // ----> 站点统计
-  ANALYTICS_GOOGLE_ID: process.env.NEXT_PUBLIC_ANALYTICS_GOOGLE_ID || 'G-VHSBBFYN1E',
   // <---- 站点统计
 
   // START---->营收相关
