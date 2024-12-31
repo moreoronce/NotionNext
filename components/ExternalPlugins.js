@@ -83,7 +83,6 @@ const ExternalPlugin = props => {
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {ENABLE_NPROGRSS && <LoadingProgress />}
-      {ANALYTICS_GOOGLE_ID && <Gtag />}
       <AosAnimation />
     </>
   )
