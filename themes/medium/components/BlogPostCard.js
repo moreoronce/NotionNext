@@ -1,7 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
-import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -47,7 +46,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div
           className={
-            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
+            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-500'
           }>
           <div className='text-sm py-1'>{post.date?.start_date}</div>
           {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
@@ -57,7 +56,6 @@ const BlogPostCard = ({ post, showSummary }) => {
             post?.tagItems?.map(tag => (
               <TagItemMini key={tag.name} tag={tag} />
             ))}
-          <TwikooCommentCount post={post} className='hover:underline' />
         </div>
 
         <div className='flex'></div>
