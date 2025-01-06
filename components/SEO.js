@@ -52,7 +52,6 @@ const SEO = props => {
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
-  const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
