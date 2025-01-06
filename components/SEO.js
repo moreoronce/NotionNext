@@ -94,7 +94,6 @@ const SEO = props => {
       <link rel='icon' href={BLOG_FAVICON} />
       <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
       <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-      <link rel="dns-prefetch" href="https://npm.elemecdn.com" />
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={meta.publishDay} />
