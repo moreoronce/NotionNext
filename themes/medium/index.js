@@ -28,6 +28,8 @@ import TocDrawer from './components/TocDrawer'
 import TopNavBar from './components/TopNavBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { useRef } from 'react'
+import AlgoliaSearchModal from 'components/AlgoliaSearchModal'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -233,6 +235,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
+  const searchModalRef = useRef(null)
 
   useEffect(() => {
     if (isBrowser) {
@@ -252,6 +255,14 @@ const LayoutSearch = props => {
       {/* 搜索导航栏 */}
       <div className='py-12'>
         <div className='pb-4 w-full'><h1>{locale.NAV.SEARCH}</h1></div>
+        <input
+          type="text"
+          placeholder="搜索文章..."
+          onFocus={() => searchModalRef.current?.openSearch()}
+          className="px-3 py-1 rounded-md w-full border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          readOnly
+        />
+        <AlgoliaSearchModal cRef={searchModalRef} />
         {!currentSearch && (
           <>
             <TagGroups {...props} />
