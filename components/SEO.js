@@ -168,7 +168,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `使用Algolia提供的搜索服务` | `${siteInfo?.description}`,
+        description: `使用Algolia提供的搜索服务 | ${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
         type: 'website'
