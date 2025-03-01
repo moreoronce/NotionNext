@@ -135,7 +135,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/page/[page]':
       return {
         title: `${page} | Page | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${siteInfo?.description} | ${page}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'page/' + page,
         type: 'website'
