@@ -8,7 +8,7 @@ export default function LogoBar(props) {
 
   return (
     <div id='top-wrapper' className='w-full flex items-center '>
-      <Link href='/' className='logo text-md md:text-xl dark:text-gray-200'>
+      <Link href='/' className='logo text-md md:text-xl dark:text-gray-200 font-bold'>
         {isHomePage ? <h1>{siteConfig('TITLE')}</h1> : <span>{siteConfig('TITLE')}</span>}
       </Link>
     </div>
