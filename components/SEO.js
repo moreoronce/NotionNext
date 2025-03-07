@@ -23,7 +23,7 @@ const SEO = props => {
   useEffect(() => {
     // 使用WebFontLoader字体加载
     loadExternalResource(
-      'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
+      '/js/webfontloader.js',
       'js'
     ).then(url => {
       const WebFont = window?.WebFont
