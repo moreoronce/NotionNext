@@ -9,14 +9,16 @@ import { initGoogleAdsense } from './GoogleAdsense'
 
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
-import WebWhiz from './Webwhiz'
-
+import { useGlobal } from '@/lib/global'
+import IconFont from './IconFont'
 /**
  * 各种插件脚本
  * @param {*} props
  * @returns
  */
 const ExternalPlugin = props => {
+  const { NOTION_CONFIG } = props
+  const { lang } = useGlobal()
   const NEST = siteConfig('NEST')
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
