@@ -7,6 +7,10 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
+import Head from 'next/head'
+import ExternalScript from './ExternalScript'
+import WebWhiz from './Webwhiz'
+
 /**
  * 各种插件脚本
  * @param {*} props
@@ -18,11 +22,21 @@ const ExternalPlugin = props => {
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
-  const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
-  const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const CUSTOM_EXTERNAL_CSS = siteConfig(
+    'CUSTOM_EXTERNAL_CSS',
+    null,
+    NOTION_CONFIG
+  )
+  const CUSTOM_EXTERNAL_JS = siteConfig(
+    'CUSTOM_EXTERNAL_JS',
+    null,
+    NOTION_CONFIG
+  )
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
+
+  const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -66,7 +80,7 @@ const ExternalPlugin = props => {
 
     setTimeout(() => {
       // 映射url
-      convertInnerUrl(props?.allNavPages)
+      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
     }, 500)
   }, [router])
 
@@ -80,6 +94,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
+      {ENABLE_ICON_FONT && <IconFont />}
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {ENABLE_NPROGRSS && <LoadingProgress />}
