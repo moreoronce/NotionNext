@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
+import { useRouter } from 'next/router'
 
 export default function LogoBar(props) {
   const router = useRouter()

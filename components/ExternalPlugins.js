@@ -23,6 +23,7 @@ const ExternalPlugin = props => {
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
+  const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const CUSTOM_EXTERNAL_CSS = siteConfig(
     'CUSTOM_EXTERNAL_CSS',
     null,

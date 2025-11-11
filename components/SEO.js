@@ -40,7 +40,8 @@ const SEO = props => {
   }, [])
 
   // SEO关键词
-  let keywords = meta?.tags || siteConfig('KEYWORDS')
+  const KEYWORDS = siteConfig('KEYWORDS')
+  let keywords = meta?.tags || KEYWORDS
   if (post?.tags && post?.tags?.length > 0) {
     keywords = post?.tags?.join(',')
   }
@@ -48,9 +49,13 @@ const SEO = props => {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
   }
+
+  const TITLE = siteConfig('TITLE')
+  const AUTHOR = siteConfig('AUTHOR')
   const title = meta?.title || siteConfig('TITLE')
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
+  const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
 
@@ -59,7 +64,7 @@ const SEO = props => {
     null,
     NOTION_CONFIG
   )
-
+  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
 
   return (
