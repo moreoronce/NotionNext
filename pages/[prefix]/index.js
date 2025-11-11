@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
-import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
@@ -89,8 +88,6 @@ const Slug = props => {
       <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
-      {/* 导流工具 */}
-      <OpenWrite />
     </>
   )
 }
