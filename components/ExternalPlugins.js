@@ -7,8 +7,6 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
-import Head from 'next/head'
-import ExternalScript from './ExternalScript'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
 /**
@@ -39,6 +37,9 @@ const ExternalPlugin = props => {
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
 
   const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
+
+  const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
+  const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -89,8 +90,15 @@ const ExternalPlugin = props => {
   useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
+    if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
+      console.log('Inject JS:', GLOBAL_JS);
+    }
     eval(GLOBAL_JS)
-  }, [])
+  })
+
+  if (DISABLE_PLUGIN) {
+    return null
+  }
 
   return (
     <>

@@ -50,16 +50,5 @@ yarn-error.log*
 # yarn
 package-lock.json
 # yarn.lock
-/themes/movie
-/themes/nav
-/themes/next
-/themes/nobelium
-/themes/plog
-/themes/simple
-/themes/starter
-components/Fireworks.js
-public/js/ribbon.js
-/themes/commerce
-/themes/example
-/themes/fukasawa
-Font Awesome Used.txt
+
+.notion-api-lock

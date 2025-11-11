@@ -3,7 +3,7 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
@@ -21,7 +21,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       data-aos-anchor-placement='top-bottom'
       className='mb-6 max-w-7xl border-b dark:border-gray-800 '>
       <header className='lg:py-8 py-4 flex flex-col w-full'>
-        <Link
+        <SmartLink
           href={post?.href}
           passHref
           className={
@@ -42,7 +42,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             )}
             {post.title}
           </h2>
-        </Link>
+        </SmartLink>
 
         <div
           className={
@@ -71,13 +71,13 @@ const BlogPostCard = ({ post, showSummary }) => {
             <NotionPage post={post} />
             <div className='pointer-events-none border-t pt-8 border-dashed'>
               <div className='w-full justify-start flex'>
-                <Link
+                <SmartLink
                   href={post?.href}
                   passHref
                   className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer'>
                   {locale.COMMON.ARTICLE_DETAIL}
                   <i className='ml-1 fas fa-angle-right' />
-                </Link>
+                </SmartLink>
               </div>
             </div>
           </div>

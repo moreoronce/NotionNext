@@ -1,5 +1,5 @@
 import LazyImage from '@/components/LazyImage'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
 
@@ -22,7 +22,7 @@ export default function ArticleInfo(props) {
                 <span className='mx-1'>|</span>
                 <span className='whitespace-nowrap mr-2'><i className='far fa-calendar-check mr-2' />{post?.lastEditedDay}</span>
             </div>
-            <Link href="/about" passHref legacyBehavior>
+            <SmartLink href="/about" passHref legacyBehavior>
                 <div className='flex pt-2'>
                     <LazyImage src={siteInfo?.icon} className='rounded-full cursor-pointer' width={22} alt={siteConfig('AUTHOR')} />
 
@@ -30,7 +30,7 @@ export default function ArticleInfo(props) {
                         {siteConfig('AUTHOR')}
                     </div>
                 </div>
-            </Link>
+            </SmartLink>
         </section>
     </>)
 }
