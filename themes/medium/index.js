@@ -5,7 +5,6 @@ import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -30,7 +29,7 @@ import TopNavBar from './components/TopNavBar'
 import CONFIG from './config'
 import { Style } from './style'
 import { useRef } from 'react'
-import AlgoliaSearchModal from 'components/AlgoliaSearchModal'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
