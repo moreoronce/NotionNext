@@ -98,20 +98,6 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
 
-  // 加载非当前默认主题
-  if (!isDefaultTheme) {
-    const loadThemeComponents = componentsSource => {
-      const components =
-        componentsSource[layoutName] || componentsSource.LayoutSlug
-      setTimeout(fixThemeDOM, 500)
-      return components
-    }
-    return dynamic(
-      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
-      { ssr: true }
-    )
-  }
-
   setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }
