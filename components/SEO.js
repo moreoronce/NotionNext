@@ -48,6 +48,10 @@ const SEO = props => {
   if (meta) {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
+    // 确保 image 是绝对 URL（Twitter/Facebook 需要）
+    if (image && !image.startsWith('http')) {
+      image = `${siteConfig('LINK')}${image}`
+    }
   }
 
   const TITLE = siteConfig('TITLE')
