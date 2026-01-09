@@ -41,7 +41,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
+      <Html lang={BLOG.LANG} suppressHydrationWarning>
         <Head>
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
