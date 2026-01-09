@@ -417,6 +417,7 @@ export {
     LayoutArchive,
     LayoutCategoryIndex,
     LayoutTagIndex,
-    Layout404
+    Layout404,
+    CONFIG as THEME_CONFIG
 }
 
