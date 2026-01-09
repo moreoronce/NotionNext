@@ -28,7 +28,7 @@ export default function ArticleLock(props) {
         <div className="w-full flex justify-center items-center py-16">
             <div className="text-center space-y-4">
                 <div className="text-[#C97A4A] font-medium">
-                    <span className="text-[#8B8B8B]">// </span>
+                    <span className="text-[#666666]">// </span>
                     {locale.COMMON.ARTICLE_LOCK_TIPS}
                 </div>
                 <div className="flex">
@@ -45,12 +45,12 @@ export default function ArticleLock(props) {
                         className="outline-none w-64 text-sm px-4 py-2 
                        border border-[#E5E5E5] rounded-l-md
                        bg-white text-[#1A1A1A]
-                       focus:border-[#cc7a60]
-                       placeholder:text-[#8B8B8B]"
+                       focus:border-[#a35a3a]
+                       placeholder:text-[#666666]"
                     />
                     <button
                         onClick={submitPassword}
-                        className="px-4 py-2 bg-[#cc7a60] text-white rounded-r-md
+                        className="px-4 py-2 bg-[#a35a3a] text-white rounded-r-md
                        hover:bg-[#a3614d] transition-colors"
                     >
                         {locale.COMMON.SUBMIT}
@@ -61,4 +61,5 @@ export default function ArticleLock(props) {
         </div>
     )
 }
+
 

@@ -48,7 +48,7 @@ export default function Header(props) {
             <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
                 {/* Logo */}
                 <SmartLink href="/" className="flex items-center gap-2 text-lg font-semibold text-[#1A1A1A] hover:text-[#1A1A1A]">
-                    <span className="text-[#cc7a60]">&gt;_</span>
+                    <span className="text-[#a35a3a]">&gt;_</span>
                     <span>DeepRouter</span>
                 </SmartLink>
 
@@ -63,7 +63,7 @@ export default function Header(props) {
                                         className="text-[#6B6B6B] hover:text-[#1A1A1A] text-sm font-mono transition-colors flex items-center gap-1"
                                     >
                                         {link.name}
-                                        <svg className="w-3 h-3 text-[#8B8B8B] group-hover:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-3 h-3 text-[#666666] group-hover:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </SmartLink>
@@ -73,7 +73,7 @@ export default function Header(props) {
                                                 <SmartLink
                                                     key={idx}
                                                     href={sub.href}
-                                                    className="block px-4 py-2 text-sm font-mono text-[#4A4A4A] hover:bg-[#F5F0E8] hover:text-[#cc7a60] truncate"
+                                                    className="block px-4 py-2 text-sm font-mono text-[#4A4A4A] hover:bg-[#F5F0E8] hover:text-[#a35a3a] truncate"
                                                 >
                                                     {sub.title}
                                                 </SmartLink>
@@ -134,6 +134,7 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-[#6B6B6B]"
+                aria-label={isOpen ? "关闭菜单" : "打开菜单"}
             >
                 {isOpen ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,7 +171,7 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
                                         <SmartLink
                                             key={idx}
                                             href={sub.href}
-                                            className="block py-1.5 text-sm font-mono text-[#8B8B8B] hover:text-[#cc7a60]"
+                                            className="block py-1.5 text-sm font-mono text-[#666666] hover:text-[#a35a3a]"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             {sub.title}
@@ -195,5 +196,6 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
         </div>
     )
 }
+
 
 

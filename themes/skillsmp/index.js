@@ -106,7 +106,7 @@ const LayoutSlug = props => {
     const { post, prev, next, lock, validPassword, recommendPosts = [] } = props
 
     if (!post) {
-        return <div className='text-center py-20 text-[#8B8B8B]'>Loading...</div>
+        return <div className='text-center py-20 text-[#666666]'>Loading...</div>
     }
 
     const fileName = post.slug ? `${post.slug}.md` : 'ARTICLE.md'
@@ -115,13 +115,13 @@ const LayoutSlug = props => {
         <>
             {/* 面包屑 - 终端风格 */}
             <div className='text-sm mb-4 font-mono'>
-                <span className='text-[#8B8B8B]'>$ pwd: ~ / </span>
+                <span className='text-[#666666]'>$ pwd: ~ / </span>
                 {post.category && (
                     <>
-                        <SmartLink href={`/category/${post.category}`} className='text-[#cc7a60] hover:underline'>
+                        <SmartLink href={`/category/${post.category}`} className='text-[#a35a3a] hover:underline'>
                             {post.category}
                         </SmartLink>
-                        <span className='text-[#8B8B8B]'> / </span>
+                        <span className='text-[#666666]'> / </span>
                     </>
                 )}
                 <span className='text-[#1A1A1A]'>{post.slug}</span>
@@ -141,7 +141,7 @@ const LayoutSlug = props => {
                         {/* 描述 - 注释风格 */}
                         {post.summary && (
                             <p className='text-[#6B6B6B] mb-4 leading-relaxed'>
-                                <span className='text-[#8B8B8B]'>// </span>
+                                <span className='text-[#666666]'>// </span>
                                 {post.summary}
                             </p>
                         )}
@@ -150,7 +150,7 @@ const LayoutSlug = props => {
                         <div className='mb-6'>
                             <TerminalCard title="git-status.log" readonly>
                                 <div className='text-sm text-[#6B6B6B] font-mono'>
-                                    <span className='text-[#8B8B8B]'>$ git log --oneline --stat</span>
+                                    <span className='text-[#666666]'>$ git log --oneline --stat</span>
                                     <div className='flex flex-wrap gap-4 mt-2'>
                                         {post.category && (
                                             <span>
@@ -158,7 +158,7 @@ const LayoutSlug = props => {
                                             </span>
                                         )}
                                         <span>
-                                            <span className='text-[#cc7a60]'>📅 updated:</span> {formatDateFmt(post.lastEditedDate || post.publishDate || post.date, 'yyyy-MM-dd')}
+                                            <span className='text-[#a35a3a]'>📅 updated:</span> {formatDateFmt(post.lastEditedDate || post.publishDate || post.date, 'yyyy-MM-dd')}
                                         </span>
                                         {post.tags?.length > 0 && (
                                             <span>
@@ -188,12 +188,12 @@ const LayoutSlug = props => {
                     {/* 7. 上一篇/下一篇导航 */}
                     <div className='flex justify-between mt-12 pt-6 border-t border-[#E8E4DC] text-sm'>
                         {prev ? (
-                            <SmartLink href={prev.href || `/${prev.slug}`} className='flex items-center gap-2 text-[#cc7a60] hover:underline'>
+                            <SmartLink href={prev.href || `/${prev.slug}`} className='flex items-center gap-2 text-[#a35a3a] hover:underline'>
                                 ← {prev.title}
                             </SmartLink>
                         ) : <div />}
                         {next ? (
-                            <SmartLink href={next.href || `/${next.slug}`} className='flex items-center gap-2 text-[#cc7a60] hover:underline'>
+                            <SmartLink href={next.href || `/${next.slug}`} className='flex items-center gap-2 text-[#a35a3a] hover:underline'>
                                 {next.title} →
                             </SmartLink>
                         ) : <div />}
@@ -202,7 +202,9 @@ const LayoutSlug = props => {
                     {/* 评论区 */}
                     {!lock && (
                         <div className='mt-12'>
-                            <Comment frontMatter={post} />
+                            <TerminalCard title="comments.log" readonly>
+                                <Comment frontMatter={post} />
+                            </TerminalCard>
                         </div>
                     )}
                 </div>
@@ -220,7 +222,7 @@ const LayoutSlug = props => {
                                 <span className='w-6 h-6 bg-[#E74C3C] rounded-full flex items-center justify-center text-white text-xs'>📦</span>
                                 <div>
                                     <div className='text-[#C97A4A]'>"author": "{post.author || 'Author'}"</div>
-                                    <div className='text-[#cc7a60]'>"category": "{post.category || 'Blog'}"</div>
+                                    <div className='text-[#a35a3a]'>"category": "{post.category || 'Blog'}"</div>
                                 </div>
                             </div>
                             <button className='w-full py-2 px-3 bg-[#F5F0E8] border border-[#E8E4DC] rounded text-sm text-[#4A4A4A] hover:bg-[#EDE8E0] transition'>
@@ -248,7 +250,7 @@ const LayoutSlug = props => {
                                 <span className='terminal-title'>related-imports.ts</span>
                             </div>
                             <div className='terminal-body'>
-                                <div className='text-[#8B8B8B] text-xs mb-3'>// Related Skills</div>
+                                <div className='text-[#666666] text-xs mb-3'>// Related Skills</div>
                                 <div className='space-y-3'>
                                     {recommendPosts.slice(0, 5).map(rPost => (
                                         <SmartLink
@@ -256,10 +258,10 @@ const LayoutSlug = props => {
                                             href={rPost.href || `/${rPost.slug}`}
                                             className='flex items-start gap-2 text-sm group'
                                         >
-                                            <span className='w-6 h-6 bg-[#cc7a60] rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'>📄</span>
+                                            <span className='w-6 h-6 bg-[#a35a3a] rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'>📄</span>
                                             <div className='min-w-0'>
                                                 <div className='text-[#9B59B6] group-hover:underline'>import <span className='text-[#C97A4A]'>{rPost.title?.slice(0, 20)}</span></div>
-                                                <div className='text-[#cc7a60] text-xs truncate'>from "{rPost.category || 'posts'}"</div>
+                                                <div className='text-[#a35a3a] text-xs truncate'>from "{rPost.category || 'posts'}"</div>
                                             </div>
                                         </SmartLink>
                                     ))}
@@ -322,8 +324,8 @@ const LayoutArchive = props => {
     return (
         <>
             <h1 className='text-2xl font-bold mb-6'>
-                <span className='text-[#8B8B8B]'>// </span>归档
-                <span className='text-[#8B8B8B] text-base ml-4'>共 {posts?.length || 0} 篇</span>
+                <span className='text-[#666666]'>// </span>归档
+                <span className='text-[#666666] text-base ml-4'>共 {posts?.length || 0} 篇</span>
             </h1>
 
             <div className='space-y-8'>
@@ -333,12 +335,12 @@ const LayoutArchive = props => {
                         <div className='space-y-2 border-l-2 border-[#E5E5E5] pl-4'>
                             {groups[key].map(post => (
                                 <div key={post.id} className='flex items-center gap-3 text-sm'>
-                                    <span className='text-[#8B8B8B] w-20'>
+                                    <span className='text-[#666666] w-20'>
                                         {formatDateFmt(post.publishDate || post.date, 'MM-dd')}
                                     </span>
                                     <SmartLink
                                         href={post.href || `/${post.slug}`}
-                                        className='text-[#1A1A1A] hover:text-[#cc7a60]'
+                                        className='text-[#1A1A1A] hover:text-[#a35a3a]'
                                     >
                                         {post.title}
                                     </SmartLink>
@@ -398,7 +400,7 @@ const Layout404 = props => {
                     </div>
                     <SmartLink
                         href='/'
-                        className='inline-block px-6 py-2 bg-[#cc7a60] text-white rounded-md hover:bg-[#a3614d]'
+                        className='inline-block px-6 py-2 bg-[#a35a3a] text-white rounded-md hover:bg-[#a3614d]'
                     >
                         返回首页
                     </SmartLink>
@@ -420,4 +422,5 @@ export {
     Layout404,
     CONFIG as THEME_CONFIG
 }
+
 

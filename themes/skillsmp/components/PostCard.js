@@ -55,7 +55,7 @@ export default function PostCard({ post, index = 0 }) {
                         </div>
 
                         {/* 第6行: 日期 */}
-                        <div className="text-[#8B8B8B] text-xs">
+                        <div className="text-[#666666] text-xs">
                             {formatDateFmt(post.publishDate || post.date, 'yyyy-MM-dd')}
                         </div>
                     </div>
@@ -64,4 +64,5 @@ export default function PostCard({ post, index = 0 }) {
         </SmartLink>
     )
 }
+
 

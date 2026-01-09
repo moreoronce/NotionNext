@@ -26,12 +26,12 @@ export default function SearchBox({ keyword }) {
                     placeholder="搜索文章..."
                     className="flex-1 px-4 py-2 border border-[#E5E5E5] rounded-md 
                      bg-white text-[#1A1A1A] 
-                     focus:outline-none focus:border-[#cc7a60]
-                     placeholder:text-[#8B8B8B]"
+                     focus:outline-none focus:border-[#a35a3a]
+                     placeholder:text-[#666666]"
                 />
                 <button
                     type="submit"
-                    className="px-6 py-2 bg-[#cc7a60] text-white rounded-md 
+                    className="px-6 py-2 bg-[#a35a3a] text-white rounded-md 
                      hover:bg-[#a3614d] transition-colors"
                 >
                     Search
@@ -40,4 +40,5 @@ export default function SearchBox({ keyword }) {
         </TerminalCard>
     )
 }
+
 

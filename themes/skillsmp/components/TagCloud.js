@@ -14,14 +14,15 @@ export default function TagCloud({ tags }) {
                     href={`/tag/${encodeURIComponent(tag.name)}`}
                     className="inline-flex items-center px-3 py-2 
                      bg-white border border-[#E5E5E5] rounded-md
-                     hover:border-[#cc7a60] transition-colors group"
+                     hover:border-[#a35a3a] transition-colors group"
                 >
                     <span className="text-[#C97A4A] mr-1">import</span>
-                    <span className="text-[#cc7a60] group-hover:underline">'{tag.name}'</span>
-                    <span className="text-[#8B8B8B] ml-2">[{tag.count}]</span>
+                    <span className="text-[#a35a3a] group-hover:underline">'{tag.name}'</span>
+                    <span className="text-[#666666] ml-2">[{tag.count}]</span>
                 </SmartLink>
             ))}
         </div>
     )
 }
+
 

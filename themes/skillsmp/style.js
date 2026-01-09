@@ -13,17 +13,17 @@ const Style = () => {
         --dr-border-hover: #D0CCC4;
         --dr-text: #1A1A1A;
         --dr-text-secondary: #4A4A4A;
-        --dr-text-muted: #8B8B8B;
+        --dr-text-muted: #666666;
         --dr-keyword: lab(52.0183% 66.11 -78.2316);
-        --dr-link: #cc7a60;
-        --dr-link-hover: #a3614d;
+        --dr-link: #a35a3a;
+        --dr-link-hover: #7a3d28;
         --dr-purple: #9B59B6;
         --dr-red: #E74C3C;
         --dr-dot-red: #FF5F56;
         --dr-dot-yellow: #FFBD2E;
         --dr-dot-green: #27C93F;
         --dr-telegram: #229ED9;
-        --dr-tag-bg: #cc7a60;
+        --dr-tag-bg: #a35a3a;
       }
 
       /* ===== 全局样式 ===== */
@@ -311,4 +311,5 @@ const Style = () => {
 }
 
 export { Style }
+
 

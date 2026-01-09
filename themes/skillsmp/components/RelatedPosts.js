@@ -18,7 +18,7 @@ export default function RelatedPosts({ posts }) {
                         className="flex items-center gap-2 text-sm group"
                     >
                         <span className="text-[#C97A4A]">import</span>
-                        <span className="text-[#cc7a60] group-hover:underline truncate">
+                        <span className="text-[#a35a3a] group-hover:underline truncate">
                             '{post.title}'
                         </span>
                     </SmartLink>
@@ -27,4 +27,5 @@ export default function RelatedPosts({ posts }) {
         </div>
     )
 }
+
 
