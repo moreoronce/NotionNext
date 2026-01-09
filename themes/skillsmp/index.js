@@ -411,7 +411,7 @@ const Layout404 = props => {
                     </div>
                     <SmartLink
                         href='/'
-                        className='inline-block px-6 py-2 bg-[#a35a3a] text-white rounded-md hover:bg-[#a3614d]'
+                        className='inline-block px-6 py-2 bg-[#a35a3a] text-white rounded-md hover:bg-[#7a3d28] transition-colors'
                     >
                         返回首页
                     </SmartLink>

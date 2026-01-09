@@ -125,6 +125,12 @@ const Style = () => {
         color: var(--dr-link-hover);
       }
 
+      /* 按钮式链接保持白色文字 */
+      #theme-deeprouter a[class*="bg-"][class*="text-white"],
+      #theme-deeprouter a[class*="bg-"][class*="text-white"]:hover {
+        color: white !important;
+      }
+
       /* ===== 标签徽章 ===== */
       .tag-badge {
         display: inline-flex;
