@@ -142,6 +142,11 @@ const fixThemeDOM = () => {
  * @description 读取cookie中存的用户主题
  */
 export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
+  // 服务端不执行
+  if (!isBrowser) {
+    return
+  }
+
   // 查看用户设备浏览器是否深色模型
   let newDarkMode = isPreferDark()
 
@@ -178,6 +183,10 @@ export function isPreferDark() {
     return true
   }
   if (BLOG.APPEARANCE === 'auto') {
+    // 服务端返回安全默认值，避免水合错误
+    if (!isBrowser) {
+      return false
+    }
     // 系统深色模式或时间是夜间时，强行置为夜间模式
     const date = new Date()
     const prefersDarkMode = window.matchMedia(
@@ -198,6 +207,10 @@ export function isPreferDark() {
  * @returns {*}
  */
 export const loadDarkModeFromLocalStorage = () => {
+  // 服务端无 localStorage，返回 null
+  if (!isBrowser) {
+    return null
+  }
   return localStorage.getItem('darkMode')
 }
 
@@ -206,5 +219,9 @@ export const loadDarkModeFromLocalStorage = () => {
  * @param newTheme
  */
 export const saveDarkModeToLocalStorage = newTheme => {
+  // 服务端无 localStorage，直接返回
+  if (!isBrowser) {
+    return
+  }
   localStorage.setItem('darkMode', newTheme)
 }
