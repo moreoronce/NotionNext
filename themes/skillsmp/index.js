@@ -82,10 +82,15 @@ const LayoutIndex = props => {
  * 博客列表
  */
 const LayoutPostList = props => {
-    const { posts, page, totalPage, prefix = '' } = props
+    const { posts, page, totalPage, prefix = '', siteInfo } = props
 
     return (
         <>
+            {/* SEO: 首页 H1 - 用 sr-only 类隐藏，仅对搜索引擎可见 */}
+            {page === 1 && (
+                <h1 className='sr-only'>{siteInfo?.title} - {siteInfo?.description}</h1>
+            )}
+
             {/* 文章列表 */}
             <div className='space-y-4'>
                 {posts?.map((post, index) => (
@@ -283,6 +288,12 @@ const LayoutSearch = props => {
 
     return (
         <>
+            {/* SEO: 搜索页 H1 */}
+            <h1 className='text-2xl font-bold mb-6'>
+                <span className='text-[#666666]'>// </span>搜索
+                {keyword && <span className='text-[#a35a3a] ml-2'>"{keyword}"</span>}
+            </h1>
+
             {/* 搜索框 */}
             <div className='mb-8'>
                 <SearchBox keyword={keyword} />
@@ -291,7 +302,7 @@ const LayoutSearch = props => {
             {/* 搜索结果 */}
             {keyword && (
                 <div className='mb-4 text-[#6B6B6B]'>
-                    搜索 "{keyword}" 的结果：{posts?.length || 0} 篇文章
+                    找到 {posts?.length || 0} 篇相关文章
                 </div>
             )}
 

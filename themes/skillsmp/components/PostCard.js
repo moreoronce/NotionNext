@@ -28,12 +28,10 @@ export default function PostCard({ post, index = 0 }) {
                             <span className="code-keyword">export</span>
                         </div>
 
-                        {/* 第2行: 标题 */}
-                        <div className="mb-2">
-                            <span className="font-semibold text-[#1A1A1A] text-base">
-                                {post.title}
-                            </span>
-                        </div>
+                        {/* 第2行: 标题 (H2 for SEO) */}
+                        <h2 className="font-semibold text-[#1A1A1A] text-base mb-2">
+                            {post.title}
+                        </h2>
 
                         {/* 第3-4行: 摘要 */}
                         <div className="text-[#6B6B6B] text-sm mb-3 line-clamp-2">
