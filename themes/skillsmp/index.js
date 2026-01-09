@@ -82,16 +82,31 @@ const LayoutIndex = props => {
  * 博客列表
  */
 const LayoutPostList = props => {
-    const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG } = props
+    const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG, category, tag } = props
 
     // 计算总页数 (NotionNext 传递 postCount 而不是 totalPage)
     const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 10, NOTION_CONFIG)
     const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
 
+    // 确定页面类型和标题
+    const isCategory = prefix?.includes('/category') || category
+    const isTag = prefix?.includes('/tag') || tag
+    const pageTitle = category || tag
+
     return (
         <>
-            {/* SEO: 首页 H1 - 用 sr-only 类隐藏，仅对搜索引擎可见 */}
-            {page === 1 && (
+            {/* SEO: 页面 H1 */}
+            {isCategory && pageTitle && (
+                <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
+                    <span>📁</span> 分类: {pageTitle}
+                </h1>
+            )}
+            {isTag && pageTitle && (
+                <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
+                    <span>🏷️</span> 标签: {pageTitle}
+                </h1>
+            )}
+            {!isCategory && !isTag && page == 1 && (
                 <h1 className='sr-only'>{siteInfo?.title} - {siteInfo?.description}</h1>
             )}
 
