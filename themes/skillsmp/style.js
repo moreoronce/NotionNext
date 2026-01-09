@@ -14,7 +14,7 @@ const Style = () => {
         --dr-text: #1A1A1A;
         --dr-text-secondary: #4A4A4A;
         --dr-text-muted: #666666;
-        --dr-keyword: lab(52.0183% 66.11 -78.2316);
+        --dr-keyword: #6B21A8;
         --dr-link: #a35a3a;
         --dr-link-hover: #7a3d28;
         --dr-purple: #9B59B6;
@@ -22,7 +22,7 @@ const Style = () => {
         --dr-dot-red: #FF5F56;
         --dr-dot-yellow: #FFBD2E;
         --dr-dot-green: #27C93F;
-        --dr-telegram: #229ED9;
+        --dr-telegram: #0369a1;
         --dr-tag-bg: #a35a3a;
       }
 

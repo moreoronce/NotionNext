@@ -1,11 +1,18 @@
 import { siteConfig } from '@/lib/config'
+import { useState, useEffect } from 'react'
 
 /**
  * 页脚组件
  */
 export default function Footer() {
-    const currentYear = new Date().getFullYear()
     const since = siteConfig('SINCE')
+    // 使用静态值作为初始值，避免 SSR/CSR hydration 不匹配
+    const [currentYear, setCurrentYear] = useState(since || '2024')
+
+    useEffect(() => {
+        setCurrentYear(new Date().getFullYear())
+    }, [])
+
     const yearRange = since && since !== currentYear ? `${since} - ${currentYear}` : currentYear
 
     return (
@@ -29,5 +36,3 @@ export default function Footer() {
         </footer>
     )
 }
-
-
