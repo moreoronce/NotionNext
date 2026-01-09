@@ -85,7 +85,7 @@ const LayoutPostList = props => {
     const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG, category, tag } = props
 
     // 计算总页数 (NotionNext 传递 postCount 而不是 totalPage)
-    const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 10, NOTION_CONFIG)
+    const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
     const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
 
     // 确定页面类型和标题
