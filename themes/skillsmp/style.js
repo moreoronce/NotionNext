@@ -2,7 +2,64 @@
 /**
  * DeepRouter 终端风格浅色主题样式
  */
+import { useEffect } from 'react'
+
 const Style = () => {
+  // 处理有序列表的 start 属性 - 修复 react-notion-x 的列表编号问题
+  useEffect(() => {
+    const updateListCounters = () => {
+      // 获取所有有序列表
+      const lists = Array.from(document.querySelectorAll('#theme-deeprouter .notion-list-numbered'))
+
+      // 按照 DOM 顺序处理，跟踪应该的起始序号
+      let expectedStart = 1
+      let lastListEndY = 0
+
+      lists.forEach((ol, index) => {
+        const rect = ol.getBoundingClientRect()
+        const liCount = ol.querySelectorAll(':scope > li').length
+        const originalStart = parseInt(ol.getAttribute('start') || '1', 10)
+        // 判断是否是被打断的连续列表：
+        // - 仅当 originalStart === 2 时（react-notion-x 的 bug 特征）
+        // - 并且和上一个列表距离很近
+        // - 并且预期的起始值大于 2
+        if (index > 0 && rect.top - lastListEndY < 200 && originalStart === 2 && expectedStart > 2) {
+          // 这是一个被打断的连续列表，使用我们计算的起始值
+          ol.style.counterReset = `notion-ol-counter ${expectedStart - 1}`
+        } else if (originalStart === 1) {
+          // 新列表开始，重置计数
+          expectedStart = 1
+          ol.style.counterReset = `notion-ol-counter 0`
+        } else {
+          // 使用原始的 start 值（包括正确延续的列表，如 start=2, 3, 4...）
+          ol.style.counterReset = `notion-ol-counter ${originalStart - 1}`
+          expectedStart = originalStart
+        }
+
+        // 更新下一个列表应该的起始序号
+        expectedStart += liCount
+        lastListEndY = rect.bottom
+      })
+    }
+
+    // 延迟执行确保 DOM 完全渲染
+    const timer = setTimeout(updateListCounters, 300)
+
+    // 监听 DOM 变化
+    const observer = new MutationObserver(() => {
+      setTimeout(updateListCounters, 100)
+    })
+    const container = document.getElementById('theme-deeprouter')
+    if (container) {
+      observer.observe(container, { childList: true, subtree: true })
+    }
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [])
+
   return (
     <style jsx global>{`
       /* ===== CSS变量 ===== */
@@ -272,6 +329,37 @@ const Style = () => {
         border-radius: 6px;
         overflow-x: auto;
         border: 1px solid var(--dr-border);
+      }
+
+      /* ===== Notion 列表间距覆盖 ===== */
+      #theme-deeprouter .notion-list {
+        margin-block-start: 0.2em;
+        margin-block-end: 0.2em;
+      }
+
+      #theme-deeprouter .notion-list li {
+        padding: 2px 0;
+      }
+
+      /* ===== 有序列表 - 使用 CSS 计数器正确处理 start 属性 ===== */
+      #theme-deeprouter .notion-list-numbered {
+        list-style-type: none !important;
+        padding-inline-start: 1.6em !important;
+        /* counter-reset 由 JavaScript 动态设置 */
+      }
+
+      #theme-deeprouter .notion-list-numbered > li {
+        counter-increment: notion-ol-counter;
+        position: relative;
+      }
+
+      #theme-deeprouter .notion-list-numbered > li::before {
+        content: counter(notion-ol-counter) ". ";
+        position: absolute;
+        left: -1.6em;
+        width: 1.4em;
+        text-align: right;
+        color: var(--dr-text);
       }
 
       /* ===== 面包屑 ===== */

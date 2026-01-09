@@ -64,10 +64,12 @@ nav {
   .sticky-nav-full {
     @apply max-w-full border-b border-opacity-50 border-gray-200 dark:border-gray-600 dark:border-opacity-50;
   }
+
   .header-name {
     display: block;
     transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
   }
+
   .sticky-nav-full .header-name {
     @apply dark:text-gray-300 text-gray-600;
   }
@@ -103,7 +105,8 @@ nav {
 .scroll-hidden {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  scrollbar-width: none; /* firefox */
+  scrollbar-width: none;
+  /* firefox */
 }
 
 .scroll-hidden::-webkit-scrollbar {
@@ -125,13 +128,15 @@ nav {
   text-shadow: 0.1em 0.1em 0.2em black;
 }
 
-.notion-code-copy-button > svg {
+.notion-code-copy-button>svg {
   pointer-events: none;
 }
 
 .writing-vertical {
-  writing-mode: vertical-rl; /* 竖向排列从右向左 */
-  text-orientation: upright; /* 文字方向正常 */
+  writing-mode: vertical-rl;
+  /* 竖向排列从右向左 */
+  text-orientation: upright;
+  /* 文字方向正常 */
 }
 
 img {
@@ -143,13 +148,15 @@ img {
 }
 
 
-.lazy-image-placeholder{
-  background: 
-      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-      #f2f2f2;
-  background-size:300% 100%;
+.lazy-image-placeholder {
+  background:
+    linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+  background-size: 300% 100%;
   animation: l1 1s infinite linear;
+}
+
+@keyframes l1 {
+  0% {
+    background-position: right
   }
-  @keyframes l1 {
-  0% {background-position: right}
 }
