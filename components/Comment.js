@@ -1,6 +1,6 @@
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
-import { isSearchEngineBot } from '@/lib/utils'
+import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -41,24 +41,25 @@ const Comment = ({ frontMatter, className }) => {
     }
   }, [frontMatter])
 
-  useEffect(() => {
-    // 当连接中有特殊参数时跳转到评论区
-    if ('giscus' in router.query || router.query.target === 'comment') {
-      setTimeout(() => {
-        const url = router.asPath.replace('?target=comment', '')
-        history.replaceState({}, '', url)
-        document
-          ?.getElementById('comment')
-          ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
-      }, 1000)
-    }
-  }, [router.query, router.asPath])
+  // 当连接中有特殊参数时跳转到评论区
+  if (
+    isBrowser &&
+    ('giscus' in router.query || router.query.target === 'comment')
+  ) {
+    setTimeout(() => {
+      const url = router.asPath.replace('?target=comment', '')
+      history.replaceState({}, '', url)
+      document
+        ?.getElementById('comment')
+        ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    }, 1000)
+  }
 
   if (!frontMatter) {
     return null
   }
 
-  if (isSearchEngineBot()) {
+  if (isSearchEngineBot) {
     return null
   }
 

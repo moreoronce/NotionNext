@@ -19,21 +19,18 @@ const NotionPage = ({ post, className }) => {
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
-  // 使用 useRef 存储 zoom 实例，避免水合问题
-  const zoomRef = useRef(null)
-  const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
+  const zoom =
+    isBrowser &&
+    mediumZoom({
+      //   container: '.notion-viewport',
+      background: 'rgba(0, 0, 0, 0.2)',
+      margin: getMediumZoomMargin()
+    })
 
+  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
-    // 初始化 mediumZoom（仅在客户端）
-    if (isBrowser && !zoomRef.current) {
-      const zoom = mediumZoom({
-        background: 'rgba(0, 0, 0, 0.2)',
-        margin: getMediumZoomMargin()
-      })
-      zoomRef.current = zoom.clone()
-    }
-
     // 检测当前的url并自动滚动到对应目标
     autoScrollToHash()
   }, [])
