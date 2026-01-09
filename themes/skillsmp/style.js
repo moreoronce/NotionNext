@@ -149,6 +149,45 @@ const Style = () => {
         transform: translateY(-1px);
       }
 
+      /* ===== 分页组件 ===== */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+      }
+
+      .pagination-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--dr-border);
+        border-radius: 6px;
+        background: var(--dr-card-bg);
+        color: var(--dr-text-secondary);
+        font-size: 14px;
+        font-family: inherit;
+        transition: all 0.2s ease;
+      }
+
+      .pagination-btn:hover {
+        border-color: var(--dr-link);
+        color: var(--dr-link);
+        background: var(--dr-bg);
+      }
+
+      #theme-deeprouter .pagination-btn.active,
+      #theme-deeprouter .pagination-btn.active:hover {
+        background: var(--dr-link);
+        border-color: var(--dr-link);
+        color: white !important;
+      }
+
       /* ===== Telegram 按钮 ===== */
       #theme-deeprouter .telegram-btn {
         display: inline-flex;
@@ -330,5 +369,6 @@ const Style = () => {
 }
 
 export { Style }
+
 
 

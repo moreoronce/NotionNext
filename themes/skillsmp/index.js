@@ -60,7 +60,7 @@ const LayoutBase = props => {
                 {/* 主内容区 */}
                 <main
                     id='container-wrapper'
-                    className={`${fullWidth ? '' : 'max-w-5xl'} mx-auto px-4 py-8 min-h-screen`}>
+                    className={`${fullWidth ? '' : 'max-w-7xl'} mx-auto px-4 py-8 min-h-screen`}>
                     {children}
                 </main>
 
@@ -82,7 +82,11 @@ const LayoutIndex = props => {
  * 博客列表
  */
 const LayoutPostList = props => {
-    const { posts, page, totalPage, prefix = '', siteInfo } = props
+    const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG } = props
+
+    // 计算总页数 (NotionNext 传递 postCount 而不是 totalPage)
+    const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 10, NOTION_CONFIG)
+    const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
 
     return (
         <>
@@ -99,7 +103,7 @@ const LayoutPostList = props => {
             </div>
 
             {/* 分页 */}
-            <Pagination page={page} totalPage={totalPage} prefix={prefix} />
+            <Pagination page={parseInt(page)} totalPage={totalPage} prefix={prefix} />
         </>
     )
 }
@@ -433,5 +437,6 @@ export {
     Layout404,
     CONFIG as THEME_CONFIG
 }
+
 
 

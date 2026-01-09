@@ -17,7 +17,7 @@ export default function Footer() {
 
     return (
         <footer className="border-t border-[#E5E5E5] py-8 mt-16">
-            <div className="max-w-5xl mx-auto px-4 text-center text-[#666666] text-sm">
+            <div className="max-w-7xl mx-auto px-4 text-center text-[#666666] text-sm">
                 <p>
                     © {yearRange} <span className="text-[#a35a3a]">DeepRouter</span>
                 </p>
@@ -36,3 +36,4 @@ export default function Footer() {
         </footer>
     )
 }
+
