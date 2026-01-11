@@ -12,7 +12,10 @@ export default function PostCard({ post, index = 0 }) {
 
     return (
         <SmartLink href={post.href || `/${post.slug}`} className="block mb-4 group">
-            <div className="terminal-card">
+            <div
+                className="terminal-card"
+                style={{ contentVisibility: 'auto', containIntrinsicSize: '0 280px' }}
+            >
                 {/* 文件标题栏 */}
                 <div className="terminal-header">
                     <div className="flex gap-1.5">
