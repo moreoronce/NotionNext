@@ -43,7 +43,7 @@ export default function PostCard({ post, index = 0 }) {
                     <CodeRow line={2}>
                         <div className="pl-4 mb-0">
                             <span className="text-[#666666]">name: </span>
-                            <h2 className="inline font-semibold text-[#111827] text-base">
+                            <h2 className="inline font-mono font-semibold text-[#111827] text-base">
                                 '{post.title}'
                             </h2>
                             <span className="text-[#666666]">,</span>
@@ -54,7 +54,7 @@ export default function PostCard({ post, index = 0 }) {
                         <CodeRow line={3}>
                             <div className="pl-4 mb-0">
                                 <span className="text-[#666666]">desc: </span>
-                                <span className="text-[#4B5563] line-clamp-2 inline max-w-[90%] align-top">
+                                <span className="font-mono text-[#4B5563] line-clamp-2 inline max-w-[90%] align-top">
                                     '{post.summary}'
                                 </span>
                                 <span className="text-[#666666]">,</span>
