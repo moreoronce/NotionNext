@@ -401,9 +401,17 @@ const LayoutCategoryIndex = props => {
 
     return (
         <>
-            <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
-                <span>📁</span> 分类
-            </h1>
+            {/* SEO: 隐藏的 H1 */}
+            <h1 className='sr-only'>分类目录</h1>
+
+            {/* 终端风格标题 */}
+            <div className='mb-6'>
+                <div className='font-mono text-sm text-[#666666]'>
+                    <span className='text-[#cc7a60]'>$</span> ls ./categories/
+                </div>
+            </div>
+
+            {/* 分类网格 */}
             <CategoryGrid categories={categoryOptions} />
         </>
     )
@@ -417,9 +425,17 @@ const LayoutTagIndex = props => {
 
     return (
         <>
-            <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
-                <span>🏷️</span> 标签
-            </h1>
+            {/* SEO: 隐藏的 H1 */}
+            <h1 className='sr-only'>标签索引</h1>
+
+            {/* 终端风格标题 */}
+            <div className='mb-6'>
+                <div className='font-mono text-sm text-[#666666]'>
+                    <span className='text-[#cc7a60]'>$</span> ls ./tags/
+                </div>
+            </div>
+
+            {/* 标签云 */}
             <TagCloud tags={tagOptions} />
         </>
     )
