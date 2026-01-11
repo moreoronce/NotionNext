@@ -16,8 +16,7 @@ export default function PostCard({ post, index = 0 }) {
                 className="terminal-card"
                 style={{
                     contentVisibility: 'auto',
-                    containIntrinsicSize: '0 280px',
-                    minHeight: '280px'
+                    containIntrinsicSize: '0 280px'
                 }}
             >
                 {/* 文件标题栏 */}

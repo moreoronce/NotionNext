@@ -91,7 +91,7 @@ export default function Footer({ notice }) {
                         <span className="text-[#cc7a60]">/*</span>
                         <span className="mx-2">© {yearRange} {siteConfig('TITLE')}</span>
                         <span className="mx-2">•</span>
-                        <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#ea580c] hover:underline">NotionNext</a></span>
+                        <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#cc7a60] underline hover:text-[#ea580c]">NotionNext</a></span>
                         <span className="text-[#cc7a60] ml-2">*/</span>
                     </div>
                 </div>

@@ -347,48 +347,117 @@ const Style = () => {
         font-weight: 500;
       }
 
-      /* ===== 文章内容 ===== */
+      /* ===== 文章内容 - 终端风格优化 ===== */
+      .article-content {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+        font-size: 1rem;
+        line-height: 1.8;
+        letter-spacing: 0.01em;
+        color: var(--dr-text);
+      }
+
       .article-content h1,
       .article-content h2,
       .article-content h3 {
         color: var(--dr-text);
-        margin: 20px 0 12px;
+        margin: 28px 0 16px;
         font-weight: 600;
+        padding-left: 12px;
+        border-left: 3px solid var(--dr-brand);
       }
 
       .article-content h1 { font-size: 1.5rem; }
       .article-content h2 { font-size: 1.25rem; }
-      .article-content h3 { font-size: 1.1rem; }
+      .article-content h3 { font-size: 1.1rem; border-left-width: 2px; }
 
       .article-content p {
-        margin: 12px 0;
+        margin: 16px 0;
         color: var(--dr-text-secondary);
+      }
+
+      .article-content a {
+        color: var(--dr-brand);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .article-content a:hover {
+        color: var(--dr-link-hover);
       }
 
       .article-content ul,
       .article-content ol {
-        padding-left: 20px;
-        margin: 12px 0;
+        padding-left: 24px;
+        margin: 16px 0;
       }
 
       .article-content li {
-        margin: 6px 0;
+        margin: 8px 0;
         color: var(--dr-text-secondary);
       }
 
+      .article-content blockquote {
+        margin: 20px 0;
+        padding: 12px 16px;
+        border-left: 4px solid var(--dr-brand);
+        background: rgba(204, 122, 96, 0.05);
+        color: var(--dr-text-secondary);
+        font-style: italic;
+      }
+
       .article-content code {
-        background: rgba(201, 122, 74, 0.1);
+        font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+        background: rgba(204, 122, 96, 0.1);
         padding: 2px 6px;
         border-radius: 4px;
-        font-size: 0.9em;
+        font-size: 0.85em;
+        color: var(--dr-brand);
       }
 
       .article-content pre {
-        background: #F5F5F5;
+        background: #1E1E1E;
         padding: 16px;
-        border-radius: 6px;
+        border-radius: 8px;
         overflow-x: auto;
+        border: 1px solid #333;
+        margin: 20px 0;
+      }
+
+      .article-content pre code {
+        background: transparent;
+        color: #D4D4D4;
+        padding: 0;
+        font-size: 0.9em;
+      }
+
+      .article-content img {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin: 16px 0;
+      }
+
+      .article-content hr {
+        border: none;
+        border-top: 1px dashed var(--dr-border);
+        margin: 32px 0;
+      }
+
+      .article-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 0.95em;
+      }
+
+      .article-content th,
+      .article-content td {
         border: 1px solid var(--dr-border);
+        padding: 10px 14px;
+        text-align: left;
+      }
+
+      .article-content th {
+        background: rgba(204, 122, 96, 0.08);
+        font-weight: 600;
       }
 
       /* ===== Notion 列表间距覆盖 ===== */
