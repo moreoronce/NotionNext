@@ -160,7 +160,6 @@ const Style = () => {
       .terminal-card:hover {
         box-shadow: 0 8px 24px rgba(234, 88, 12, 0.08);
         border-color: var(--dr-border-hover);
-        transform: translateY(-2px);
       }
 
       .terminal-header {
@@ -345,6 +344,44 @@ const Style = () => {
         background: rgba(201, 122, 74, 0.08);
         color: var(--dr-keyword);
         font-weight: 500;
+      }
+
+      /* ===== 分类网格 - 文件夹风格 ===== */
+      .folder-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        background: var(--dr-bg-card);
+        border: 1px solid var(--dr-border);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-family: 'JetBrains Mono', Consolas, monospace;
+      }
+
+      .folder-card:hover {
+        border-color: var(--dr-brand);
+        box-shadow: 0 4px 12px rgba(204, 122, 96, 0.1);
+      }
+
+      .folder-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+
+      .folder-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--dr-text);
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      .folder-count {
+        font-size: 0.75rem;
+        color: var(--dr-brand);
       }
 
       /* ===== 文章内容 - 统一字体和颜色 ===== */
