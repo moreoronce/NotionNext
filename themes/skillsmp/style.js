@@ -62,38 +62,69 @@ const Style = () => {
 
   return (
     <style jsx global>{`
-      /* ===== CSS变量 ===== */
+      /* ===== CSS变量 - Skillsmp 官方提取配色 ===== */
       :root {
-        --dr-bg: #F5F0E8;
+        --dr-bg: #FFFFFF; /* 官方: #fff */
         --dr-bg-card: #FFFFFF;
-        --dr-border: #E8E4DC;
-        --dr-border-hover: #D0CCC4;
-        --dr-text: #1A1A1A;
-        --dr-text-secondary: #4A4A4A;
-        --dr-text-muted: #666666;
-        --dr-keyword: #6B21A8;
-        --dr-link: #a35a3a;
-        --dr-link-hover: #7a3d28;
-        --dr-purple: #9B59B6;
-        --dr-red: #E74C3C;
-        --dr-dot-red: #FF5F56;
-        --dr-dot-yellow: #FFBD2E;
-        --dr-dot-green: #27C93F;
+        --dr-border: #E5E7EB; /* 接近官方风格的淡灰 */
+        --dr-border-hover: #D1D5DB;
+        --dr-text: #111827; /* 官方: #111827 */
+        --dr-text-secondary: #4B5563;
+        --dr-text-muted: #6B7280;
+        
+        /* 核心主色 */
+        --dr-brand: #cc7a60; /* 官方: #cc7a60 暖红褐 */
+        
+        --dr-keyword: #cc7a60; /* 统一使用主色 */
+        --dr-link: #cc7a60;
+        --dr-link-hover: #b4654d; /* 加深一点用于悬停 */
+        
+        --dr-teal: #cc7a60; /* 替换掉原来的青色 */
+        --dr-orange: #cc7a60; /* 替换掉原来的橙色 */
+        
+        --dr-dot-red: #EF4444; /* 调整为更现代的红 */
+        --dr-dot-yellow: #F59E0B;
+        --dr-dot-green: #10B981;
         --dr-telegram: #0369a1;
-        --dr-tag-bg: #a35a3a;
+        --dr-tag-bg: #cc7a60;
+        --dr-nav-bg: rgba(255, 255, 255, 0.9);
+      }
+
+      /* ===== 动画定义 ===== */
+      @keyframes pulse-border {
+        0%, 100% {
+          border-color: #E5E7EB;
+          box-shadow: 0 0 0 0 rgba(204, 122, 96, 0);
+        }
+        50% {
+          border-color: rgba(204, 122, 96, 0.3);
+          box-shadow: 0 0 6px 1px rgba(204, 122, 96, 0.1);
+        }
+      }
+
+      @keyframes cursor-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
       }
 
       /* ===== 全局样式 ===== */
       #theme-deeprouter {
         background-color: var(--dr-bg);
         color: var(--dr-text);
-        font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Courier New', monospace;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 优先无衬线 */
         min-height: 100vh;
         font-size: 14px;
         line-height: 1.6;
+        /* 移除点阵背景，还原干净纯白 */
+        background-image: none;
       }
 
-      /* 覆盖全局背景，移除蓝色光晕 */
+      /* Mono字体仅用于代码块 */
+      code, pre, .font-mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+      /* 全局背景 */
       html, body {
         background-color: var(--dr-bg) !important;
         background-image: none !important;
@@ -120,15 +151,16 @@ const Style = () => {
       .terminal-card {
         background: var(--dr-bg-card);
         border: 1px solid var(--dr-border);
-        border-radius: 8px;
+        border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        transition: all 0.3s ease;
       }
 
       .terminal-card:hover {
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 24px rgba(234, 88, 12, 0.08);
         border-color: var(--dr-border-hover);
+        transform: translateY(-2px);
       }
 
       .terminal-header {
@@ -136,20 +168,48 @@ const Style = () => {
         align-items: center;
         gap: 8px;
         padding: 10px 14px;
-        background: linear-gradient(180deg, #F8F8F8 0%, #F0F0F0 100%);
+        background: linear-gradient(180deg, #F8F8F8 0%, #F2F2F2 100%);
         border-bottom: 1px solid var(--dr-border);
       }
-
-
 
       .terminal-title {
         color: var(--dr-text-secondary);
         font-size: 12px;
-
       }
 
       .terminal-body {
         padding: 16px;
+      }
+
+      /* ===== 终端命令导航按钮 ===== */
+      .nav-cmd-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border: 1px solid #E5E5E5;
+        border-radius: 8px;
+        background: #FFFFFF;
+        color: #4B5563;
+        font-size: 13px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .nav-cmd-btn:hover {
+        background: rgba(204, 122, 96, 0.08); /* #cc7a60 极淡背景 */
+        border-color: rgba(204, 122, 96, 0.4);
+        color: #cc7a60;
+      }
+
+      .nav-cmd-btn:active {
+        transform: scale(0.98);
+      }
+
+      .nav-cmd-btn .cmd-prefix {
+        color: var(--dr-orange);
+        font-weight: 500;
       }
 
       /* ===== 代码行号 ===== */

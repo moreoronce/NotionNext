@@ -1,12 +1,15 @@
 import { siteConfig } from '@/lib/config'
 import { useState, useEffect } from 'react'
+import SmartLink from '@/components/SmartLink'
+import dynamic from 'next/dynamic'
+
+const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
 /**
- * 页脚组件
+ * 页脚组件 - 终端目录列表风格
  */
-export default function Footer() {
+export default function Footer({ notice }) {
     const since = siteConfig('SINCE')
-    // 使用静态值作为初始值，避免 SSR/CSR hydration 不匹配
     const [currentYear, setCurrentYear] = useState(since || '2024')
 
     useEffect(() => {
@@ -16,24 +19,83 @@ export default function Footer() {
     const yearRange = since && since !== currentYear ? `${since} - ${currentYear}` : currentYear
 
     return (
-        <footer className="border-t border-[#E5E5E5] py-8 mt-16">
-            <div className="max-w-7xl mx-auto px-4 text-center text-[#666666] text-sm">
-                <p>
-                    © {yearRange} <span className="text-[#a35a3a]">DeepRouter</span>
-                </p>
-                <p className="mt-2">
-                    Powered by{' '}
-                    <a
-                        href="https://github.com/tangly1024/NotionNext"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#a35a3a] hover:underline"
-                    >
-                        NotionNext
-                    </a>
-                </p>
+        <footer className="border-t border-[#E5E5E5] py-12 mt-16 bg-[#FAFAFA]">
+            <div className="max-w-7xl mx-auto px-4">
+                {/* 终端风格目录结构 */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                    {/* README 部分 - 支持 Notion 公告 */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
+                            <span className="text-[#ea580c]">$</span>
+                            <span className="select-none">cat README.md</span>
+                        </div>
+                        <div className="font-mono text-sm space-y-2 text-[#4A4A4A]">
+                            {notice && notice.blockMap ? (
+                                <div className="notice-content font-mono text-[#4B5563]">
+                                    <NotionPage post={notice} className="text-left" />
+                                </div>
+                            ) : (
+                                <>
+                                    <p className="text-[#4A4A4A]">
+                                        <span className="text-[#0d9488]">#</span> SkillSMP
+                                    </p>
+                                    <p className="text-[#666666]">
+                                        AI Skills Marketplace - 发现、学习、分享技能
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* 资源目录 */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
+                            <span className="text-[#ea580c]">$</span>
+                            <span>ls ./resources/</span>
+                        </div>
+                        <div className="font-mono text-sm space-y-2">
+                            <SmartLink href="/archive" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                <span>📄</span> posts/
+                            </SmartLink>
+                            <SmartLink href="/category" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                <span>📁</span> categories/
+                            </SmartLink>
+                            <SmartLink href="/tag" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                <span>🏷️</span> tags/
+                            </SmartLink>
+                        </div>
+                    </div>
+
+                    {/* 外部链接 */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
+                            <span className="text-[#ea580c]">$</span>
+                            <span>cat links.json</span>
+                        </div>
+                        <div className="font-mono text-sm space-y-2">
+                            <a
+                                href="https://github.com/tangly1024/NotionNext"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors"
+                            >
+                                <span>🔗</span> github.com/NotionNext
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 底部版权 */}
+                <div className="border-t border-[#E5E5E5] pt-6">
+                    <div className="font-mono text-xs text-[#666666] text-center">
+                        <span className="text-[#0d9488]">/*</span>
+                        <span className="mx-2">© {yearRange} {siteConfig('TITLE')}</span>
+                        <span className="mx-2">•</span>
+                        <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#ea580c] hover:underline">NotionNext</a></span>
+                        <span className="text-[#0d9488] ml-2">*/</span>
+                    </div>
+                </div>
             </div>
         </footer>
     )
 }
-

@@ -51,4 +51,7 @@ yarn-error.log*
 package-lock.json
 # yarn.lock
 
+# Agent
+.agent
+
 .notion-api-lock

@@ -5,17 +5,19 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 /**
- * 顶部导航栏
+ * 顶部导航栏 - 终端命令风格
  */
 export default function Header(props) {
     const { customNav, customMenu, categoryOptions, tagOptions } = props
     const { locale } = useGlobal()
 
+    // 终端命令风格导航
     const defaultLinks = [
-        { name: '首页', href: '/', show: true },
-        { name: '文章', href: '/archive', show: true },
+        { name: '首页', cmd: 'cd /home', href: '/', show: true },
+        { name: '文章', cmd: 'ls ./posts', href: '/archive', show: true },
         {
             name: '分类',
+            cmd: 'cd /categories',
             href: '/category',
             show: siteConfig('DEEPROUTER_MENU_CATEGORY', null, CONFIG),
             subMenus: categoryOptions?.map(c => ({
@@ -25,6 +27,7 @@ export default function Header(props) {
         },
         {
             name: '标签',
+            cmd: 'grep tags',
             href: '/tag',
             show: siteConfig('DEEPROUTER_MENU_TAG', null, CONFIG),
             subMenus: tagOptions?.slice(0, 15).map(t => ({
@@ -32,7 +35,7 @@ export default function Header(props) {
                 href: `/tag/${t.name}`
             }))
         },
-        { name: '搜索', href: '/search', show: siteConfig('DEEPROUTER_MENU_SEARCH', null, CONFIG) }
+        { name: '搜索', cmd: 'ai --search', href: '/search', show: siteConfig('DEEPROUTER_MENU_SEARCH', null, CONFIG) }
     ]
 
     let links = defaultLinks.concat(customNav || [])
@@ -44,37 +47,40 @@ export default function Header(props) {
     const telegramUrl = siteConfig('DEEPROUTER_TELEGRAM_URL', null, CONFIG)
 
     return (
-        <header className="sticky top-0 z-50 bg-[#FAFAFA] border-b border-[#E5E5E5]">
-            <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-                {/* Logo */}
+        <header className="sticky top-0 z-50 bg-[rgba(255,255,255,0.8)] backdrop-blur-md border-b border-[rgba(0,0,0,0.05)]">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+                {/* Logo - 带闪烁光标 */}
                 <SmartLink href="/" className="flex items-center gap-2 text-lg font-semibold text-[#1A1A1A] hover:text-[#1A1A1A]">
-                    <span className="text-[#a35a3a]">&gt;_</span>
-                    <span>DeepRouter</span>
+                    <span className="text-[#0d9488]">&gt;_</span>
+                    <span>{siteConfig('TITLE') || 'DeepRouter'}</span>
+                    <span className="w-2 h-5 bg-[#ea580c] animate-[cursor-blink_1s_ease-in-out_infinite]"></span>
                 </SmartLink>
 
-                {/* 导航菜单 */}
-                <nav className="hidden md:flex items-center gap-6">
+                {/* 导航菜单 - 终端命令风格 */}
+                <nav className="hidden md:flex items-center gap-3">
                     {links?.filter(link => link.show).map((link, index) => {
                         if (link.subMenus && link.subMenus.length > 0) {
                             return (
                                 <div key={index} className="relative group pb-2 pt-2">
                                     <SmartLink
                                         href={link.href}
-                                        className="text-[#6B6B6B] hover:text-[#1A1A1A] text-sm font-mono transition-colors flex items-center gap-1"
+                                        className="nav-cmd-btn"
                                     >
-                                        {link.name}
+                                        <span className="cmd-prefix">$</span>
+                                        <span>{link.cmd || link.name}</span>
                                         <svg className="w-3 h-3 text-[#666666] group-hover:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </SmartLink>
-                                    <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-40 bg-white border border-[#E8E4DC] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                                    <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-44 bg-white border border-[#E5E5E5] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
                                         <div className="py-1">
                                             {link.subMenus.map((sub, idx) => (
                                                 <SmartLink
                                                     key={idx}
                                                     href={sub.href}
-                                                    className="block px-4 py-2 text-sm font-mono text-[#4A4A4A] hover:bg-[#F5F0E8] hover:text-[#a35a3a] truncate"
+                                                    className="block px-4 py-2 text-sm text-[#4B5563] hover:bg-[rgba(204,122,96,0.08)] hover:text-[#cc7a60] truncate"
                                                 >
+                                                    <span className="text-[#cc7a60] mr-2">→</span>
                                                     {sub.title}
                                                 </SmartLink>
                                             ))}
@@ -87,7 +93,7 @@ export default function Header(props) {
                             <SmartLink
                                 key={index}
                                 href={link.href}
-                                className="text-[#6B6B6B] hover:text-[#1A1A1A] text-sm font-mono transition-colors"
+                                className="nav-cmd-btn"
                                 onClick={(e) => {
                                     if (link.href === '/search' && siteConfig('ALGOLIA_APP_ID')) {
                                         e.preventDefault()
@@ -95,7 +101,8 @@ export default function Header(props) {
                                     }
                                 }}
                             >
-                                {link.name}
+                                <span className="cmd-prefix">$</span>
+                                <span>{link.cmd || link.name}</span>
                             </SmartLink>
                         )
                     })}
@@ -124,7 +131,7 @@ export default function Header(props) {
 }
 
 /**
- * 移动端菜单按钮
+ * 移动端菜单按钮 - 终端风格
  */
 function MobileMenuButton({ links, telegramUrl, onSearch }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -133,7 +140,7 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
         <div className="md:hidden">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-[#6B6B6B]"
+                className="p-2 text-[#0d9488] hover:text-[#ea580c] transition-colors"
                 aria-label={isOpen ? "关闭菜单" : "打开菜单"}
             >
                 {isOpen ? (
@@ -147,14 +154,14 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
                 )}
             </button>
 
-            {/* 移动端菜单 */}
+            {/* 移动端菜单 - 终端风格 */}
             {isOpen && (
-                <div className="absolute top-14 left-0 right-0 bg-white border-b border-[#E5E5E5] py-4 px-4">
+                <div className="absolute top-16 left-0 right-0 bg-[#FAFAFA] border-b border-[#E5E5E5] py-4 px-4 shadow-lg">
                     {links?.filter(link => link.show).map((link, index) => (
                         <div key={index}>
                             <SmartLink
                                 href={link.href}
-                                className="block py-2 text-[#6B6B6B] font-mono hover:text-[#1A1A1A]"
+                                className="flex items-center gap-2 py-3 text-[#111827] hover:text-[#cc7a60] transition-colors"
                                 onClick={(e) => {
                                     setIsOpen(false)
                                     if (link.href === '/search' && siteConfig('ALGOLIA_APP_ID')) {
@@ -163,17 +170,19 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
                                     }
                                 }}
                             >
-                                {link.name}
+                                <span className="text-[#cc7a60] font-mono">$</span>
+                                <span>{link.cmd || link.name}</span>
                             </SmartLink>
                             {link.subMenus && link.subMenus.length > 0 && (
-                                <div className="pl-4 border-l border-[#E5E5E5] ml-2 mt-1 space-y-1">
+                                <div className="pl-6 border-l-2 border-[#E5E7EB] ml-3 space-y-1">
                                     {link.subMenus.map((sub, idx) => (
                                         <SmartLink
                                             key={idx}
                                             href={sub.href}
-                                            className="block py-1.5 text-sm font-mono text-[#666666] hover:text-[#a35a3a]"
+                                            className="flex items-center gap-2 py-2 text-sm text-[#4B5563] hover:text-[#cc7a60]"
                                             onClick={() => setIsOpen(false)}
                                         >
+                                            <span className="text-[#cc7a60]">→</span>
                                             {sub.title}
                                         </SmartLink>
                                     ))}

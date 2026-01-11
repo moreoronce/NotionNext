@@ -2,7 +2,7 @@ import { useGlobal } from '@/lib/global'
 import { useEffect, useRef } from 'react'
 
 /**
- * 加密文章校验组件 - DeepRouter 终端风格
+ * 加密文章校验组件 - 暖色系
  */
 export default function ArticleLock(props) {
     const { validPassword } = props
@@ -27,7 +27,7 @@ export default function ArticleLock(props) {
     return (
         <div className="w-full flex justify-center items-center py-16">
             <div className="text-center space-y-4">
-                <div className="text-[#C97A4A] font-medium">
+                <div className="text-[#ea580c] font-medium">
                     <span className="text-[#666666]">// </span>
                     {locale.COMMON.ARTICLE_LOCK_TIPS}
                 </div>
@@ -45,13 +45,13 @@ export default function ArticleLock(props) {
                         className="outline-none w-64 text-sm px-4 py-2 
                        border border-[#E5E5E5] rounded-l-md
                        bg-white text-[#1A1A1A]
-                       focus:border-[#a35a3a]
+                       focus:border-[#ea580c]
                        placeholder:text-[#666666]"
                     />
                     <button
                         onClick={submitPassword}
-                        className="px-4 py-2 bg-[#a35a3a] text-white rounded-r-md
-                       hover:bg-[#a3614d] transition-colors"
+                        className="px-4 py-2 bg-[#ea580c] text-white rounded-r-md
+                       hover:bg-[#c2410c] transition-colors"
                     >
                         {locale.COMMON.SUBMIT}
                     </button>
@@ -61,6 +61,3 @@ export default function ArticleLock(props) {
         </div>
     )
 }
-
-
-

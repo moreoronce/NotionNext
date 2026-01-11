@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import TerminalCard from './TerminalCard'
 
 /**
- * 搜索框组件 - 终端风格
+ * 搜索框组件 - 终端风格 (暖色系)
  */
 export default function SearchBox({ keyword }) {
     const router = useRouter()
@@ -26,13 +26,13 @@ export default function SearchBox({ keyword }) {
                     placeholder="搜索文章..."
                     className="flex-1 px-4 py-2 border border-[#E5E5E5] rounded-md 
                      bg-white text-[#1A1A1A] 
-                     focus:outline-none focus:border-[#a35a3a]
+                     focus:outline-none focus:border-[#ea580c]
                      placeholder:text-[#666666]"
                 />
                 <button
                     type="submit"
-                    className="px-6 py-2 bg-[#a35a3a] text-white rounded-md 
-                     hover:bg-[#a3614d] transition-colors"
+                    className="px-6 py-2 bg-[#ea580c] text-white rounded-md 
+                     hover:bg-[#c2410c] transition-colors"
                 >
                     Search
                 </button>
@@ -40,6 +40,3 @@ export default function SearchBox({ keyword }) {
         </TerminalCard>
     )
 }
-
-
-

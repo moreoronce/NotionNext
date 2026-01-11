@@ -65,7 +65,7 @@ const LayoutBase = props => {
                 </main>
 
                 {/* 底部 */}
-                <Footer />
+                <Footer notice={props.notice} />
             </div>
         </ThemeGlobalDeepRouter.Provider>
     )
@@ -142,7 +142,7 @@ const LayoutSlug = props => {
                 <span className='text-[#666666]'>$ pwd: ~ / </span>
                 {post.category && (
                     <>
-                        <SmartLink href={`/category/${post.category}`} className='text-[#a35a3a] hover:underline'>
+                        <SmartLink href={`/category/${post.category}`} className='text-[#cc7a60] hover:underline'>
                             {post.category}
                         </SmartLink>
                         <span className='text-[#666666]'> / </span>
@@ -158,7 +158,7 @@ const LayoutSlug = props => {
                     {/* 1. 文章基本信息 (无卡片包裹) */}
                     <div>
                         {/* H1 标题 */}
-                        <h1 className='text-3xl font-bold text-[#C97A4A] mb-3'>
+                        <h1 className='text-3xl font-bold text-[#cc7a60] mb-3'>
                             {post.title}
                         </h1>
 
@@ -178,15 +178,15 @@ const LayoutSlug = props => {
                                     <div className='flex flex-wrap gap-4 mt-2'>
                                         {post.category && (
                                             <span>
-                                                <span className='text-[#9B59B6]'>📁 category:</span> {post.category}
+                                                <span className='text-[#0d9488]'>📁 category:</span> {post.category}
                                             </span>
                                         )}
                                         <span>
-                                            <span className='text-[#a35a3a]'>📅 updated:</span> {formatDateFmt(post.lastEditedDate || post.publishDate || post.date, 'yyyy-MM-dd')}
+                                            <span className='text-[#cc7a60]'>📅 updated:</span> {formatDateFmt(post.lastEditedDate || post.publishDate || post.date, 'yyyy-MM-dd')}
                                         </span>
                                         {post.tags?.length > 0 && (
                                             <span>
-                                                <span className='text-[#C97A4A]'>🏷️ tags:</span> {post.tags.slice(0, 3).join(', ')}
+                                                <span className='text-[#cc7a60]'>🏷️ tags:</span> {post.tags.slice(0, 3).join(', ')}
                                             </span>
                                         )}
                                     </div>
@@ -212,12 +212,12 @@ const LayoutSlug = props => {
                     {/* 7. 上一篇/下一篇导航 */}
                     <div className='flex justify-between mt-12 pt-6 border-t border-[#E8E4DC] text-sm'>
                         {prev ? (
-                            <SmartLink href={prev.href || `/${prev.slug}`} className='flex items-center gap-2 text-[#a35a3a] hover:underline'>
+                            <SmartLink href={prev.href || `/${prev.slug}`} className='flex items-center gap-2 text-[#ea580c] hover:underline'>
                                 ← {prev.title}
                             </SmartLink>
                         ) : <div />}
                         {next ? (
-                            <SmartLink href={next.href || `/${next.slug}`} className='flex items-center gap-2 text-[#a35a3a] hover:underline'>
+                            <SmartLink href={next.href || `/${next.slug}`} className='flex items-center gap-2 text-[#ea580c] hover:underline'>
                                 {next.title} →
                             </SmartLink>
                         ) : <div />}
@@ -245,11 +245,11 @@ const LayoutSlug = props => {
                             <div className='flex items-center gap-2 mb-3'>
                                 <span className='w-6 h-6 bg-[#E74C3C] rounded-full flex items-center justify-center text-white text-xs'>📦</span>
                                 <div>
-                                    <div className='text-[#C97A4A]'>"author": "{post.author || 'Author'}"</div>
-                                    <div className='text-[#a35a3a]'>"category": "{post.category || 'Blog'}"</div>
+                                    <div className='text-[#ea580c]'>"author": "{post.author || 'Author'}"</div>
+                                    <div className='text-[#ea580c]'>"category": "{post.category || 'Blog'}"</div>
                                 </div>
                             </div>
-                            <button className='w-full py-2 px-3 bg-[#F5F0E8] border border-[#E8E4DC] rounded text-sm text-[#4A4A4A] hover:bg-[#EDE8E0] transition'>
+                            <button className='w-full py-2 px-3 bg-[#FEF3E2] border border-[#E8E4DC] rounded text-sm text-[#4A4A4A] hover:bg-[#EDE8E0] transition'>
                                 📋 $ gh browse
                             </button>
                         </div>
@@ -282,10 +282,10 @@ const LayoutSlug = props => {
                                             href={rPost.href || `/${rPost.slug}`}
                                             className='flex items-start gap-2 text-sm group'
                                         >
-                                            <span className='w-6 h-6 bg-[#a35a3a] rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'>📄</span>
+                                            <span className='w-6 h-6 bg-[#ea580c] rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'>📄</span>
                                             <div className='min-w-0'>
-                                                <div className='text-[#9B59B6] group-hover:underline'>import <span className='text-[#C97A4A]'>{rPost.title?.slice(0, 20)}</span></div>
-                                                <div className='text-[#a35a3a] text-xs truncate'>from "{rPost.category || 'posts'}"</div>
+                                                <div className='text-[#0d9488] group-hover:underline'>import <span className='text-[#ea580c]'>{rPost.title?.slice(0, 20)}</span></div>
+                                                <div className='text-[#ea580c] text-xs truncate'>from "{rPost.category || 'posts'}"</div>
                                             </div>
                                         </SmartLink>
                                     ))}
@@ -310,7 +310,7 @@ const LayoutSearch = props => {
             {/* SEO: 搜索页 H1 */}
             <h1 className='text-2xl font-bold mb-6'>
                 <span className='text-[#666666]'>// </span>搜索
-                {keyword && <span className='text-[#a35a3a] ml-2'>"{keyword}"</span>}
+                {keyword && <span className='text-[#ea580c] ml-2'>"{keyword}"</span>}
             </h1>
 
             {/* 搜索框 */}
@@ -361,7 +361,7 @@ const LayoutArchive = props => {
             <div className='space-y-8'>
                 {Object.keys(groups).sort().reverse().map(key => (
                     <div key={key}>
-                        <h2 className='text-lg font-semibold text-[#C97A4A] mb-3'>{key}</h2>
+                        <h2 className='text-lg font-semibold text-[#ea580c] mb-3'>{key}</h2>
                         <div className='space-y-2 border-l-2 border-[#E5E5E5] pl-4'>
                             {groups[key].map(post => (
                                 <div key={post.id} className='flex items-center gap-3 text-sm'>
@@ -370,7 +370,7 @@ const LayoutArchive = props => {
                                     </span>
                                     <SmartLink
                                         href={post.href || `/${post.slug}`}
-                                        className='text-[#1A1A1A] hover:text-[#a35a3a]'
+                                        className='text-[#1A1A1A] hover:text-[#ea580c]'
                                     >
                                         {post.title}
                                     </SmartLink>
@@ -426,11 +426,11 @@ const Layout404 = props => {
                 <div className='py-8'>
                     <div className='text-6xl font-bold text-[#E74C3C] mb-4'>404</div>
                     <div className='text-[#6B6B6B] mb-6'>
-                        <span className='text-[#C97A4A]'>Error:</span> Page not found
+                        <span className='text-[#ea580c]'>Error:</span> Page not found
                     </div>
                     <SmartLink
                         href='/'
-                        className='inline-block px-6 py-2 bg-[#a35a3a] text-white rounded-md hover:bg-[#7a3d28] transition-colors'
+                        className='inline-block px-6 py-2 bg-[#ea580c] text-white rounded-md hover:bg-[#c2410c] transition-colors'
                     >
                         返回首页
                     </SmartLink>

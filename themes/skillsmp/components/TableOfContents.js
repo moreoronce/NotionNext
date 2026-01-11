@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /**
- * 文章目录组件
+ * 文章目录组件 - 暖色系
  */
 export default function TableOfContents({ toc }) {
     const [activeId, setActiveId] = useState('')
@@ -40,7 +40,7 @@ export default function TableOfContents({ toc }) {
                         className={`block text-sm py-1 transition-colors
                             ${item.level === 2 ? 'pl-0' : 'pl-3'}
               ${activeId === item.id
-                                ? 'text-[#a35a3a] font-medium'
+                                ? 'text-[#ea580c] font-medium'
                                 : 'text-[#6B6B6B] hover:text-[#1A1A1A]'
                             }`}
                     >
@@ -51,6 +51,3 @@ export default function TableOfContents({ toc }) {
         </div>
     )
 }
-
-
-

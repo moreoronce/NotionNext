@@ -2,7 +2,7 @@ import SmartLink from '@/components/SmartLink'
 import TerminalCard from './TerminalCard'
 
 /**
- * 相关文章列表
+ * 相关文章列表 - 暖色系
  */
 export default function RelatedPosts({ posts }) {
     if (!posts || posts.length === 0) return null
@@ -17,8 +17,8 @@ export default function RelatedPosts({ posts }) {
                         href={post.href || `/${post.slug}`}
                         className="flex items-center gap-2 text-sm group"
                     >
-                        <span className="text-[#C97A4A]">import</span>
-                        <span className="text-[#a35a3a] group-hover:underline truncate">
+                        <span className="text-[#0d9488]">import</span>
+                        <span className="text-[#ea580c] group-hover:underline truncate">
                             '{post.title}'
                         </span>
                     </SmartLink>
@@ -27,6 +27,3 @@ export default function RelatedPosts({ posts }) {
         </div>
     )
 }
-
-
-
