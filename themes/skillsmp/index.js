@@ -28,6 +28,7 @@ import TableOfContents from './components/TableOfContents'
 import RelatedPosts from './components/RelatedPosts'
 import TerminalCard from './components/TerminalCard'
 import ArticleLock from './components/ArticleLock'
+import BackToTop from './components/BackToTop'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 
 // 主题全局状态
@@ -66,6 +67,9 @@ const LayoutBase = props => {
 
                 {/* 底部 */}
                 <Footer notice={props.notice} />
+
+                {/* 返回顶部按钮 */}
+                <BackToTop />
             </div>
         </ThemeGlobalDeepRouter.Provider>
     )
@@ -178,7 +182,7 @@ const LayoutSlug = props => {
                                     <div className='flex flex-wrap gap-4 mt-2'>
                                         {post.category && (
                                             <span>
-                                                <span className='text-[#0d9488]'>📁 category:</span> {post.category}
+                                                <span className='text-[#cc7a60]'>📁 category:</span> {post.category}
                                             </span>
                                         )}
                                         <span>
@@ -245,7 +249,7 @@ const LayoutSlug = props => {
                             <div className='flex items-center gap-2 mb-3'>
                                 <span className='w-6 h-6 bg-[#E74C3C] rounded-full flex items-center justify-center text-white text-xs'>📦</span>
                                 <div>
-                                    <div className='text-[#ea580c]'>"author": "{post.author || 'Author'}"</div>
+                                    <div className='text-[#ea580c]'>"author": "{post.author || siteConfig('AUTHOR')}"</div>
                                     <div className='text-[#ea580c]'>"category": "{post.category || 'Blog'}"</div>
                                 </div>
                             </div>

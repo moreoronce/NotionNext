@@ -16,7 +16,7 @@ export default function TagCloud({ tags }) {
                      bg-white border border-[#E5E5E5] rounded-md
                      hover:border-[#ea580c] transition-colors group"
                 >
-                    <span className="text-[#0d9488] mr-1">import</span>
+                    <span className="text-[#cc7a60] mr-1">import</span>
                     <span className="text-[#ea580c] group-hover:underline">'{tag.name}'</span>
                     <span className="text-[#666666] ml-2">[{tag.count}]</span>
                 </SmartLink>

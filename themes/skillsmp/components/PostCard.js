@@ -29,7 +29,7 @@ export default function PostCard({ post, index = 0 }) {
                         <div className="mb-0">
                             <span style={{ color: 'lab(52.0183% 66.11 -78.2316)' }}>export</span>
                             <span className="text-[#666666]"> const </span>
-                            <span className="text-[#ea580c]">article</span>
+                            <span className="text-[#cc7a60]">article</span>
                             <span className="text-[#666666]"> = {'{'}</span>
                         </div>
                     </CodeRow>

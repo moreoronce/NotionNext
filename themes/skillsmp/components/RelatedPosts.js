@@ -17,7 +17,7 @@ export default function RelatedPosts({ posts }) {
                         href={post.href || `/${post.slug}`}
                         className="flex items-center gap-2 text-sm group"
                     >
-                        <span className="text-[#0d9488]">import</span>
+                        <span className="text-[#cc7a60]">import</span>
                         <span className="text-[#ea580c] group-hover:underline truncate">
                             '{post.title}'
                         </span>

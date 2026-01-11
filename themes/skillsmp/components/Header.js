@@ -51,7 +51,7 @@ export default function Header(props) {
             <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                 {/* Logo - 带闪烁光标 */}
                 <SmartLink href="/" className="flex items-center gap-2 text-lg font-semibold text-[#1A1A1A] hover:text-[#1A1A1A]">
-                    <span className="text-[#0d9488]">&gt;_</span>
+                    <span className="text-[#cc7a60]">&gt;_</span>
                     <span>{siteConfig('TITLE') || 'DeepRouter'}</span>
                     <span className="w-2 h-5 bg-[#ea580c] animate-[cursor-blink_1s_ease-in-out_infinite]"></span>
                 </SmartLink>
