@@ -8,10 +8,13 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import SmartLink from '@/components/SmartLink'
-import NotionPage from '@/components/NotionPage'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
-import Comment from '@/components/Comment'
 import { useRef } from 'react'
+import dynamic from 'next/dynamic'
+
+// 动态导入 - 减少首屏 JS 体积
+const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: true })
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
 // 主题组件导入
 import { Style } from './style'
@@ -24,12 +27,14 @@ import SearchBox from './components/SearchBox'
 import CategoryGrid from './components/CategoryGrid'
 import TagCloud from './components/TagCloud'
 import Breadcrumb from './components/Breadcrumb'
-import TableOfContents from './components/TableOfContents'
-import RelatedPosts from './components/RelatedPosts'
 import TerminalCard from './components/TerminalCard'
-import ArticleLock from './components/ArticleLock'
-import BackToTop from './components/BackToTop'
 import { formatDateFmt } from '@/lib/utils/formatDate'
+
+// 非首屏组件 - 动态加载
+const TableOfContents = dynamic(() => import('./components/TableOfContents'), { ssr: false })
+const RelatedPosts = dynamic(() => import('./components/RelatedPosts'), { ssr: false })
+const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
+const BackToTop = dynamic(() => import('./components/BackToTop'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalDeepRouter = createContext()

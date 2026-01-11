@@ -37,6 +37,9 @@ const ExternalPlugin = props => {
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
 
+  // 默认关闭AOS动画 (防止 Forced Reflow)
+  const ENABLE_AOS = siteConfig('ENABLE_AOS', false)
+
   const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
 
   const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
@@ -109,7 +112,7 @@ const ExternalPlugin = props => {
       {NEST && <Nest />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
       {ENABLE_NPROGRSS && <LoadingProgress />}
-      <AosAnimation />
+      {ENABLE_AOS && <AosAnimation />}
     </>
   )
 }

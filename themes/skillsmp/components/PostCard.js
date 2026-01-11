@@ -14,7 +14,11 @@ export default function PostCard({ post, index = 0 }) {
         <SmartLink href={post.href || `/${post.slug}`} className="block mb-4 group">
             <div
                 className="terminal-card"
-                style={{ contentVisibility: 'auto', containIntrinsicSize: '0 280px' }}
+                style={{
+                    contentVisibility: 'auto',
+                    containIntrinsicSize: '0 280px',
+                    minHeight: '280px'
+                }}
             >
                 {/* 文件标题栏 */}
                 <div className="terminal-header">
