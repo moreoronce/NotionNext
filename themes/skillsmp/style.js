@@ -347,32 +347,42 @@ const Style = () => {
         font-weight: 500;
       }
 
-      /* ===== 文章内容 - 终端风格优化 ===== */
-      .article-content {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
-        font-size: 1rem;
-        line-height: 1.8;
+      /* ===== 文章内容 - 统一字体和颜色 ===== */
+      .article-content,
+      .article-content .notion-text,
+      .article-content .notion-list,
+      .article-content .notion-list li,
+      .article-content .notion-callout,
+      .article-content .notion-quote,
+      .article-content .notion-toggle {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif !important;
+        font-size: 1rem !important;
+        line-height: 1.8 !important;
         letter-spacing: 0.01em;
-        color: var(--dr-text);
+        color: #111827 !important;
       }
 
       .article-content h1,
       .article-content h2,
-      .article-content h3 {
-        color: var(--dr-text);
+      .article-content h3,
+      .article-content .notion-h1,
+      .article-content .notion-h2,
+      .article-content .notion-h3 {
+        color: #111827 !important;
         margin: 28px 0 16px;
         font-weight: 600;
         padding-left: 12px;
         border-left: 3px solid var(--dr-brand);
       }
 
-      .article-content h1 { font-size: 1.5rem; }
-      .article-content h2 { font-size: 1.25rem; }
-      .article-content h3 { font-size: 1.1rem; border-left-width: 2px; }
+      .article-content h1, .article-content .notion-h1 { font-size: 1.5rem !important; }
+      .article-content h2, .article-content .notion-h2 { font-size: 1.25rem !important; }
+      .article-content h3, .article-content .notion-h3 { font-size: 1.1rem !important; border-left-width: 2px; }
 
-      .article-content p {
+      .article-content p,
+      .article-content .notion-text {
         margin: 16px 0;
-        color: var(--dr-text-secondary);
+        color: #111827 !important;
       }
 
       .article-content a {
