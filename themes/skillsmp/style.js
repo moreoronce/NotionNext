@@ -178,6 +178,18 @@ const Style = () => {
 
       .terminal-body {
         padding: 16px;
+        /* 包含中文等宽/无衬线字体的字体栈 */
+        font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 
+                     'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 
+                     'Source Han Sans SC', monospace, sans-serif !important;
+      }
+
+      .terminal-body h1,
+      .terminal-body h2,
+      .terminal-body h3,
+      .terminal-body p,
+      .terminal-body span {
+        font-family: inherit !important;
       }
 
       /* ===== 终端命令导航按钮 ===== */
@@ -410,6 +422,43 @@ const Style = () => {
         font-weight: 600;
         padding-left: 12px;
         border-left: 3px solid var(--dr-brand);
+        scroll-margin-top: 100px;
+      }
+
+      /* 标题内的 span 容器 - 使用 inline-flex 重新排序子元素 */
+      .article-content h1 > span,
+      .article-content h2 > span,
+      .article-content h3 > span,
+      .article-content .notion-h1 > span,
+      .article-content .notion-h2 > span,
+      .article-content .notion-h3 > span {
+        display: inline-flex !important;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      /* 隐藏锚点 div */
+      .article-content .notion-header-anchor {
+        order: 0;
+      }
+
+      /* 锚点链接图标 - 移到最后 */
+      .article-content .notion-hash-link {
+        order: 2 !important;
+        margin-left: 8px;
+        opacity: 0.3;
+        font-size: 0.8em;
+      }
+
+      /* 标题文本 */
+      .article-content .notion-h-title {
+        order: 1 !important;
+      }
+
+      .article-content h1:hover .notion-hash-link,
+      .article-content h2:hover .notion-hash-link,
+      .article-content h3:hover .notion-hash-link {
+        opacity: 0.7;
       }
 
       .article-content h1, .article-content .notion-h1 { font-size: 1.5rem !important; }
@@ -438,7 +487,7 @@ const Style = () => {
       }
 
       .article-content li {
-        margin: 8px 0;
+        margin: 2px 0;
         color: var(--dr-text-secondary);
       }
 
@@ -465,7 +514,7 @@ const Style = () => {
         padding: 16px;
         border-radius: 8px;
         overflow-x: auto;
-        border: 1px solid #333;
+        border: none;
         margin: 20px 0;
       }
 
@@ -476,10 +525,121 @@ const Style = () => {
         font-size: 0.9em;
       }
 
+      /* Notion 代码块样式覆盖 */
+      .article-content .notion-code,
+      .article-content .code-toolbar {
+        position: relative;
+        background: #1E1E1E !important;
+        border-radius: 8px !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 20px 0 !important;
+        overflow: hidden;
+      }
+
+      /* Prism 工具栏定位修复 */
+      .code-toolbar > .toolbar {
+        position: absolute !important;
+        top: 8px !important;
+        right: 8px !important;
+        opacity: 1 !important;
+      }
+
+      /* 工具栏按钮容器 - 移除背景 */
+      .code-toolbar > .toolbar > .toolbar-item {
+        background: transparent !important;
+        border: none !important;
+        margin-left: 4px !important;
+      }
+
+      /* 工具栏按钮本身 */
+      .code-toolbar > .toolbar > .toolbar-item > button,
+      .code-toolbar > .toolbar > .toolbar-item > a,
+      .code-toolbar > .toolbar > .toolbar-item > span {
+        background: rgba(60, 60, 60, 0.8) !important;
+        color: #aaa !important;
+        font-size: 12px !important;
+        padding: 4px 10px !important;
+        border-radius: 4px !important;
+        border: none !important;
+        cursor: pointer !important;
+      }
+
+      .code-toolbar > .toolbar > .toolbar-item > button:hover,
+      .code-toolbar > .toolbar > .toolbar-item > a:hover,
+      .code-toolbar > .toolbar > .toolbar-item > span:hover {
+        color: #fff !important;
+        background: rgba(80, 80, 80, 0.9) !important;
+      }
+
+      /* 代码块头部（显示语言名称） */
+      .article-content .notion-code > div:first-child {
+        background: #2D2D2D !important;
+        border-bottom: 1px solid #333 !important;
+        padding: 8px 12px !important;
+        color: #888 !important;
+        font-size: 12px !important;
+        font-family: 'JetBrains Mono', Consolas, monospace !important;
+      }
+
+      /* 代码块头部按钮 */
+      .article-content .notion-code button {
+        color: #666 !important;
+        background: transparent !important;
+      }
+
+      /* 图片骨架屏动画 */
+      @keyframes skeleton-pulse {
+        0% { background-position: -200px 0; }
+        100% { background-position: calc(200px + 100%) 0; }
+      }
+
+      /* Notion 图片容器 - 占位符 */
+      .article-content .notion-asset-wrapper {
+        position: relative;
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200px 100%;
+        animation: skeleton-pulse 1.5s ease-in-out infinite;
+        border-radius: 8px;
+        min-height: 200px;
+        overflow: hidden;
+      }
+
+      /* 图片加载完成后隐藏骨架屏效果 */
+      .article-content .notion-asset-wrapper:has(img[src]:not([src=""])) {
+        background: transparent;
+        animation: none;
+        min-height: auto;
+      }
+
       .article-content img {
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         margin: 16px 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* 图片加载完成后显示 */
+      .article-content img[src]:not([src=""]) {
+        opacity: 1;
+      }
+
+      /* lazy-image-placeholder 类样式 */
+      .lazy-image-placeholder {
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200px 100%;
+        animation: skeleton-pulse 1.5s ease-in-out infinite;
       }
 
       .article-content hr {

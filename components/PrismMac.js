@@ -122,16 +122,18 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     collapseWrapper.className = 'collapse-wrapper w-full py-2'
     const panelWrapper = document.createElement('div')
     panelWrapper.className =
-      'border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
+      'rounded-lg overflow-hidden'
+    panelWrapper.style.cssText = 'border: 1px solid #333; background: #1E1E1E;'
 
     const header = document.createElement('div')
     header.className =
       'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
-    header.innerHTML = `<h3 class="text-lg font-medium">${language}</h3><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+    header.style.cssText = 'background: #2D2D2D; border-bottom: 1px solid #333;'
+    header.innerHTML = `<span class="text-sm font-mono" style="color: #888;">${language}</span><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" style="color: #666;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
 
     const panel = document.createElement('div')
     panel.className =
-      'invisible h-0 transition-transform duration-200 border-t border-gray-300'
+      'invisible h-0 transition-transform duration-200'
 
     panelWrapper.appendChild(header)
     panelWrapper.appendChild(panel)
