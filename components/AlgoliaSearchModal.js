@@ -152,7 +152,10 @@ export default function AlgoliaSearchModal({ cRef }) {
 
   const client = algoliasearch(
     siteConfig('ALGOLIA_APP_ID'),
-    siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
+    siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY'),
+    {
+      hosts: [{ url: 'algolia20260112.metacryoto.workers.dev', protocol: 'https' }]
+    }
   )
   const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
 
@@ -245,14 +248,12 @@ export default function AlgoliaSearchModal({ cRef }) {
   return (
     <div
       id='search-wrapper'
-      className={`${
-        isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
+      className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
+        } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
       {/* 模态框 */}
       <div
-        className={`${
-          isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
+        className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
+          } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
         <div className='flex justify-between items-center'>
           <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
             搜索
