@@ -66,21 +66,18 @@ export default function Footer({ notice }) {
                         </div>
                     </div>
 
-                    {/* 外部链接 */}
+                    {/* 微信公众号 */}
                     <div>
                         <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
                             <span className="text-[#ea580c]">$</span>
-                            <span>cat links.json</span>
+                            <span>follow --wechat</span>
                         </div>
-                        <div className="font-mono text-sm space-y-2">
-                            <a
-                                href="https://github.com/tangly1024/NotionNext"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors"
-                            >
-                                <span>🔗</span> github.com/NotionNext
-                            </a>
+                        <div>
+                            <img
+                                src="/wechat-qrcode.png"
+                                alt="微信公众号二维码"
+                                className="h-28 rounded-lg"
+                            />
                         </div>
                     </div>
                 </div>
