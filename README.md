@@ -1,79 +1,90 @@
-# 帮助教程
+# SkillsMP Blog
 
-访问帮助：[NotionNext帮助手册](https://docs.tangly1024.com/)
+基于 [NotionNext](https://github.com/tangly1024/NotionNext) 的个人博客，使用 Notion 作为 CMS，部署在 Vercel 上。
 
-> 本项目教程为免费、公开资源，仅限个人学习使用，禁止利用本教程建立的博客发布非法内容、进行违法犯罪活动。严禁任何个人或组织将本教程用于商业用途，包括但不限于直接售卖、间接收费、或其他变相盈利行为。转载、复制或介绍本教程内容时，须保留作者信息并明确注明来源。 
-> 本项目仅提供由作者团队授权的付费咨询服务，请注意辨别，谨防诈骗行为。任何未经授权的收费服务均可能存在法律风险。
+## ✨ 主题特色
 
-Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档、管理笔记，搭建知识库，甚至可以为你规划项目、时间管理、组织团队、提高生产力、还有当前最强大的AI技术加持。
+**SkillsMP** 是一个自定义的终端/代码风格主题，具有以下特点：
 
-> 若希望进一步探索Notion的功能，欢迎购买《[Notion笔记从入门到精通进阶课程](https://docs.tangly1024.com/article/notion-tutorial)》
+- 🎨 **暖色调设计** - 以 `#cc7a60` 为主色调的温暖配色
+- 💻 **终端风格卡片** - PostCard 采用代码块样式展示文章
+- 🔤 **等宽字体** - JetBrains Mono + 中文字体优化
+- 📱 **响应式布局** - 适配桌面和移动端
 
-> 若希望获得稳定、高速、不限设备数量的VPN科学上网服务，欢迎使用[飞鸟VPN](https://fbinv02.fbaff.cc/auth/register?code=kaA7t4kh)，这是我目前在用的VPN，仅作友情推广
+## 🚀 最新更新
 
-# NotionNext
+### v4.9.2-skillsmp (2026-01-12)
 
-<p>
-  <a aria-label="GitHub commit activity" href="https://github.com/tangly1024/NotionNext/commits/main" title="GitHub commit activity">
-    <img src="https://img.shields.io/github/commit-activity/m/tangly1024/NotionNext?style=for-the-badge"/>
-  </a>
-  <a aria-label="GitHub contributors" href="https://github.com/tangly1024/NotionNext/graphs/contributors" title="GitHub contributors">
-    <img src="https://img.shields.io/github/contributors/tangly1024/NotionNext?color=orange&style=for-the-badge"/>
-  </a>
-  <a aria-label="Build status" href="#" title="Build status">
-    <img src="https://img.shields.io/github/deployments/tangly1024/NotionNext/Production?logo=Vercel&style=for-the-badge"/>
-  </a>
-  <a aria-label="Powered by Vercel" href="https://vercel.com?utm_source=Craigary&utm_campaign=oss" title="Powered by Vercel">
-    <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" height="28"/>
-  </a>
-</p>
+#### 文章页优化
+- ✅ **代码块样式** - 深色主题 `prism-okaidia`，工具栏按钮修复
+- ✅ **列表行间距** - 减小到 2px，更紧凑
+- ✅ **标题锚点** - 图标移至文本末尾，hover 时显示
+- ✅ **目录导航** - 修复 TOC 链接 ID 匹配问题
+- ✅ **图片占位符** - 骨架屏动画，防止布局跳动
 
-中文文档 | [README in English](./README_EN.md)
+#### 分类/标签页
+- ✅ **终端风格** - 命令行样式标题 (`$ ls ./categories/`)
+- ✅ **文件卡片** - 模拟代码文件的分类展示
 
-<hr/>
+#### 页脚优化
+- ✅ **动态公告** - 从 Notion 读取公告内容
+- ✅ **动态版权年份** - 自动更新当前年份
 
-一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
+## 📁 项目结构
 
-支持多种部署方案
+```
+themes/skillsmp/
+├── index.js              # 主题入口，布局定义
+├── style.js              # 全局样式 (CSS-in-JS)
+├── components/
+│   ├── Header.js         # 顶部导航
+│   ├── Footer.js         # 页脚
+│   ├── PostCard.js       # 文章卡片 (终端风格)
+│   ├── CategoryGrid.js   # 分类网格
+│   ├── TableOfContents.js # 文章目录
+│   └── ...
+```
 
-## 预览效果
+## ⚙️ 配置
 
-在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，点击左下角挂件可以切换主题，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
+### 环境变量
 
-| Next                                                                                                  | Medium                                                                                                      | Hexo                                                                                                  | Fukasawa                                                                                                          |
-| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next) | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
+```env
+NOTION_PAGE_ID=你的Notion页面ID
+```
 
-## 致谢
+### blog.config.js
 
-感谢Craig Hart发起的Nobelium项目
+```javascript
+BLOG: {
+  THEME: 'skillsmp',
+  // ...
+}
+```
 
-<table><tr align="left">
-  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
-</tr></table>
+## 🛠️ 开发
 
-## 贡献者
+```bash
+# 安装依赖
+npm install
 
-致敬每一位开发者！
+# 启动开发服务器
+npm run dev
 
-[![Contributors](https://contrib.rocks/image?repo=tangly1024/NotionNext)](https://github.com/tangly1024/NotionNext/graphs/contributors)
+# 构建生产版本
+npm run build
+```
 
-## 引用技术
+## 📦 部署
 
-- **框架**: [Next.js](https://nextjs.org)
-- **样式**: [Tailwind CSS](https://www.tailwindcss.cn/)
-- **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**: [Twikoo](https://github.com/imaegoo/twikoo), [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
-- **图标**: [Fontawesome](https://fontawesome.com/v6/icons/)
+推送到 GitHub 后，Vercel 会自动触发部署。
 
-## 🔗 友情链接
+## 🙏 致谢
 
-- [Elog](https://github.com/LetTTGACO/elog) Markdown 批量导出工具、开放式跨平台博客解决方案，随意组合写作平台(语雀/Notion/FlowUs/飞书)和博客平台(Hexo/Vitepress/Halo/Confluence/WordPress等)
+- [NotionNext](https://github.com/tangly1024/NotionNext) - 原始项目
+- [react-notion-x](https://github.com/NotionX/react-notion-x) - Notion 渲染
+- [Tailwind CSS](https://tailwindcss.com) - 样式框架
 
-## License
+## 📄 License
 
-The MIT License.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=tangly1024/NotionNext&type=Date)](https://star-history.com/#tangly1024/NotionNext&Date)
+MIT License
