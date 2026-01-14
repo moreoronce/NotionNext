@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config'
 import { useState, useEffect } from 'react'
 import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
@@ -73,10 +74,12 @@ export default function Footer({ notice }) {
                             <span>follow --wechat</span>
                         </div>
                         <div>
-                            <img
+                            <Image
                                 src="/wechat-qrcode.webp"
                                 alt="微信公众号二维码"
-                                className="h-28 rounded-lg"
+                                width={327}
+                                height={112}
+                                className="h-28 w-auto rounded-lg"
                             />
                         </div>
                     </div>
