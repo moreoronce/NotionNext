@@ -11,12 +11,7 @@ import { createContext, useContext, useEffect, useRef } from 'react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
-import Catalog from './components/Catalog'
-
-const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
-  { ssr: false }
-)
+const Catalog = dynamic(() => import('./components/Catalog'), { ssr: false })
 
 // 主题组件
 
@@ -116,8 +111,7 @@ const LayoutBase = props => {
           <JumpToTopButton />
         </div>
 
-        {/* 搜索框 */}
-        <AlgoliaSearchModal cRef={searchModal} {...props} />
+        {/* 搜索框 - 已移除 */}
       </div>
     </ThemeGlobalSimple.Provider>
   )
@@ -171,7 +165,7 @@ const LayoutSearch = props => {
   return <LayoutPostList {...props} />
 }
 
- function groupArticlesByYearArray(articles) {
+function groupArticlesByYearArray(articles) {
   const grouped = {};
 
   for (const article of articles) {

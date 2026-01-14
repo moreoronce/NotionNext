@@ -29,7 +29,6 @@ import TopNavBar from './components/TopNavBar'
 import CONFIG from './config'
 import { Style } from './style'
 import { useRef } from 'react'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -263,7 +262,6 @@ const LayoutSearch = props => {
           className="px-3 py-1 rounded-md w-full border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           readOnly
         />
-        <AlgoliaSearchModal cRef={searchModalRef} />
         {!currentSearch && (
           <>
             <TagGroups {...props} />
@@ -358,7 +356,7 @@ const LayoutCategoryIndex = props => {
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5'>
           <h1><i className='mr-4 fas fa-th' />
-          {locale.COMMON.CATEGORY}:
+            {locale.COMMON.CATEGORY}:
           </h1>
         </div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
@@ -398,7 +396,7 @@ const LayoutTagIndex = props => {
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5'>
           <h1><i className='mr-4 fas fa-tag' />
-          {locale.COMMON.TAGS}:
+            {locale.COMMON.TAGS}:
           </h1>
         </div>
         <div id='tags-list' className='duration-200 flex flex-wrap'>
