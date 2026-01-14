@@ -150,14 +150,16 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
   })
 
-  const client = algoliasearch(
-    siteConfig('ALGOLIA_APP_ID'),
+  // 条件初始化：只有在配置了 Algolia 时才初始化客户端
+  const algoliaAppId = siteConfig('ALGOLIA_APP_ID')
+  const client = algoliaAppId ? algoliasearch(
+    algoliaAppId,
     siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY'),
     {
       hosts: [{ url: 'algolia20260112.metacryoto.workers.dev', protocol: 'https' }]
     }
-  )
-  const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
+  ) : null
+  const index = client ? client.initIndex(siteConfig('ALGOLIA_INDEX')) : null
 
   /**
    * 搜索
