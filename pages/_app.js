@@ -48,13 +48,17 @@ const MyApp = ({ Component, pageProps }) => {
 
   const content = (
     <GlobalContextProvider {...pageProps}>
-      <div className={`${notoSansSC.variable} ${bitter.variable} font-sans`}>
-        <GLayout {...pageProps}>
-          <SEO {...pageProps} />
-          <Component {...pageProps} />
-        </GLayout>
-        <ExternalPlugins {...pageProps} />
-      </div>
+      <style jsx global>{`
+        :root {
+          --font-sans: ${notoSansSC.style.fontFamily};
+          --font-serif: ${bitter.style.fontFamily};
+        }
+      `}</style>
+      <GLayout {...pageProps}>
+        <SEO {...pageProps} />
+        <Component {...pageProps} />
+      </GLayout>
+      <ExternalPlugins {...pageProps} />
     </GlobalContextProvider>
   )
   return content

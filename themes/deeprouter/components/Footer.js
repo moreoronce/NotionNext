@@ -38,7 +38,7 @@ export default function Footer({ notice }) {
                             ) : (
                                 <>
                                     <p className="text-[#4A4A4A]">
-                                        <span className="text-[#cc7a60]">#</span> SkillSMP
+                                        <span className="text-[#c2410c]">#</span> SkillSMP
                                     </p>
                                     <p className="text-[#666666]">
                                         AI Skills Marketplace - 发现、学习、分享技能
@@ -88,11 +88,11 @@ export default function Footer({ notice }) {
                 {/* 底部版权 */}
                 <div className="border-t border-[#E5E5E5] pt-6">
                     <div className="font-mono text-xs text-[#666666] text-center">
-                        <span className="text-[#cc7a60]">/*</span>
+                        <span className="text-[#c2410c]">/*</span>
                         <span className="mx-2">© {yearRange} {siteConfig('TITLE')}</span>
                         <span className="mx-2">•</span>
-                        <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#cc7a60] underline hover:text-[#ea580c]">NotionNext</a></span>
-                        <span className="text-[#cc7a60] ml-2">*/</span>
+                        <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#c2410c] underline hover:text-[#ea580c]">NotionNext</a></span>
+                        <span className="text-[#c2410c] ml-2">*/</span>
                     </div>
                 </div>
             </div>
