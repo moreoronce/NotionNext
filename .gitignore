@@ -47,6 +47,9 @@ yarn-error.log*
 /public/rss/*
 /sitemap.xml
 
+# pagefind search index (generated during build)
+/public/pagefind/
+
 # yarn
 package-lock.json
 # yarn.lock

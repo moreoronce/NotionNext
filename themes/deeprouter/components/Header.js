@@ -95,7 +95,7 @@ export default function Header(props) {
                                 href={link.href}
                                 className="nav-cmd-btn"
                                 onClick={(e) => {
-                                    if (link.href === '/search' && siteConfig('ALGOLIA_APP_ID')) {
+                                    if (link.href === '/search') {
                                         e.preventDefault()
                                         props.onSearch?.()
                                     }
@@ -164,7 +164,7 @@ function MobileMenuButton({ links, telegramUrl, onSearch }) {
                                 className="flex items-center gap-2 py-3 text-[#111827] hover:text-[#cc7a60] transition-colors"
                                 onClick={(e) => {
                                     setIsOpen(false)
-                                    if (link.href === '/search' && siteConfig('ALGOLIA_APP_ID')) {
+                                    if (link.href === '/search') {
                                         e.preventDefault()
                                         onSearch?.()
                                     }

@@ -673,6 +673,11 @@
   resolved "https://registry.npmmirror.com/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz"
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
+"@pagefind/windows-x64@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@pagefind/windows-x64/-/windows-x64-1.4.0.tgz"
+  integrity sha512-NkT+YAdgS2FPCn8mIA9bQhiBs+xmniMGq1LFPDhcFn0+2yIUEiIG06t7bsZlhdjknEQRTSdT7YitP6fC5qwP0g==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.npmmirror.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
@@ -4621,6 +4626,18 @@ package-json-from-dist@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz"
   integrity sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==
+
+pagefind@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/pagefind/-/pagefind-1.4.0.tgz"
+  integrity sha512-z2kY1mQlL4J8q5EIsQkLzQjilovKzfNVhX8De6oyE6uHpfFtyBaqUpcl/XzJC/4fjD8vBDyh1zolimIcVrCn9g==
+  optionalDependencies:
+    "@pagefind/darwin-arm64" "1.4.0"
+    "@pagefind/darwin-x64" "1.4.0"
+    "@pagefind/freebsd-x64" "1.4.0"
+    "@pagefind/linux-arm64" "1.4.0"
+    "@pagefind/linux-x64" "1.4.0"
+    "@pagefind/windows-x64" "1.4.0"
 
 parent-module@^1.0.0:
   version "1.0.1"
