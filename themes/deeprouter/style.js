@@ -11,32 +11,33 @@ const Style = () => {
       // 获取所有有序列表
       const lists = Array.from(document.querySelectorAll('#theme-deeprouter .notion-list-numbered'))
 
+      // 1. 第一步：读取所有 DOM 信息 (避免 Layout Thrashing)
+      const listMetrics = lists.map(ol => {
+        const rect = ol.getBoundingClientRect()
+        const liCount = ol.querySelectorAll(':scope > li').length
+        const originalStart = parseInt(ol.getAttribute('start') || '1', 10)
+        return { ol, rect, liCount, originalStart }
+      })
+
       // 按照 DOM 顺序处理，跟踪应该的起始序号
       let expectedStart = 1
       let lastListEndY = 0
 
-      lists.forEach((ol, index) => {
-        const rect = ol.getBoundingClientRect()
-        const liCount = ol.querySelectorAll(':scope > li').length
-        const originalStart = parseInt(ol.getAttribute('start') || '1', 10)
-        // 判断是否是被打断的连续列表：
-        // - 仅当 originalStart === 2 时（react-notion-x 的 bug 特征）
-        // - 并且和上一个列表距离很近
-        // - 并且预期的起始值大于 2
+      // 2. 第二步：计算并写入样式
+      listMetrics.forEach((metric, index) => {
+        const { ol, rect, liCount, originalStart } = metric
+
+        // 判断是否是被打断的连续列表
         if (index > 0 && rect.top - lastListEndY < 200 && originalStart === 2 && expectedStart > 2) {
-          // 这是一个被打断的连续列表，使用我们计算的起始值
           ol.style.counterReset = `notion-ol-counter ${expectedStart - 1}`
         } else if (originalStart === 1) {
-          // 新列表开始，重置计数
           expectedStart = 1
           ol.style.counterReset = `notion-ol-counter 0`
         } else {
-          // 使用原始的 start 值（包括正确延续的列表，如 start=2, 3, 4...）
           ol.style.counterReset = `notion-ol-counter ${originalStart - 1}`
           expectedStart = originalStart
         }
 
-        // 更新下一个列表应该的起始序号
         expectedStart += liCount
         lastListEndY = rect.bottom
       })

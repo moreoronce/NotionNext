@@ -11,8 +11,8 @@ module.exports = {
   // 优化：只加载必要的字重，减少 CSS 体积
   FONT_URL: [
     // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
-    'https://fonts.googleapis.com/css?family=Bitter:400,700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap'
+    // 'https://fonts.googleapis.com/css?family=Bitter:400,700&display=swap',
+    // 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap'
     // Noto Serif SC 已移除 - 如需衬线字体请取消注释
     // 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap'
   ],

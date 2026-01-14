@@ -140,10 +140,21 @@ const SEO = props => {
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
 
-      {/* 字体优化：直接通过 Link 加载，替代 WebFontLoader */}
+      {/* 字体优化：异步加载 CSS，避免阻塞渲染 */}
       {webFontUrl && webFontUrl.map((url, index) => (
-        <link key={index} rel="stylesheet" href={url} />
+        <link
+          key={index}
+          rel="stylesheet"
+          href={url}
+          media="print"
+          onLoad="this.media='all'"
+        />
       ))}
+      <noscript>
+        {webFontUrl && webFontUrl.map((url, index) => (
+          <link key={index} rel="stylesheet" href={url} />
+        ))}
+      </noscript>
 
       {children}
     </Head>

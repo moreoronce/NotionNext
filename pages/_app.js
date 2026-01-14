@@ -12,6 +12,7 @@ import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
+import { notoSansSC, bitter } from '@/lib/fonts'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
@@ -47,11 +48,13 @@ const MyApp = ({ Component, pageProps }) => {
 
   const content = (
     <GlobalContextProvider {...pageProps}>
-      <GLayout {...pageProps}>
-        <SEO {...pageProps} />
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
+      <div className={`${notoSansSC.variable} ${bitter.variable} font-sans`}>
+        <GLayout {...pageProps}>
+          <SEO {...pageProps} />
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </div>
     </GlobalContextProvider>
   )
   return content
