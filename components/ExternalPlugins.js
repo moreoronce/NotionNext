@@ -4,11 +4,11 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { GlobalStyle } from './GlobalStyle'
+// import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
 import { useGlobal } from '@/lib/global'
-import IconFont from './IconFont'
+// import IconFont from './IconFont'
 /**
  * 各种插件脚本
  * @param {*} props
@@ -128,5 +128,8 @@ const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
   ssr: false
 })
+
+const GlobalStyle = dynamic(() => import('./GlobalStyle').then(m => m.GlobalStyle), { ssr: true })
+const IconFont = dynamic(() => import('./IconFont'), { ssr: false })
 
 export default ExternalPlugin

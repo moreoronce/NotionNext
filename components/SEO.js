@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { loadExternalResource } from '@/lib/utils'
+// import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -20,24 +20,7 @@ const SEO = props => {
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
   const webFontUrl = siteConfig('FONT_URL')
 
-  useEffect(() => {
-    // 使用WebFontLoader字体加载
-    loadExternalResource(
-      '/js/webfontloader.js',
-      'js'
-    ).then(url => {
-      const WebFont = window?.WebFont
-      if (WebFont) {
-        // console.log('LoadWebFont', webFontUrl)
-        WebFont.load({
-          custom: {
-            // families: ['"LXGW WenKai"'],
-            urls: webFontUrl
-          }
-        })
-      }
-    })
-  }, [])
+
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
@@ -156,6 +139,11 @@ const SEO = props => {
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+
+      {/* 字体优化：直接通过 Link 加载，替代 WebFontLoader */}
+      {webFontUrl && webFontUrl.map((url, index) => (
+        <link key={index} rel="stylesheet" href={url} />
+      ))}
 
       {children}
     </Head>
