@@ -6,7 +6,6 @@ import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/redirect'
-import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 
 /**
  * 首页布局
@@ -60,10 +59,8 @@ export async function getStaticProps(req) {
   generateRobotsTxt(props)
   // 生成Feed订阅
   generateRss(props)
-  // 生成
+  // 生成Sitemap
   generateSitemapXml(props)
-  // 检查数据是否需要从algolia删除
-  checkDataFromAlgolia(props)
   if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
     // 生成重定向 JSON
     generateRedirectJson(props)
@@ -80,10 +77,10 @@ export async function getStaticProps(req) {
     revalidate: process.env.EXPORT
       ? undefined
       : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
+        'NEXT_REVALIDATE_SECOND',
+        BLOG.NEXT_REVALIDATE_SECOND,
+        props.NOTION_CONFIG
+      )
   }
 }
 
