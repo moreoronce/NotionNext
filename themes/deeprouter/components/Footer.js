@@ -74,7 +74,7 @@ export default function Footer({ notice }) {
                         </div>
                         <div>
                             <img
-                                src="/wechat-qrcode.png"
+                                src="/wechat-qrcode.webp"
                                 alt="微信公众号二维码"
                                 className="h-28 rounded-lg"
                             />
