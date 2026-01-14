@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic'
 
 // 动态导入 - 减少首屏 JS 体积
 const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: true })
-const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+const PageFindSearchModal = dynamic(() => import('@/components/PageFindSearchModal'), { ssr: false })
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
 // 主题组件导入
@@ -50,8 +50,8 @@ const LayoutBase = props => {
 
     return (
         <ThemeGlobalDeepRouter.Provider value={{ searchModal }}>
-            {/* Algolia 搜索弹窗 */}
-            <AlgoliaSearchModal cRef={searchModal} />
+            {/* 搜索弹窗 - 使用 PageFind */}
+            <PageFindSearchModal cRef={searchModal} />
 
             {/* CSS样式 */}
             <Style />
