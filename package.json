@@ -103,13 +103,5 @@
   "bugs": {
     "url": "https://github.com/tangly/NotionNext/issues",
     "email": "tlyong1992@hotmail.com"
-  },
-  "browserslist": [
-    "chrome >= 100",
-    "firefox >= 100",
-    "safari >= 15",
-    "edge >= 100",
-    "ios >= 15",
-    "not ie 11"
-  ]
+  }
 }

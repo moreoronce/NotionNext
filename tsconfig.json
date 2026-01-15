@@ -1,18 +1,41 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "target": "ES2022",
     "paths": {
-      "@/*": ["./*"],
-      "@/blog.config": ["./blog.config"],
-      "@/components/*": ["components/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/themes/*": ["themes/*"],
-      "@/pages/*": ["pages/*"],
-      "@/data/*": ["data/*"],
-      "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@/blog.config": [
+        "./blog.config"
+      ],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/themes/*": [
+        "themes/*"
+      ],
+      "@/pages/*": [
+        "pages/*"
+      ],
+      "@/data/*": [
+        "data/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ]
     },
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
