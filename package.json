@@ -105,11 +105,11 @@
     "email": "tlyong1992@hotmail.com"
   },
   "browserslist": [
-    "last 2 Chrome versions",
-    "last 2 Firefox versions",
-    "last 2 Safari versions",
-    "last 2 Edge versions",
-    "not IE 11",
-    "not dead"
+    "chrome >= 100",
+    "firefox >= 100",
+    "safari >= 15",
+    "edge >= 100",
+    "ios >= 15",
+    "not ie 11"
   ]
 }
