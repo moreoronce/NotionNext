@@ -366,6 +366,15 @@ const Style = () => {
         color: white;
       }
 
+      /* 移动端社交按钮 - 仅图标时使用方形样式 */
+      @media (max-width: 768px) {
+        #theme-deeprouter .telegram-btn,
+        #theme-deeprouter .twitter-btn {
+          padding: 8px;
+          border-radius: 8px;
+        }
+      }
+
       /* ===== 表格样式 ===== */
       .md-table {
         width: 100%;
