@@ -317,6 +317,13 @@ const Style = () => {
         color: white !important;
       }
 
+      /* ===== 社交按钮容器 ===== */
+      #theme-deeprouter .social-buttons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
       /* ===== Telegram 按钮 ===== */
       #theme-deeprouter .telegram-btn {
         display: inline-flex;
@@ -335,6 +342,27 @@ const Style = () => {
 
       #theme-deeprouter .telegram-btn:hover {
         background: #1E88BC;
+        color: white;
+      }
+
+      /* ===== Twitter/X 按钮 ===== */
+      #theme-deeprouter .twitter-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: #000000;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      #theme-deeprouter .twitter-btn:hover {
+        background: #333333;
         color: white;
       }
 

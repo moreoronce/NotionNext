@@ -15,6 +15,9 @@ const CONFIG = {
     // Telegram 链接
     DEEPROUTER_TELEGRAM_URL: process.env.NEXT_PUBLIC_TELEGRAM_URL || 'https://t.me/dolingouu',
 
+    // Twitter/X 链接
+    DEEPROUTER_TWITTER_URL: process.env.NEXT_PUBLIC_TWITTER_URL || 'https://x.com/moreoronce',
+
     // 文章列表配置
     DEEPROUTER_POST_LIST_COVER: false,
     DEEPROUTER_POST_LIST_PREVIEW: true,
