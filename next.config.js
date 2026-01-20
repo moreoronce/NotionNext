@@ -116,6 +116,8 @@ const nextConfig = {
       localeDetection: false // 禁用自动语言重定向，减少首屏延迟
     },
   images: {
+    // 静态导出时禁用图片优化
+    unoptimized: process.env.EXPORT ? true : false,
     // 图片压缩和格式优化
     formats: ['image/avif', 'image/webp'],
     // 图片尺寸优化
