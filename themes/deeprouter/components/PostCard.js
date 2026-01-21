@@ -33,40 +33,23 @@ export default function PostCard({ post, index = 0 }) {
                 <div className="terminal-body font-mono text-sm p-4">
                     <CodeRow line={1}>
                         <div className="mb-0">
-                            <span style={{ color: 'lab(52.0183% 66.11 -78.2316)' }}>export</span>
-                            <span className="text-[#666666]"> const </span>
-                            <span className="text-[#cc7a60]">article</span>
-                            <span className="text-[#666666]"> = {'{'}</span>
-                        </div>
-                    </CodeRow>
-
-                    <CodeRow line={2}>
-                        <div className="pl-4 mb-0">
                             <span className="text-[#666666]">name: </span>
                             <h2 className="inline font-mono font-semibold text-[#111827] text-base">
                                 '{post.title}'
                             </h2>
-                            <span className="text-[#666666]">,</span>
                         </div>
                     </CodeRow>
 
                     {post.summary && (
-                        <CodeRow line={3}>
-                            <div className="pl-4 mb-0">
+                        <CodeRow line={2}>
+                            <div className="mb-0">
                                 <span className="text-[#666666]">desc: </span>
                                 <span className="font-mono text-[#4B5563] line-clamp-2 inline max-w-[90%] align-top">
                                     '{post.summary}'
                                 </span>
-                                <span className="text-[#666666]">,</span>
                             </div>
                         </CodeRow>
                     )}
-
-                    <CodeRow line={post.summary ? 4 : 3}>
-                        <div>
-                            <span className="text-[#666666]">{'}'}</span>
-                        </div>
-                    </CodeRow>
                 </div>
 
                 {/* 底部信息栏 - 独立区域 */}
