@@ -33,7 +33,7 @@ export default function PostCard({ post, index = 0 }) {
                 <div className="terminal-body font-mono text-sm p-4">
                     <CodeRow line={1}>
                         <div className="mb-0">
-                            <span className="text-[#666666]">name: </span>
+                            <span style={{ color: 'lab(52.0183% 66.11 -78.2316)' }}>name: </span>
                             <h2 className="inline font-mono font-semibold text-[#111827] text-base">
                                 '{post.title}'
                             </h2>
@@ -43,7 +43,7 @@ export default function PostCard({ post, index = 0 }) {
                     {post.summary && (
                         <CodeRow line={2}>
                             <div className="mb-0">
-                                <span className="text-[#666666]">desc: </span>
+                                <span className="text-[#cc7a60]">desc: </span>
                                 <span className="font-mono text-[#4B5563] line-clamp-2 inline max-w-[90%] align-top">
                                     '{post.summary}'
                                 </span>
