@@ -64,6 +64,12 @@ export default function Footer({ notice }) {
                             <SmartLink href="/tag" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
                                 <span>🏷️</span> tags/
                             </SmartLink>
+                            <a href="https://en.deeprouter.org" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                <span>🇺🇸</span> English Version
+                            </a>
+                            <a href="https://deeprouter.org/now" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                <span>⚡</span> Now
+                            </a>
                         </div>
                     </div>
 
