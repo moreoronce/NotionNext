@@ -1,8 +1,9 @@
 const { THEME } = require('./blog.config')
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 const BLOG = require('./blog.config')
 const { extractLangPrefix } = require('./lib/utils/pageId')
+const { isExport } = require('./lib/utils/buildMode')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -18,8 +19,7 @@ const locales = (function () {
   const langs = [BLOG.LANG]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-    for (let index = 0; index < siteIds.length; index++) {
-      const siteId = siteIds[index]
+    for (const siteId of siteIds) {
       const prefix = extractLangPrefix(siteId)
       // 如果包含前缀 例如 zh , en 等
       if (prefix) {
@@ -36,8 +36,8 @@ const locales = (function () {
 // eslint-disable-next-line no-unused-vars
 const preBuild = (function () {
   if (
-    !process.env.npm_lifecycle_event === 'export' &&
-    !process.env.npm_lifecycle_event === 'build'
+    process.env.npm_lifecycle_event !== 'export' &&
+    process.env.npm_lifecycle_event !== 'build'
   ) {
     return
   }
@@ -80,12 +80,18 @@ function scanSubdirectories(directory) {
  * @type {import('next').NextConfig}
  */
 
+function getOutput() {
+  if (isExport()) return 'export'
+  if (process.env.NEXT_BUILD_STANDALONE === 'true') return 'standalone'
+  return undefined
+}
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT ? 'export' : (process.env.NEXT_BUILD_STANDALONE === 'true' ? 'standalone' : undefined),
-  staticPageGenerationTimeout: 120,
+  output: getOutput(),
+  staticPageGenerationTimeout: 300,
 
   // 性能优化配置
   compress: true,
@@ -160,8 +166,7 @@ const nextConfig = {
       if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
         const siteIds = BLOG.NOTION_PAGE_ID.split(',')
         const langs = []
-        for (let index = 0; index < siteIds.length; index++) {
-          const siteId = siteIds[index]
+        for (const siteId of siteIds) {
           const prefix = extractLangPrefix(siteId)
           // 如果包含前缀 例如 zh , en 等
           if (prefix) {
@@ -309,6 +314,7 @@ const nextConfig = {
 
     // Enable source maps in development mode
     if (dev || process.env.NODE_ENV_API === 'development') {
+      // config.devtool = 'source-map'
       config.devtool = 'eval-source-map'
     } else {
       // 生产环境启用 hidden source maps，生成 .map 文件但不暴露源代码
@@ -322,8 +328,10 @@ const nextConfig = {
     ]
 
     return config
-  },
+  }
+  ,
   experimental: {
+    // cpus: 1,
     scrollRestoration: true,
     // 性能优化实验性功能
     optimizePackageImports: ['@heroicons/react', 'lodash']
