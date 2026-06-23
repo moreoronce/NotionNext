@@ -32,11 +32,12 @@ export default function TableOfContents({ toc }) {
 
     return (
         <div className="">
-            <nav className="space-y-1">
+            <nav className="space-y-1" aria-label="文章目录">
                 {toc.map((item) => (
                     <a
                         key={item.id}
                         href={`#${item.id}`}
+                        aria-current={activeId === item.id ? 'true' : undefined}
                         className={`block text-sm py-1 transition-colors
                             ${item.level === 2 ? 'pl-0' : 'pl-3'}
               ${activeId === item.id

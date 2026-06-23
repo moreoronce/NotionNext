@@ -19,7 +19,7 @@ export default function RelatedPosts({ posts }) {
                     >
                         <span className="text-[#cc7a60]">import</span>
                         <span className="text-[#ea580c] group-hover:underline truncate">
-                            '{post.title}'
+                            {`'${post.title}'`}
                         </span>
                     </SmartLink>
                 ))}

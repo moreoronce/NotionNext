@@ -5,10 +5,8 @@
 
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useRef } from 'react'
 import SmartLink from '@/components/SmartLink'
-import { useRef } from 'react'
 import dynamic from 'next/dynamic'
 
 // 动态导入 - 减少首屏 JS 体积
@@ -26,13 +24,13 @@ import Pagination from './components/Pagination'
 import SearchBox from './components/SearchBox'
 import CategoryGrid from './components/CategoryGrid'
 import TagCloud from './components/TagCloud'
-import Breadcrumb from './components/Breadcrumb'
 import TerminalCard from './components/TerminalCard'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 
+const encodedPath = (base, value) => `${base}/${encodeURIComponent(value)}`
+
 // 非首屏组件 - 动态加载
 const TableOfContents = dynamic(() => import('./components/TableOfContents'), { ssr: false })
-const RelatedPosts = dynamic(() => import('./components/RelatedPosts'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
 const BackToTop = dynamic(() => import('./components/BackToTop'), { ssr: false })
 
@@ -94,8 +92,13 @@ const LayoutPostList = props => {
     const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG, category, tag } = props
 
     // 计算总页数 (NotionNext 传递 postCount 而不是 totalPage)
-    const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+    const globalPostsPerPage = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+    const POSTS_PER_PAGE = siteConfig('DEEPROUTER_POSTS_PER_PAGE', globalPostsPerPage, CONFIG)
     const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
+    const showCover = siteConfig('DEEPROUTER_POST_LIST_COVER', false, CONFIG)
+    const showPreview = siteConfig('DEEPROUTER_POST_LIST_PREVIEW', true, CONFIG)
+    const showCategory = siteConfig('DEEPROUTER_POST_LIST_CATEGORY', true, CONFIG)
+    const showTags = siteConfig('DEEPROUTER_POST_LIST_TAG', true, CONFIG)
 
     // 确定页面类型和标题
     const isCategory = prefix?.includes('/category') || category
@@ -122,7 +125,15 @@ const LayoutPostList = props => {
             {/* 文章列表 */}
             <div className='space-y-4'>
                 {posts?.map((post, index) => (
-                    <PostCard key={post.id} post={post} index={index} />
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        index={index}
+                        showCover={showCover}
+                        showPreview={showPreview}
+                        showCategory={showCategory}
+                        showTags={showTags}
+                    />
                 ))}
             </div>
 
@@ -143,15 +154,21 @@ const LayoutSlug = props => {
     }
 
     const fileName = post.slug ? `${post.slug}.md` : 'ARTICLE.md'
+    const showDetailCategory = siteConfig('DEEPROUTER_POST_DETAIL_CATEGORY', true, CONFIG)
+    const showDetailTags = siteConfig('DEEPROUTER_POST_DETAIL_TAG', true, CONFIG)
+    const showToc = siteConfig('DEEPROUTER_WIDGET_TOC', true, CONFIG)
+    const showRelated = siteConfig('DEEPROUTER_WIDGET_RELATED', true, CONFIG)
+    const sidebarAction = siteConfig('DEEPROUTER_SIDEBAR_ACTION', 'copy-link', CONFIG)
+    const sourceLink = post.notionLink || post.link || siteConfig('LINK')
 
     return (
         <>
             {/* 面包屑 - 终端风格 */}
             <div className='text-sm mb-4 font-mono'>
                 <span className='text-[#666666]'>$ pwd: ~ / </span>
-                {post.category && (
+                {showDetailCategory && post.category && (
                     <>
-                        <SmartLink href={`/category/${post.category}`} className='text-[#cc7a60] hover:underline'>
+                        <SmartLink href={encodedPath('/category', post.category)} className='text-[#cc7a60] hover:underline'>
                             {post.category}
                         </SmartLink>
                         <span className='text-[#666666]'> / </span>
@@ -174,7 +191,7 @@ const LayoutSlug = props => {
                         {/* 描述 - 注释风格 */}
                         {post.summary && (
                             <p className='text-[#6B6B6B] mb-4 leading-relaxed'>
-                                <span className='text-[#666666]'>// </span>
+                                <span className='text-[#666666]'>{'// '}</span>
                                 {post.summary}
                             </p>
                         )}
@@ -185,7 +202,7 @@ const LayoutSlug = props => {
                                 <div className='text-sm text-[#6B6B6B] font-mono'>
                                     <span className='text-[#666666]'>$ git log --oneline --stat</span>
                                     <div className='flex flex-wrap gap-4 mt-2'>
-                                        {post.category && (
+                                        {showDetailCategory && post.category && (
                                             <span>
                                                 <span className='text-[#cc7a60]'>📁 category:</span> {post.category}
                                             </span>
@@ -193,7 +210,7 @@ const LayoutSlug = props => {
                                         <span>
                                             <span className='text-[#cc7a60]'>📅 updated:</span> {formatDateFmt(post.lastEditedDate || post.publishDate || post.date, 'yyyy-MM-dd')}
                                         </span>
-                                        {post.tags?.length > 0 && (
+                                        {showDetailTags && post.tags?.length > 0 && (
                                             <span>
                                                 <span className='text-[#cc7a60]'>🏷️ tags:</span> {post.tags.slice(0, 3).join(', ')}
                                             </span>
@@ -254,25 +271,43 @@ const LayoutSlug = props => {
                             <div className='flex items-center gap-2 mb-3'>
                                 <span className='w-6 h-6 bg-[#E74C3C] rounded-full flex items-center justify-center text-white text-xs'>📦</span>
                                 <div>
-                                    <div className='text-[#ea580c]'>"author": "{post.author || siteConfig('AUTHOR')}"</div>
-                                    <div className='text-[#ea580c]'>"category": "{post.category || 'Blog'}"</div>
+                                    <div className='text-[#ea580c]'>{`"author": "${post.author || siteConfig('AUTHOR')}"`}</div>
+                                    {showDetailCategory && <div className='text-[#ea580c]'>{`"category": "${post.category || 'Blog'}"`}</div>}
                                 </div>
                             </div>
-                            <button className='w-full py-2 px-3 bg-[#FEF3E2] border border-[#E8E4DC] rounded text-sm text-[#4A4A4A] hover:bg-[#EDE8E0] transition'>
-                                📋 $ gh browse
-                            </button>
+                            {sidebarAction === 'copy-link' && (
+                                <button
+                                    type='button'
+                                    onClick={() => {
+                                        void navigator.clipboard?.writeText(window.location.href)
+                                    }}
+                                    className='w-full py-2 px-3 bg-[#FEF3E2] border border-[#E8E4DC] rounded text-sm text-[#4A4A4A] hover:bg-[#EDE8E0] transition'
+                                >
+                                    📋 $ copy link
+                                </button>
+                            )}
+                            {sidebarAction === 'site-link' && sourceLink && (
+                                <a
+                                    href={sourceLink}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    className='block w-full py-2 px-3 bg-[#FEF3E2] border border-[#E8E4DC] rounded text-sm text-center text-[#4A4A4A] hover:bg-[#EDE8E0] transition'
+                                >
+                                    ↗ $ open source
+                                </a>
+                            )}
                         </div>
                     </div>
 
                     {/* 文章目录 */}
-                    {post.toc?.length > 0 && (
+                    {showToc && post.toc?.length > 0 && (
                         <TerminalCard title="catalog" readonly>
                             <TableOfContents toc={post.toc} />
                         </TerminalCard>
                     )}
 
                     {/* related-imports.ts 风格相关文章 */}
-                    {recommendPosts?.length > 0 && (
+                    {showRelated && recommendPosts?.length > 0 && (
                         <div className='terminal-card'>
                             <div className='terminal-header'>
                                 <div className='terminal-dots'>
@@ -283,7 +318,7 @@ const LayoutSlug = props => {
                                 <span className='terminal-title'>related-imports.ts</span>
                             </div>
                             <div className='terminal-body'>
-                                <div className='text-[#666666] text-xs mb-3'>// Related Skills</div>
+                                <div className='text-[#666666] text-xs mb-3'>{'// Related Skills'}</div>
                                 <div className='space-y-3'>
                                     {recommendPosts.slice(0, 5).map(rPost => (
                                         <SmartLink
@@ -293,8 +328,8 @@ const LayoutSlug = props => {
                                         >
                                             <span className='w-6 h-6 bg-[#ea580c] rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'>📄</span>
                                             <div className='min-w-0'>
-                                                <div className='text-[#0d9488] group-hover:underline'>import <span className='text-[#ea580c]'>{rPost.title?.slice(0, 20)}</span></div>
-                                                <div className='text-[#ea580c] text-xs truncate'>from "{rPost.category || 'posts'}"</div>
+                                                <div className='text-[#cc7a60] group-hover:underline'>import <span className='text-[#ea580c]'>{rPost.title?.slice(0, 20)}</span></div>
+                                                <div className='text-[#ea580c] text-xs truncate'>{`from "${rPost.category || 'posts'}"`}</div>
                                             </div>
                                         </SmartLink>
                                     ))}
@@ -313,13 +348,17 @@ const LayoutSlug = props => {
  */
 const LayoutSearch = props => {
     const { posts, keyword } = props
+    const showCover = siteConfig('DEEPROUTER_POST_LIST_COVER', false, CONFIG)
+    const showPreview = siteConfig('DEEPROUTER_POST_LIST_PREVIEW', true, CONFIG)
+    const showCategory = siteConfig('DEEPROUTER_POST_LIST_CATEGORY', true, CONFIG)
+    const showTags = siteConfig('DEEPROUTER_POST_LIST_TAG', true, CONFIG)
 
     return (
         <>
             {/* SEO: 搜索页 H1 */}
             <h1 className='text-2xl font-bold mb-6'>
-                <span className='text-[#666666]'>// </span>搜索
-                {keyword && <span className='text-[#ea580c] ml-2'>"{keyword}"</span>}
+                <span className='text-[#666666]'>{'// '}</span>搜索
+                {keyword && <span className='text-[#ea580c] ml-2'>{`"${keyword}"`}</span>}
             </h1>
 
             {/* 搜索框 */}
@@ -336,7 +375,15 @@ const LayoutSearch = props => {
 
             <div className='space-y-4'>
                 {posts?.map((post, index) => (
-                    <PostCard key={post.id} post={post} index={index} />
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        index={index}
+                        showCover={showCover}
+                        showPreview={showPreview}
+                        showCategory={showCategory}
+                        showTags={showTags}
+                    />
                 ))}
             </div>
         </>
@@ -363,7 +410,7 @@ const LayoutArchive = props => {
     return (
         <>
             <h1 className='text-2xl font-bold mb-6'>
-                <span className='text-[#666666]'>// </span>归档
+                <span className='text-[#666666]'>{'// '}</span>归档
                 <span className='text-[#666666] text-base ml-4'>共 {posts?.length || 0} 篇</span>
             </h1>
 

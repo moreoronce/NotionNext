@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
@@ -9,12 +9,13 @@ import CONFIG from '../config'
  */
 export default function Header(props) {
     const { customNav, customMenu, categoryOptions, tagOptions } = props
-    const { locale } = useGlobal()
+    const router = useRouter()
+    const isActive = href => href === '/' ? router.asPath === '/' : router.asPath?.startsWith(href)
 
     // 终端命令风格导航
     const defaultLinks = [
         { name: '首页', cmd: 'cd /home', href: '/', show: true },
-        { name: '文章', cmd: 'ls ./posts', href: '/archive', show: true },
+        { name: '文章', cmd: 'ls ./posts', href: '/archive', show: siteConfig('DEEPROUTER_MENU_ARCHIVE', true, CONFIG) },
         {
             name: '分类',
             cmd: 'cd /categories',
@@ -22,7 +23,7 @@ export default function Header(props) {
             show: siteConfig('DEEPROUTER_MENU_CATEGORY', null, CONFIG),
             subMenus: categoryOptions?.map(c => ({
                 title: `${c.name} (${c.count})`,
-                href: `/category/${c.name}`
+                href: `/category/${encodeURIComponent(c.name)}`
             }))
         },
         {
@@ -32,7 +33,7 @@ export default function Header(props) {
             show: siteConfig('DEEPROUTER_MENU_TAG', null, CONFIG),
             subMenus: tagOptions?.slice(0, 15).map(t => ({
                 title: `${t.name} (${t.count})`,
-                href: `/tag/${t.name}`
+                href: `/tag/${encodeURIComponent(t.name)}`
             }))
         },
         { name: '搜索', cmd: 'ai --search', href: '/search', show: siteConfig('DEEPROUTER_MENU_SEARCH', null, CONFIG) }
@@ -59,13 +60,15 @@ export default function Header(props) {
 
                 {/* 导航菜单 - 终端命令风格 */}
                 <nav className="hidden md:flex items-center gap-3">
-                    {links?.filter(link => link.show).map((link, index) => {
+                    {links?.filter(link => link.show !== false).map((link, index) => {
                         if (link.subMenus && link.subMenus.length > 0) {
+                            const active = isActive(link.href)
                             return (
                                 <div key={index} className="relative group pb-2 pt-2">
                                     <SmartLink
                                         href={link.href}
-                                        className="nav-cmd-btn"
+                                        className={`nav-cmd-btn ${active ? 'active' : ''}`}
+                                        aria-current={active ? 'page' : undefined}
                                     >
                                         <span className="cmd-prefix">$</span>
                                         <span>{link.cmd || link.name}</span>
@@ -73,7 +76,7 @@ export default function Header(props) {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </SmartLink>
-                                    <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-44 bg-white border border-[#E5E5E5] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                                    <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-44 bg-white border border-[#E5E5E5] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 overflow-hidden">
                                         <div className="py-1">
                                             {link.subMenus.map((sub, idx) => (
                                                 <SmartLink
@@ -90,11 +93,13 @@ export default function Header(props) {
                                 </div>
                             )
                         }
+                        const active = isActive(link.href)
                         return (
                             <SmartLink
                                 key={index}
                                 href={link.href}
-                                className="nav-cmd-btn"
+                                className={`nav-cmd-btn ${active ? 'active' : ''}`}
+                                aria-current={active ? 'page' : undefined}
                                 onClick={(e) => {
                                     if (link.href === '/search') {
                                         e.preventDefault()
@@ -153,13 +158,38 @@ export default function Header(props) {
  */
 function MobileMenuButton({ links, telegramUrl, twitterUrl, onSearch }) {
     const [isOpen, setIsOpen] = useState(false)
+    const router = useRouter()
+    const menuRef = useRef(null)
+    const isActive = href => href === '/' ? router.asPath === '/' : router.asPath?.startsWith(href)
+
+    useEffect(() => {
+        if (!isOpen) return
+
+        const handleKeyDown = event => {
+            if (event.key === 'Escape') setIsOpen(false)
+        }
+        const handlePointerDown = event => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsOpen(false)
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('pointerdown', handlePointerDown)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('pointerdown', handlePointerDown)
+        }
+    }, [isOpen])
 
     return (
-        <div className="md:hidden">
+        <div className="md:hidden" ref={menuRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-[#0d9488] hover:text-[#ea580c] transition-colors"
+                className="p-2 text-[#cc7a60] hover:text-[#b4654d] transition-colors"
                 aria-label={isOpen ? "关闭菜单" : "打开菜单"}
+                aria-expanded={isOpen}
+                aria-controls="deeprouter-mobile-menu"
             >
                 {isOpen ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,12 +204,15 @@ function MobileMenuButton({ links, telegramUrl, twitterUrl, onSearch }) {
 
             {/* 移动端菜单 - 终端风格 */}
             {isOpen && (
-                <div className="absolute top-16 left-0 right-0 bg-[#FAFAFA] border-b border-[#E5E5E5] py-4 px-4 shadow-lg">
-                    {links?.filter(link => link.show).map((link, index) => (
+                <div id="deeprouter-mobile-menu" className="absolute top-16 left-0 right-0 bg-[#FAFAFA] border-b border-[#E5E5E5] py-4 px-4 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto">
+                    {links?.filter(link => link.show !== false).map((link, index) => {
+                        const active = isActive(link.href)
+                        return (
                         <div key={index}>
                             <SmartLink
                                 href={link.href}
-                                className="flex items-center gap-2 py-3 text-[#111827] hover:text-[#cc7a60] transition-colors"
+                                className={`flex items-center gap-2 py-3 transition-colors ${active ? 'text-[#cc7a60] font-semibold' : 'text-[#111827] hover:text-[#cc7a60]'}`}
+                                aria-current={active ? 'page' : undefined}
                                 onClick={(e) => {
                                     setIsOpen(false)
                                     if (link.href === '/search') {
@@ -207,7 +240,7 @@ function MobileMenuButton({ links, telegramUrl, twitterUrl, onSearch }) {
                                 </div>
                             )}
                         </div>
-                    ))}
+                    )})}
                     {telegramUrl && (
                         <a
                             href={telegramUrl}

@@ -34,7 +34,7 @@ export default function CategoryGrid({ categories }) {
                                 <span className="text-[#1A1A1A] font-semibold ml-2">{category.name}</span>
                             </div>
                             <div className="text-[#cc7a60]">
-                                // {category.count} 篇文章
+                                {'// '}{category.count} 篇文章
                             </div>
                         </div>
                     </div>

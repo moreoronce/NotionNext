@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import CONFIG from '../config'
 
 const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
@@ -12,6 +13,11 @@ const NotionPage = dynamic(() => import('@/components/NotionPage'))
 export default function Footer({ notice }) {
     const since = siteConfig('SINCE')
     const [currentYear, setCurrentYear] = useState(since || '2024')
+    const footerBrand = siteConfig('DEEPROUTER_FOOTER_BRAND', siteConfig('TITLE'), CONFIG)
+    const footerDescription = siteConfig('DEEPROUTER_FOOTER_DESCRIPTION', siteConfig('DESCRIPTION'), CONFIG)
+    const englishUrl = siteConfig('DEEPROUTER_FOOTER_EN_URL', '', CONFIG)
+    const nowUrl = siteConfig('DEEPROUTER_FOOTER_NOW_URL', '', CONFIG)
+    const wechatQr = siteConfig('DEEPROUTER_FOOTER_WECHAT_QR', '', CONFIG)
 
     useEffect(() => {
         setCurrentYear(new Date().getFullYear())
@@ -38,11 +44,13 @@ export default function Footer({ notice }) {
                             ) : (
                                 <>
                                     <p className="text-[#4A4A4A]">
-                                        <span className="text-[#c2410c]">#</span> SkillSMP
+                                        <span className="text-[#c2410c]">#</span> {footerBrand || 'README'}
                                     </p>
-                                    <p className="text-[#666666]">
-                                        AI Skills Marketplace - 发现、学习、分享技能
-                                    </p>
+                                    {footerDescription && (
+                                        <p className="text-[#666666]">
+                                            {footerDescription}
+                                        </p>
+                                    )}
                                 </>
                             )}
                         </div>
@@ -64,41 +72,47 @@ export default function Footer({ notice }) {
                             <SmartLink href="/tag" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
                                 <span>🏷️</span> tags/
                             </SmartLink>
-                            <a href="https://en.deeprouter.org" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
-                                <span>🇺🇸</span> English Version
-                            </a>
-                            <a href="https://deeprouter.org/now" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
-                                <span>⚡</span> Now
-                            </a>
+                            {englishUrl && (
+                                <a href={englishUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                    <span>🇺🇸</span> English Version
+                                </a>
+                            )}
+                            {nowUrl && (
+                                <a href={nowUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#4A4A4A] hover:text-[#ea580c] transition-colors">
+                                    <span>⚡</span> Now
+                                </a>
+                            )}
                         </div>
                     </div>
 
                     {/* 微信公众号 */}
-                    <div>
-                        <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
-                            <span className="text-[#ea580c]">$</span>
-                            <span>follow --wechat</span>
-                        </div>
+                    {wechatQr && (
                         <div>
-                            <Image
-                                src="/wechat-qrcode.webp"
-                                alt="微信公众号二维码"
-                                width={327}
-                                height={112}
-                                className="h-28 w-auto rounded-lg"
-                            />
+                            <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#666666]">
+                                <span className="text-[#ea580c]">$</span>
+                                <span>follow --wechat</span>
+                            </div>
+                            <div>
+                                <Image
+                                    src={wechatQr}
+                                    alt="微信公众号二维码"
+                                    width={327}
+                                    height={112}
+                                    className="h-28 w-auto rounded-lg"
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* 底部版权 */}
                 <div className="border-t border-[#E5E5E5] pt-6">
                     <div className="font-mono text-xs text-[#666666] text-center">
-                        <span className="text-[#c2410c]">/*</span>
+                        <span className="text-[#c2410c]">{'/*'}</span>
                         <span className="mx-2">© {yearRange} {siteConfig('TITLE')}</span>
                         <span className="mx-2">•</span>
                         <span>Powered by <a href="https://github.com/tangly1024/NotionNext" target="_blank" rel="noopener noreferrer" className="text-[#c2410c] underline hover:text-[#ea580c]">NotionNext</a></span>
-                        <span className="text-[#c2410c] ml-2">*/</span>
+                        <span className="text-[#c2410c] ml-2">{'*/'}</span>
                     </div>
                 </div>
             </div>

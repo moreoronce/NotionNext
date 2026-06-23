@@ -17,7 +17,7 @@ export default function TagCloud({ tags }) {
                      hover:border-[#ea580c] transition-colors group"
                 >
                     <span className="text-[#cc7a60] mr-1">import</span>
-                    <span className="text-[#ea580c] group-hover:underline">'{tag.name}'</span>
+                    <span className="text-[#ea580c] group-hover:underline">{`'${tag.name}'`}</span>
                     <span className="text-[#666666] ml-2">[{tag.count}]</span>
                 </SmartLink>
             ))}

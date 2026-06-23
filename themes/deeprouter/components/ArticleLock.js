@@ -28,7 +28,7 @@ export default function ArticleLock(props) {
         <div className="w-full flex justify-center items-center py-16">
             <div className="text-center space-y-4">
                 <div className="text-[#ea580c] font-medium">
-                    <span className="text-[#666666]">// </span>
+                    <span className="text-[#666666]">{'// '}</span>
                     {locale.COMMON.ARTICLE_LOCK_TIPS}
                 </div>
                 <div className="flex">

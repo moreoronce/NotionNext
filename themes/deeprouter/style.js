@@ -7,6 +7,8 @@ import { useEffect } from 'react'
 const Style = () => {
   // 处理有序列表的 start 属性 - 修复 react-notion-x 的列表编号问题
   useEffect(() => {
+    let observerTimer = null
+
     const updateListCounters = () => {
       // 获取所有有序列表
       const lists = Array.from(document.querySelectorAll('#theme-deeprouter .notion-list-numbered'))
@@ -48,15 +50,17 @@ const Style = () => {
 
     // 监听 DOM 变化
     const observer = new MutationObserver(() => {
-      setTimeout(updateListCounters, 100)
+      if (observerTimer) clearTimeout(observerTimer)
+      observerTimer = setTimeout(updateListCounters, 100)
     })
-    const container = document.getElementById('theme-deeprouter')
+    const container = document.getElementById('article-wrapper') || document.getElementById('theme-deeprouter')
     if (container) {
       observer.observe(container, { childList: true, subtree: true })
     }
 
     return () => {
       clearTimeout(timer)
+      if (observerTimer) clearTimeout(observerTimer)
       observer.disconnect()
     }
   }, [])
@@ -152,7 +156,7 @@ const Style = () => {
       .terminal-card {
         background: var(--dr-bg-card);
         border: 1px solid var(--dr-border);
-        border-radius: 10px;
+        border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         transition: all 0.3s ease;
@@ -213,6 +217,21 @@ const Style = () => {
         background: rgba(204, 122, 96, 0.08); /* #cc7a60 极淡背景 */
         border-color: rgba(204, 122, 96, 0.4);
         color: #cc7a60;
+      }
+
+      .nav-cmd-btn.active,
+      .nav-cmd-btn[aria-current="page"] {
+        background: rgba(204, 122, 96, 0.1);
+        border-color: rgba(204, 122, 96, 0.5);
+        color: #cc7a60;
+        font-weight: 600;
+      }
+
+      #theme-deeprouter a:focus-visible,
+      #theme-deeprouter button:focus-visible,
+      #theme-deeprouter input:focus-visible {
+        outline: 2px solid rgba(204, 122, 96, 0.65);
+        outline-offset: 2px;
       }
 
       .nav-cmd-btn:active {
@@ -297,7 +316,7 @@ const Style = () => {
         padding: 0 12px;
         border: 1px solid var(--dr-border);
         border-radius: 6px;
-        background: var(--dr-card-bg);
+        background: var(--dr-bg-card);
         color: var(--dr-text-secondary);
         font-size: 14px;
         font-family: inherit;
@@ -678,6 +697,17 @@ const Style = () => {
         );
         background-size: 200px 100%;
         animation: skeleton-pulse 1.5s ease-in-out infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #theme-deeprouter *,
+        #theme-deeprouter *::before,
+        #theme-deeprouter *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
       }
 
       .article-content hr {

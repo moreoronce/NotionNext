@@ -1,14 +1,23 @@
 import SmartLink from '@/components/SmartLink'
+import LazyImage from '@/components/LazyImage'
 import TerminalCard from './TerminalCard'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 
 /**
  * 文章卡片 - JSON 模块风格
  */
-export default function PostCard({ post, index = 0 }) {
+export default function PostCard({
+    post,
+    index = 0,
+    showCover = false,
+    showPreview = true,
+    showCategory = true,
+    showTags = true
+}) {
     if (!post) return null
 
     const fileName = post.slug ? `${post.slug}.tsx` : 'module.tsx'
+    const cover = post.pageCover || post.cover || post.thumbnail
 
     return (
         <SmartLink href={post.href || `/${post.slug}`} className="block mb-4 group">
@@ -29,23 +38,33 @@ export default function PostCard({ post, index = 0 }) {
                     <span className="terminal-title font-mono">{fileName}</span>
                 </div>
 
+                {showCover && cover && (
+                    <div className="border-b border-[#E5E7EB] bg-white">
+                        <LazyImage
+                            src={cover}
+                            alt={post.title || '文章封面'}
+                            className="h-44 w-full object-cover"
+                        />
+                    </div>
+                )}
+
                 {/* JSON 模块风格内容 - 带行号 */}
                 <div className="terminal-body font-mono text-sm p-4">
                     <CodeRow line={1}>
                         <div className="mb-0">
-                            <span style={{ color: 'lab(52.0183% 66.11 -78.2316)' }}>name: </span>
+                            <span className="text-[#cc7a60]">name: </span>
                             <h2 className="inline font-mono font-semibold text-[#111827] text-base">
-                                '{post.title}'
+                                {`'${post.title}'`}
                             </h2>
                         </div>
                     </CodeRow>
 
-                    {post.summary && (
+                    {showPreview && post.summary && (
                         <CodeRow line={2}>
                             <div className="mb-0">
                                 <span className="text-[#cc7a60]">desc: </span>
                                 <span className="font-mono text-[#4B5563] line-clamp-2 inline max-w-[90%] align-top">
-                                    '{post.summary}'
+                                    {`'${post.summary}'`}
                                 </span>
                             </div>
                         </CodeRow>
@@ -58,12 +77,12 @@ export default function PostCard({ post, index = 0 }) {
 
                     {/* Tags & Categories 互换位置：Tags在前，Category在后 */}
                     <div className="flex items-center gap-2">
-                        {post.tags?.slice(0, 3).map((tag, idx) => (
+                        {showTags && post.tags?.slice(0, 3).map((tag) => (
                             <span key={tag} className="text-xs text-[#6B7280] hover:text-[#cc7a60] transition-colors">
                                 #{tag}
                             </span>
                         ))}
-                        {post.category && (
+                        {showCategory && post.category && (
                             <span className="px-2 py-0.5 rounded text-xs border border-[#E5E7EB] bg-gray-50 text-[#4B5563]">
                                 {post.category}
                             </span>
