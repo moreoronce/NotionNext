@@ -3,5 +3,6 @@
  */
 module.exports = {
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
+  // AI 聊天机器人相关配置已迁移至 conf/ai.config.js
 
 }
