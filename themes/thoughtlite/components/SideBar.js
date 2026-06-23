@@ -1,4 +1,4 @@
-﻿import Live2D from '@/components/Live2D'
+
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
@@ -118,7 +118,7 @@ export const SideBar = props => {
       {/* 宠物挂件 */}
       <aside
         className={`rounded overflow-hidden mb-6 ${LAYOUT_VERTICAL ? 'hidden md:fixed right-4 bottom-20' : ''}`}>
-        <Live2D />
+
       </aside>
     </>
   )

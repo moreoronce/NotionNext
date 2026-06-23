@@ -11,7 +11,7 @@ import { generateRss, shouldGenerateRssForLocale } from '@/lib/utils/rss'
 import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
-import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+
 import pLimit from 'p-limit'
 import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 
@@ -104,14 +104,14 @@ export async function getStaticProps(req) {
   if (isBuildLifecycle) {
     // 生成robotTxt
     generateRobotsTxt(props)
+
     // 生成Feed订阅
     if (shouldGenerateRssForLocale({ locale })) {
       await generateRss(props)
     }
     // 生成
     generateSitemapXml(props)
-    // 检查数据是否需要从algolia删除
-    await checkDataFromAlgolia(props)
+
     if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
       // 生成重定向 JSON
       generateRedirectJson(props)

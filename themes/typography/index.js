@@ -23,7 +23,7 @@ const NotionPage = dynamic(() => import('@/components/NotionPage'), {
 })
 
 const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
+  () => import('@/components/PageFindSearchModal'),
   { ssr: false }
 )
 

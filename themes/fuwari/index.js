@@ -30,7 +30,7 @@ import { isCommentServiceConfigured } from './utils/commentEnabled'
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
 const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
+  () => import('@/components/PageFindSearchModal'),
   { ssr: false }
 )
 const Lenis = dynamic(() => import('@/components/Lenis'), { ssr: false })

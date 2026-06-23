@@ -15,7 +15,7 @@ import Catalog from './components/Catalog'
 import ProfileHome from './components/ProfileHome'
 
 const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
+  () => import('@/components/PageFindSearchModal'),
   { ssr: false }
 )
 
