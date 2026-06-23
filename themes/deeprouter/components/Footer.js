@@ -18,6 +18,8 @@ export default function Footer({ notice }) {
     const englishUrl = siteConfig('DEEPROUTER_FOOTER_EN_URL', '', CONFIG)
     const nowUrl = siteConfig('DEEPROUTER_FOOTER_NOW_URL', '', CONFIG)
     const wechatQr = siteConfig('DEEPROUTER_FOOTER_WECHAT_QR', '', CONFIG)
+    const wechatQrWidth = 327
+    const wechatQrHeight = 112
 
     useEffect(() => {
         setCurrentYear(new Date().getFullYear())
@@ -92,13 +94,16 @@ export default function Footer({ notice }) {
                                 <span className="text-[#ea580c]">$</span>
                                 <span>follow --wechat</span>
                             </div>
-                            <div>
+                            <div
+                                className="relative w-full max-w-[327px] overflow-hidden rounded-lg"
+                                style={{ aspectRatio: `${wechatQrWidth} / ${wechatQrHeight}` }}
+                            >
                                 <Image
                                     src={wechatQr}
                                     alt="微信公众号二维码"
-                                    width={327}
-                                    height={112}
-                                    className="h-28 w-auto rounded-lg"
+                                    width={wechatQrWidth}
+                                    height={wechatQrHeight}
+                                    className="block h-full w-full object-contain"
                                 />
                             </div>
                         </div>

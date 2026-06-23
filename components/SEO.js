@@ -19,6 +19,8 @@ const SEO = props => {
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
   const webFontUrl = siteConfig('FONT_URL')
+  const webFontUrls = Array.isArray(webFontUrl) ? webFontUrl : webFontUrl ? [webFontUrl] : []
+  const usesGoogleFonts = webFontUrls.some(url => url?.includes('fonts.googleapis.com'))
 
 
 
@@ -138,10 +140,10 @@ const SEO = props => {
       <link rel='dns-prefetch' href='//fonts.googleapis.com' />
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
-      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+      {usesGoogleFonts && <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />}
 
       {/* 字体优化：异步加载 CSS，避免阻塞渲染 */}
-      {webFontUrl && webFontUrl.map((url, index) => (
+      {webFontUrls.map((url, index) => (
         <link
           key={index}
           rel="stylesheet"
@@ -151,7 +153,7 @@ const SEO = props => {
         />
       ))}
       <noscript>
-        {webFontUrl && webFontUrl.map((url, index) => (
+        {webFontUrls.map((url, index) => (
           <link key={index} rel="stylesheet" href={url} />
         ))}
       </noscript>
