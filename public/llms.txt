@@ -1,27 +1,37 @@
 # DeepRouter
 
-DeepRouter is a personal knowledge site and blog built with NotionNext. It publishes articles, categories, tags, archives, search pages, RSS feeds, and public metadata intended to be browsed by people and AI agents.
+> DeepRouter is a Chinese-language technical blog focused on practical network engineering, home lab reliability, OpenWRT and RouterOS routing, IPv6, DNS, proxy and bypass-gateway setups, Cloudflare deployment, AI tools, Windows optimization, and occasional finance, gaming, and resource notes.
 
-## Agent Guidance
+DeepRouter is written as a field notebook: many posts start from a real failure, trace the symptoms through DNS, routing tables, CDN behavior, operating-system quirks, or deployment constraints, and end with reproducible fixes. The most useful content for agents is usually in the technical tutorials, troubleshooting posts, archive, category index, tag index, and feeds.
 
-- Use the public pages, RSS feeds, sitemap, and article content for discovery and citation.
-- Prefer canonical article URLs when referencing content.
+Agent guidance:
+- Use public pages, article content, RSS feeds, the sitemap, categories, and tags for discovery and citation.
+- Prefer canonical article URLs when referencing content, especially for troubleshooting steps.
 - Respect robots.txt, rate limits, and normal cache behavior.
 - Do not attempt to access private Notion APIs, authentication endpoints, dashboards, or unpublished content.
 - Attribute quoted or summarized content to DeepRouter and link back to the source page.
 
-## Primary URLs
+## Core Pages
 
-- [Home](https://deeprouter.org/)
-- [Archive](https://deeprouter.org/archive)
-- [Categories](https://deeprouter.org/category)
-- [Tags](https://deeprouter.org/tag)
-- [Search](https://deeprouter.org/search)
-- [Sitemap](https://deeprouter.org/sitemap.xml)
-- [Robots](https://deeprouter.org/robots.txt)
+- [Home](https://deeprouter.org/): Site entry point and latest published content.
+- [About](https://deeprouter.org/about): Author background, interests, and content scope.
+- [Archive](https://deeprouter.org/archive): Chronological list of posts.
+- [Categories](https://deeprouter.org/category): Topic-based article groups.
+- [Tags](https://deeprouter.org/tag): Tag index for finer-grained discovery.
+- [Search](https://deeprouter.org/search): Site search entry point.
+
+## Representative Technical Posts
+
+- [WeChat image loading slowdown from DNS to OSPF routing](https://deeprouter.org/article/debug-wechat-image-slow-ospf-routing): Example of the site's practical network troubleshooting style.
+- [Cloudflare SaaS origin plus Worker for Pages custom domains](https://deeprouter.org/article/cloudflare-saas-worker-custom-domain-pages-proxy-guide): Deployment and CDN workaround guide.
 
 ## Feeds
 
-- [RSS](https://deeprouter.org/rss/feed.xml)
-- [Atom](https://deeprouter.org/rss/atom.xml)
-- [JSON Feed](https://deeprouter.org/rss/feed.json)
+- [RSS](https://deeprouter.org/rss/feed.xml): RSS feed for recent posts.
+- [Atom](https://deeprouter.org/rss/atom.xml): Atom feed for recent posts.
+- [JSON Feed](https://deeprouter.org/rss/feed.json): JSON Feed for recent posts.
+
+## Optional
+
+- [Sitemap](https://deeprouter.org/sitemap.xml): Machine-readable index of public pages.
+- [Robots](https://deeprouter.org/robots.txt): Crawling guidance for automated clients.
