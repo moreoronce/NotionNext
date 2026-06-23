@@ -159,7 +159,10 @@ const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
   ssr: false
 })
 
-const GlobalStyle = dynamic(() => import('./GlobalStyle').then(m => m.GlobalStyle), { ssr: true })
+const GlobalStyle = dynamic(
+  () => import('./GlobalStyle').then(m => m.GlobalStyle),
+  { ssr: true }
+)
 const IconFont = dynamic(() => import('./IconFont'), { ssr: false })
 
 export default ExternalPlugin

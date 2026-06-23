@@ -76,7 +76,8 @@ const LayoutBase = props => {
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
         id='theme-typography'
-        className={`${siteConfig('FONT_STYLE')} font-typography h-screen flex flex-col dark:text-gray-300 bg-white dark:bg-[#232222] overflow-hidden`}>
+        className={`${siteConfig('FONT_STYLE')} font-typography h-screen flex flex-col dark:text-gray-300 bg-white dark:bg-[#232222] overflow-hidden`}
+      >
         <Style />
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
@@ -93,7 +94,8 @@ const LayoutBase = props => {
             {/* 左侧内容区域 - 可滚动 */}
             <div
               id='container-inner'
-              className='h-full w-full md:px-24 overflow-y-auto scroll-hidden relative'>
+              className='h-full w-full md:px-24 overflow-y-auto scroll-hidden relative'
+            >
               {/* 移动端导航 - 显示在顶部 */}
               <div className='md:hidden'>
                 <NavBar {...props} />
@@ -215,27 +217,25 @@ const LayoutSearch = props => {
 }
 
 function groupArticlesByYearArray(articles) {
-  const grouped = {};
+  const grouped = {}
 
   for (const article of articles) {
-    const year = new Date(article.publishDate).getFullYear().toString();
+    const year = new Date(article.publishDate).getFullYear().toString()
     if (!grouped[year]) {
-      grouped[year] = [];
+      grouped[year] = []
     }
-    grouped[year].push(article);
+    grouped[year].push(article)
   }
 
   for (const year in grouped) {
-    grouped[year].sort((a, b) => b.publishDate - a.publishDate);
+    grouped[year].sort((a, b) => b.publishDate - a.publishDate)
   }
 
   // 转成数组并按年份倒序
   return Object.entries(grouped)
     .sort(([a], [b]) => b - a)
-    .map(([year, posts]) => ({ year, posts }));
+    .map(([year, posts]) => ({ year, posts }))
 }
-
-
 
 /**
  * 归档页
@@ -275,7 +275,8 @@ const LayoutSlug = props => {
 
       {!lock && post && (
         <div
-          className={`px-5 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+          className={`px-5 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}
+        >
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 
@@ -354,11 +355,13 @@ const LayoutCategoryIndex = props => {
               key={category.name}
               href={`/category/${category.name}`}
               passHref
-              legacyBehavior>
+              legacyBehavior
+            >
               <div
                 className={
                   'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-                }>
+                }
+              >
                 <i className='mr-4 fas fa-folder' />
                 {category.name}({category.count})
               </div>
@@ -387,7 +390,8 @@ const LayoutTagIndex = props => {
                 key={tag}
                 href={`/tag/${encodeURIComponent(tag.name)}`}
                 passHref
-                className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200  mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+                className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200  mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}
+              >
                 <div className='font-light dark:text-gray-400'>
                   <i className='mr-1 fas fa-tag' />{' '}
                   {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}

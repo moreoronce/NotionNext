@@ -1,4 +1,3 @@
-
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
@@ -57,12 +56,14 @@ export const SideBar = props => {
                   key={category.name}
                   href={`/category/${category.name}`}
                   passHref
-                  legacyBehavior>
+                  legacyBehavior
+                >
                   <li>
                     {' '}
                     <a
                       href={`/category/${category.name}`}
-                      className='text-sm text-[var(--tl-muted)] hover:text-[var(--tl-accent)]'>
+                      className='text-sm text-[var(--tl-muted)] hover:text-[var(--tl-accent)]'
+                    >
                       {category.name}({category.count})
                     </a>
                   </li>
@@ -83,12 +84,18 @@ export const SideBar = props => {
           <ul className='list-reset leading-normal'>
             {latestPosts?.map(p => {
               return (
-                <SmartLink key={p.id} href={`/${p.slug}`} passHref legacyBehavior>
+                <SmartLink
+                  key={p.id}
+                  href={`/${p.slug}`}
+                  passHref
+                  legacyBehavior
+                >
                   <li>
                     {' '}
                     <a
                       href={`/${p.slug}`}
-                      className='text-sm text-[var(--tl-muted)] hover:text-[var(--tl-accent)]'>
+                      className='text-sm text-[var(--tl-muted)] hover:text-[var(--tl-accent)]'
+                    >
                       {p.title}
                     </a>
                   </li>
@@ -117,9 +124,8 @@ export const SideBar = props => {
 
       {/* 宠物挂件 */}
       <aside
-        className={`rounded overflow-hidden mb-6 ${LAYOUT_VERTICAL ? 'hidden md:fixed right-4 bottom-20' : ''}`}>
-
-      </aside>
+        className={`rounded overflow-hidden mb-6 ${LAYOUT_VERTICAL ? 'hidden md:fixed right-4 bottom-20' : ''}`}
+      ></aside>
     </>
   )
 }
