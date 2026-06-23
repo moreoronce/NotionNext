@@ -36,6 +36,7 @@ export async function getStaticProps({ locale }) {
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  props.posts = props.posts?.map(cleanArchivePost)
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
@@ -56,6 +57,9 @@ export async function getStaticProps({ locale }) {
   })
 
   props.archivePosts = archivePosts
+  if (siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG) === 'deeprouter') {
+    delete props.archivePosts
+  }
   delete props.allPages
 
   return {
@@ -71,3 +75,14 @@ export async function getStaticProps({ locale }) {
 }
 
 export default ArchiveIndex
+
+function cleanArchivePost(post) {
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    href: post.href,
+    publishDate: post.publishDate,
+    date: post.date
+  }
+}

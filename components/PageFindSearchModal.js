@@ -6,6 +6,7 @@ import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
     Fragment,
+    useCallback,
     useEffect,
     useImperativeHandle,
     useRef,
@@ -45,34 +46,43 @@ export default function PageFindSearchModal({ cRef }) {
     const [isLoading, setIsLoading] = useState(false)
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [pagefind, setPagefind] = useState(null)
+    const [pagefindLoadError, setPagefindLoadError] = useState(false)
+    const [isPagefindLoading, setIsPagefindLoading] = useState(false)
 
     const inputRef = useRef(null)
     const searchTimer = useRef(null)
     const router = useRouter()
 
-    useEffect(() => {
-        // 动态加载 PageFind
-        const loadPageFind = async () => {
-            try {
-                // 使用 eval 绕过 webpack 打包，直接从浏览器加载
-                const load = new Function('url', 'return import(url)')
-                const pf = await load('/pagefind/pagefind.js')
-                console.log('PageFind module loaded:', pf)
+    const loadPageFind = useCallback(async () => {
+        if (pagefind || isPagefindLoading) return pagefind
 
-                // 初始化 PageFind
-                if (pf.init) {
-                    await pf.init()
-                    console.log('PageFind initialized successfully')
-                }
+        setIsPagefindLoading(true)
+        setPagefindLoadError(false)
+        try {
+            const pf = await import(
+                /* webpackIgnore: true */ '/pagefind/pagefind.js'
+            )
 
-                setPagefind(pf)
-                console.log('PageFind set to state')
-            } catch (e) {
-                console.warn('PageFind failed to load. It might only be available after build.', e)
+            if (pf.init) {
+                await pf.init()
             }
+
+            setPagefind(pf)
+            return pf
+        } catch (e) {
+            setPagefindLoadError(true)
+            console.warn('PageFind failed to load. It might only be available after build.', e)
+            return null
+        } finally {
+            setIsPagefindLoading(false)
         }
-        loadPageFind()
-    }, [])
+    }, [isPagefindLoading, pagefind])
+
+    useEffect(() => {
+        if (isModalOpen) {
+            void loadPageFind()
+        }
+    }, [isModalOpen, loadPageFind])
 
     /**
      * 快捷键设置
@@ -80,6 +90,7 @@ export default function PageFindSearchModal({ cRef }) {
     useHotkeys('ctrl+k', e => {
         e.preventDefault()
         setIsModalOpen(true)
+        void loadPageFind()
     })
 
     useHotkeys(
@@ -178,9 +189,10 @@ export default function PageFindSearchModal({ cRef }) {
         return {
             openSearch: () => {
                 setIsModalOpen(true)
+                void loadPageFind()
             }
         }
-    })
+    }, [loadPageFind])
 
     /**
      * 搜索
@@ -199,7 +211,8 @@ export default function PageFindSearchModal({ cRef }) {
             return
         }
 
-        if (!pagefind) {
+        const searchClient = pagefind || await loadPageFind()
+        if (!searchClient) {
             console.warn('PageFind not loaded yet')
             return
         }
@@ -207,7 +220,7 @@ export default function PageFindSearchModal({ cRef }) {
         setIsLoading(true)
         const startTime = Date.now()
         try {
-            const search = await pagefind.search(query)
+            const search = await searchClient.search(query)
             // 加载所有结果以支持分页
             const results = await Promise.all(search.results.map(r => r.data()))
 
@@ -331,7 +344,12 @@ export default function PageFindSearchModal({ cRef }) {
                     ref={inputRef}
                 />
 
-                {!pagefind && (
+                {isPagefindLoading && (
+                    <div className="text-[#6B7280] text-sm mb-2 text-center">
+                        正在加载 PageFind 索引...
+                    </div>
+                )}
+                {pagefindLoadError && (
                     <div className="text-red-500 text-sm mb-2 text-center">
                         PageFind 索引未加载 (请运行 build 生成索引)
                     </div>

@@ -5,7 +5,7 @@
 
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { createContext, useContext, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
 
@@ -45,11 +45,37 @@ const LayoutBase = props => {
     const { children } = props
     const { fullWidth } = useGlobal()
     const searchModal = useRef(null)
+    const [isSearchMounted, setIsSearchMounted] = useState(false)
+    const [shouldOpenSearch, setShouldOpenSearch] = useState(false)
+
+    const openSearch = () => {
+        setIsSearchMounted(true)
+        setShouldOpenSearch(true)
+    }
+
+    useEffect(() => {
+        if (shouldOpenSearch && searchModal.current?.openSearch) {
+            searchModal.current.openSearch()
+            setShouldOpenSearch(false)
+        }
+    }, [shouldOpenSearch, isSearchMounted])
+
+    useEffect(() => {
+        const handleKeyDown = event => {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+                event.preventDefault()
+                openSearch()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+        return () => window.removeEventListener('keydown', handleKeyDown)
+    }, [])
 
     return (
         <ThemeGlobalDeepRouter.Provider value={{ searchModal }}>
             {/* 搜索弹窗 - 使用 PageFind */}
-            <PageFindSearchModal cRef={searchModal} />
+            {isSearchMounted && <PageFindSearchModal cRef={searchModal} />}
 
             {/* CSS样式 */}
             <Style />
@@ -59,7 +85,7 @@ const LayoutBase = props => {
                 className='bg-[#FAFAFA] w-full h-full min-h-screen font-mono text-[#1A1A1A]'>
 
                 {/* 顶部导航栏 */}
-                <Header {...props} onSearch={() => searchModal.current?.openSearch()} />
+                <Header {...props} onSearch={openSearch} />
 
                 {/* 主内容区 */}
                 <main

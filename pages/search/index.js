@@ -20,7 +20,9 @@ const Search = props => {
   if (keyword) {
     filteredPosts = posts.filter(post => {
       const tagContent = post?.tags ? post?.tags.join(' ') : ''
-      const categoryContent = post.category ? post.category.join(' ') : ''
+      const categoryContent = Array.isArray(post.category)
+        ? post.category.join(' ')
+        : post.category || ''
       const searchContent =
         post.title + post.summary + tagContent + categoryContent
       return searchContent.toLowerCase().includes(keyword.toLowerCase())
@@ -47,6 +49,8 @@ export async function getStaticProps({ locale }) {
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  props.posts = props.posts?.map(cleanSearchPost)
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
@@ -60,3 +64,19 @@ export async function getStaticProps({ locale }) {
 }
 
 export default Search
+
+function cleanSearchPost(post) {
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    href: post.href,
+    summary: post.summary,
+    tags: post.tags,
+    category: post.category,
+    publishDate: post.publishDate,
+    date: post.date,
+    pageCover: post.pageCover,
+    pageCoverThumbnail: post.pageCoverThumbnail
+  }
+}

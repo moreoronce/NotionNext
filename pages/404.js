@@ -17,6 +17,15 @@ export async function getStaticProps(req) {
   const { locale } = req
 
   const props = (await fetchGlobalAllData({ from: '404', locale })) || {}
+  if (siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG) === 'deeprouter') {
+    delete props.allPages
+    delete props.allNavPages
+    delete props.allLinkPages
+    delete props.latestPosts
+    delete props.allMembers
+    delete props.allEvents
+    delete props.postCount
+  }
   return { props }
 }
 

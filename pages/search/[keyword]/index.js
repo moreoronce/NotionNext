@@ -40,7 +40,9 @@ export async function getStaticProps({ params: { keyword }, locale }) {
   } else if (POST_LIST_STYLE) {
     props.posts = props.posts?.slice(0, POSTS_PER_PAGE)
   }
+  props.posts = props.posts?.map(cleanSearchPost)
   props.keyword = keyword
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
@@ -79,7 +81,7 @@ async function filterByMemCache(allPosts, keyword) {
     const categoryContent =
       post.category && Array.isArray(post.category)
         ? post.category.join(' ')
-        : ''
+        : post.category || ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     const contentTextList = getPageContentText(post, page)
@@ -110,3 +112,20 @@ async function filterByMemCache(allPosts, keyword) {
 }
 
 export default Index
+
+function cleanSearchPost(post) {
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    href: post.href,
+    summary: post.summary,
+    tags: post.tags,
+    category: post.category,
+    publishDate: post.publishDate,
+    date: post.date,
+    pageCover: post.pageCover,
+    pageCoverThumbnail: post.pageCoverThumbnail,
+    results: post.results
+  }
+}

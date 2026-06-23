@@ -36,6 +36,7 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
     POSTS_PER_PAGE * (page - 1),
     POSTS_PER_PAGE * page
   )
+  props.posts = props.posts?.map(cleanSearchPost)
   props.keyword = keyword
   props.page = page
   delete props.allPages
@@ -55,6 +56,23 @@ export function getStaticPaths() {
   return {
     paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
     fallback: true
+  }
+}
+
+function cleanSearchPost(post) {
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    href: post.href,
+    summary: post.summary,
+    tags: post.tags,
+    category: post.category,
+    publishDate: post.publishDate,
+    date: post.date,
+    pageCover: post.pageCover,
+    pageCoverThumbnail: post.pageCoverThumbnail,
+    results: post.results
   }
 }
 
@@ -121,7 +139,7 @@ async function filterByMemCache(allPosts, keyword) {
     const categoryContent =
       post.category && Array.isArray(post.category)
         ? post.category.join(' ')
-        : ''
+        : post.category || ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
     let indexContent = [post.summary]
