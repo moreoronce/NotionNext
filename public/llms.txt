@@ -22,8 +22,13 @@ Agent guidance:
 
 ## Representative Technical Posts
 
-- [WeChat image loading slowdown from DNS to OSPF routing](https://deeprouter.org/article/debug-wechat-image-slow-ospf-routing): Example of the site's practical network troubleshooting style.
+- [Hermes agent optimization for GLM 5.2 429 and 1305 overload errors](https://deeprouter.org/article/hermes-agent-optimization-fix-glm-5-2-model-429-1305-overloaded): AI agent and model API troubleshooting.
 - [Cloudflare SaaS origin plus Worker for Pages custom domains](https://deeprouter.org/article/cloudflare-saas-worker-custom-domain-pages-proxy-guide): Deployment and CDN workaround guide.
+- [Use official TikTok on Android without removing the SIM card](https://deeprouter.org/article/use-official-tiktok-without-removing-the-sim-card-android): Android networking and regional behavior workaround.
+- [Dae installation and configuration guide](https://deeprouter.org/article/dae-installation-configuration-guide): Transparent proxy setup and network routing notes.
+- [Compilation of OpenWRT software sources](https://deeprouter.org/article/Compilation-of-OpenWRT-Software-Sources): OpenWRT package source references.
+- [RouterOS OSPF intelligent traffic split](https://deeprouter.org/article/routeros-ospf-intelligent-traffic-split): RouterOS and OSPF routing design.
+- [DNS servers guide](https://deeprouter.org/article/dns-servers-guide): DNS resolver selection and network configuration reference.
 
 ## Feeds
 
