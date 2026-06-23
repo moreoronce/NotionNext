@@ -67,6 +67,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
+    "**/*.mjs",
     ".eslintrc.js"
   ],
   "exclude": [
