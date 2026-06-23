@@ -1,0 +1,27 @@
+# DeepRouter
+
+DeepRouter is a personal knowledge site and blog built with NotionNext. It publishes articles, categories, tags, archives, search pages, RSS feeds, and public metadata intended to be browsed by people and AI agents.
+
+## Agent Guidance
+
+- Use the public pages, RSS feeds, sitemap, and article content for discovery and citation.
+- Prefer canonical article URLs when referencing content.
+- Respect robots.txt, rate limits, and normal cache behavior.
+- Do not attempt to access private Notion APIs, authentication endpoints, dashboards, or unpublished content.
+- Attribute quoted or summarized content to DeepRouter and link back to the source page.
+
+## Primary URLs
+
+- [Home](https://deeprouter.org/)
+- [Archive](https://deeprouter.org/archive)
+- [Categories](https://deeprouter.org/category)
+- [Tags](https://deeprouter.org/tag)
+- [Search](https://deeprouter.org/search)
+- [Sitemap](https://deeprouter.org/sitemap.xml)
+- [Robots](https://deeprouter.org/robots.txt)
+
+## Feeds
+
+- [RSS](https://deeprouter.org/rss/feed.xml)
+- [Atom](https://deeprouter.org/rss/atom.xml)
+- [JSON Feed](https://deeprouter.org/rss/feed.json)
