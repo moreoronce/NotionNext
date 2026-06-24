@@ -12,9 +12,11 @@ import { useEffect } from 'react'
  */
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
-  let url = siteConfig('PATH')?.length
-    ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}`
-    : siteConfig('LINK')
+  // 去除 LINK / SUB_PATH 可能存在的首尾斜杠，避免拼接出 // 双斜杠
+  const link = siteConfig('LINK').replace(/\/+$/, '')
+  const subPath = siteConfig('SUB_PATH', '').replace(/^\/+|\/+$/g, '')
+  // 子目录部署时的前缀，例如部署在 example.com/blog/ 时为 /blog
+  const basePath = siteConfig('PATH')?.length && subPath ? `/${subPath}` : ''
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -22,7 +24,11 @@ const SEO = props => {
   const webFontUrls = Array.isArray(webFontUrl) ? webFontUrl : webFontUrl ? [webFontUrl] : []
   const usesGoogleFonts = webFontUrls.some(url => url?.includes('fonts.googleapis.com'))
 
-
+  // 基于 router.asPath 计算净化后的 canonical URL：
+  // 去除 query/hash，保证 canonical 精确自指；多语言前缀在静态导出下不存在，asPath 即裸路径
+  const cleanPath = (router?.asPath || '/').split('#')[0].split('?')[0]
+  const pathSuffix = cleanPath === '/' ? '' : cleanPath
+  let url = `${link}${basePath}${pathSuffix}`
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
@@ -31,7 +37,6 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
     // 确保 image 是绝对 URL（Twitter/Facebook 需要）
     if (image && !image.startsWith('http')) {
@@ -136,7 +141,7 @@ const SEO = props => {
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateStructuredData(meta, siteInfo, url, image, AUTHOR))
+          __html: JSON.stringify(generateStructuredData(meta, siteInfo, url, image, AUTHOR, router))
         }}
       />
 
@@ -168,72 +173,160 @@ const SEO = props => {
 }
 
 /**
- * 生成结构化数据
- * @param {*} meta
- * @param {*} siteInfo
- * @param {*} url
- * @param {*} image
- * @param {*} author
- * @returns
+ * 站点发布者（Organization）
  */
-const generateStructuredData = (meta, siteInfo, url, image, author) => {
-  const baseData = {
-    '@context': 'https://schema.org',
+const buildOrganization = siteInfo => ({
+  '@type': 'Organization',
+  '@id': `${siteConfig('LINK')}/#organization`,
+  name: siteInfo?.title,
+  url: siteConfig('LINK'),
+  logo: {
+    '@type': 'ImageObject',
+    url: siteInfo?.icon
+  }
+})
+
+/**
+ * 作者（Person）
+ */
+const buildAuthor = (author, siteInfo) => ({
+  '@type': 'Person',
+  '@id': `${siteConfig('LINK')}/#person`,
+  name: author,
+  url: siteConfig('LINK')
+})
+
+/**
+ * 站点级 WebSite 实体（含站内搜索 Action）
+ */
+const buildWebSite = siteInfo => {
+  const website = {
     '@type': 'WebSite',
+    '@id': `${siteConfig('LINK')}/#website`,
     name: siteInfo?.title,
     description: siteInfo?.description,
     url: siteConfig('LINK'),
-    author: {
-      '@type': 'Person',
-      name: author
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: siteInfo?.title,
-      logo: {
-        '@type': 'ImageObject',
-        url: siteInfo?.icon
-      }
-    },
     inLanguage: siteConfig('LANG'),
-    mainEntityOfPage: siteConfig('LINK')
+    publisher: { '@id': `${siteConfig('LINK')}/#organization` }
   }
+  return website
+}
 
-  // 如果是文章页面，添加文章结构化数据
+/**
+ * 面包屑（BreadcrumbList）
+ * @param {Array<{name:string, url?:string}>} items
+ */
+const buildBreadcrumb = items => {
+  if (!items || items.length === 0) return null
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${siteConfig('LINK')}/#breadcrumb`,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      ...(item.url ? { item: item.url } : {})
+    }))
+  }
+}
+
+/**
+ * 文章（BlogPosting）
+ */
+const buildBlogPosting = (meta, siteInfo, url, image, author) => {
+  const posting = {
+    '@type': 'BlogPosting',
+    '@id': url,
+    headline: meta.title,
+    description: meta.description,
+    image: {
+      '@type': 'ImageObject',
+      url: image
+    },
+    url: url,
+    datePublished: meta.publishDay,
+    dateModified: meta.lastEditedDay || meta.publishDay,
+    author: { '@id': `${siteConfig('LINK')}/#person` },
+    publisher: { '@id': `${siteConfig('LINK')}/#organization` },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url
+    },
+    keywords: meta.tags?.join(', '),
+    articleSection: meta.category,
+    inLanguage: siteConfig('LANG'),
+    isAccessibleForFree: true
+  }
+  // 仅当存在真实字数统计时才输出，不注入虚假数据
+  if (meta.wordCount && meta.wordCount > 0) {
+    posting.wordCount = meta.wordCount
+  }
+  return posting
+}
+
+/**
+ * 生成结构化数据（@graph 数组形式）
+ * - 所有页面：Organization / WebSite / Person
+ * - 文章页：追加 BlogPosting + BreadcrumbList
+ * - 分类页 / 标签页：追加 BreadcrumbList
+ * @param {*} meta
+ * @param {*} siteInfo
+ * @param {*} url 当前页面净化后的绝对 URL
+ * @param {*} image
+ * @param {*} author
+ * @param {*} router next/router
+ * @returns
+ */
+const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
+  const link = siteConfig('LINK').replace(/\/+$/, '')
+  const graph = [
+    buildOrganization(siteInfo),
+    buildAuthor(author, siteInfo),
+    buildWebSite(siteInfo)
+  ]
+
+  const route = router?.route
+
+  // 文章页：BlogPosting + 面包屑（首页 > 分类 > 文章）
   if (meta?.type === 'Post') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: meta.title,
-      description: meta.description,
-      image: image,
-      url: url,
-      datePublished: meta.publishDay,
-      dateModified: meta.lastEditedDay || meta.publishDay,
-      author: {
-        '@type': 'Person',
-        name: author
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: siteInfo?.title,
-        logo: {
-          '@type': 'ImageObject',
-          url: siteInfo?.icon
-        }
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': url
-      },
-      keywords: meta.tags?.join(', '),
-      articleSection: meta.category,
-      inLanguage: siteConfig('LANG'),
-      isAccessibleForFree: true
+    graph.push(buildBlogPosting(meta, siteInfo, url, image, author))
+
+    const crumbItems = [{ name: siteInfo?.title || 'Home', url: link }]
+    if (meta.category) {
+      crumbItems.push({
+        name: meta.category,
+        url: `${link}/category/${meta.category}`
+      })
+    }
+    crumbItems.push({ name: meta.title })
+    const breadcrumb = buildBreadcrumb(crumbItems)
+    if (breadcrumb) graph.push(breadcrumb)
+  } else if (route === '/category/[category]' || route === '/category/[category]/page/[page]') {
+    // 分类页：面包屑（首页 > 分类）
+    const category = meta?.categoryName || router?.query?.category
+    if (category) {
+      const breadcrumb = buildBreadcrumb([
+        { name: siteInfo?.title || 'Home', url: link },
+        { name: category }
+      ])
+      if (breadcrumb) graph.push(breadcrumb)
+    }
+  } else if (route === '/tag/[tag]' || route === '/tag/[tag]/page/[page]') {
+    // 标签页：面包屑（首页 > 标签）
+    const tag = router?.query?.tag
+    if (tag) {
+      const breadcrumb = buildBreadcrumb([
+        { name: siteInfo?.title || 'Home', url: link },
+        { name: tag }
+      ])
+      if (breadcrumb) graph.push(breadcrumb)
     }
   }
 
-  return baseData
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph
+  }
 }
 
 /**
@@ -343,7 +436,8 @@ const getSEOMeta = (props, router, locale) => {
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
         category: post?.category?.[0],
-        tags: post?.tags
+        tags: post?.tags,
+        wordCount: post?.wordCount
       }
   }
 }
