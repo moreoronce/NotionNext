@@ -12,6 +12,7 @@ import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { writeLlmsTxt } from '@/lib/llms-utils'
+import { generateMarkdownFiles } from '@/lib/utils/markdown'
 
 import pLimit from 'p-limit'
 import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
@@ -117,6 +118,8 @@ export async function getStaticProps(req) {
     // 生成
     generateSitemapXml(props)
     writeLlmsTxt(props)
+    // 生成每篇文章的 Markdown（供 AI Agent 内容协商 Accept: text/markdown）
+    await generateMarkdownFiles(props)
 
     if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
       // 生成重定向 JSON
