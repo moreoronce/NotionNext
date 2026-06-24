@@ -1,6 +1,8 @@
 # DeepRouter Blog
 
-基于 [NotionNext](https://github.com/tangly1024/NotionNext) 的个人博客，使用 Notion 作为 CMS，部署在 Vercel 上。
+基于 [NotionNext](https://github.com/tangly1024/NotionNext) 的个人博客，使用 Notion 作为 CMS，静态导出部署在 [Cloudflare Pages](https://pages.cloudflare.com/) 上。
+
+线上站点：[deeprouter.org](https://deeprouter.org)
 
 ## ✨ 主题特色
 
@@ -10,25 +12,33 @@
 - 💻 **终端风格卡片** - PostCard 采用代码块样式展示文章
 - 🔤 **等宽字体** - JetBrains Mono + 中文字体优化
 - 📱 **响应式布局** - 适配桌面和移动端
+- 🤖 **AI 引擎友好** - 生成 `/llms.txt`（供 ChatGPT / Perplexity / Claude 等推理时抓取），并在 `robots.txt` 中可分别放行 AI 搜索与 AI 训练爬虫
+- ⚡ **首屏性能优化** - PageFind 搜索按需挂载，静态资源长缓存，CLS 修复
 
 ## 🚀 最新更新
 
-### v4.9.2-deeprouter (2026-01-12)
+### v4.10.2-deeprouter (2026-06-24)
 
-#### 文章页优化
-- ✅ **代码块样式** - 深色主题 `prism-okaidia`，工具栏按钮修复
-- ✅ **列表行间距** - 减小到 2px，更紧凑
-- ✅ **标题锚点** - 图标移至文本末尾，hover 时显示
-- ✅ **目录导航** - 修复 TOC 链接 ID 匹配问题
-- ✅ **图片占位符** - 骨架屏动画，防止布局跳动
+#### AI 引擎友好（新增能力）
+- ✅ **`/llms.txt` 生成** - 为 ChatGPT / Perplexity / Claude 等提供精简站点地图（`pages/llms.txt.js`、`lib/llms-utils.js`）
+- ✅ **`robots.txt` AI 策略** - 区分「AI 搜索」与「AI 训练」两类爬虫，可单独开关（`lib/utils/robots.txt.js`）
+- ✅ **GEO 配置文件** - 新增 `conf/geo.config.js`，集中管理 llms.txt 与爬虫策略开关
+- ✅ **Meta 地理标签** - `components/SEO.js` 注入 region/country/placename 标签
+- ✅ **环境变量** - `.env.example` 新增 `NEXT_PUBLIC_LLMS_TXT_*`、`NEXT_PUBLIC_GEO_*` 系列变量
 
-#### 分类/标签页
-- ✅ **终端风格** - 命令行样式标题 (`$ ls ./categories/`)
-- ✅ **文件卡片** - 模拟代码文件的分类展示
+> ℹ️ 说明：`llms.txt` 对 **Google AI Overviews 无效**（[Google 官方明确](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)），主要受益对象是 ChatGPT / Perplexity / Claude 等第三方 AI 引擎的「推理时抓取」。Google AI 搜索仍依赖核心搜索索引 + 基础 SEO。
 
-#### 页脚优化
-- ✅ **动态公告** - 从 Notion 读取公告内容
-- ✅ **动态版权年份** - 自动更新当前年份
+#### 性能优化（PSI / LCP）
+- ✅ **PageFind 按需挂载** - 搜索弹窗改为点击 / `Ctrl+K` 后才加载，减少首屏 JS（`themes/deeprouter/index.js`、`components/PageFindSearchModal.js`）
+- ✅ **数据 props 精简** - 搜索 / 归档页裁剪传给前端的数据字段，降低 hydration 成本（`lib/db/SiteDataApi.js`、`pages/search/*`、`pages/archive/index.js`）
+- ✅ **CLS 布局偏移修复** - 页脚微信二维码图加 `aspect-ratio` 容器，避免图片加载位移（`themes/deeprouter/components/Footer.js`）
+- ✅ **字体预连接按需化** - 仅在使用 Google Fonts 时才注入 preconnect（`components/SEO.js`）
+- ✅ **Font Awesome 加载优化** - 按需注入，避免无条件阻塞（`pages/_document.js`）
+
+#### 主题配置
+- ✅ **Header / Footer / PostCard 重构** - deeprouter 主题组件样式与交互打磨（`themes/deeprouter/components/*`）
+
+> 历史版本：v4.9.2-deeprouter (2026-01-12) - 代码块样式、列表行间距、标题锚点、目录导航、图片占位符、终端风格分类页、动态公告与版权年份。
 
 ## 📁 项目结构
 
@@ -43,6 +53,19 @@ themes/deeprouter/
 │   ├── CategoryGrid.js   # 分类网格
 │   ├── TableOfContents.js # 文章目录
 │   └── ...
+
+conf/
+├── geo.config.js         # GEO / AI 搜索优化配置（llms.txt、爬虫策略）
+
+lib/
+├── llms-utils.js         # /llms.txt 内容生成逻辑
+└── utils/
+    └── robots.txt.js     # robots.txt 生成（含 AI 爬虫策略）
+
+pages/
+├── index.js              # 首页（静态导出 + ISR）
+├── llms.txt.js           # /llms.txt 路由
+└── [prefix]/[slug]/      # 文章详情页
 ```
 
 ## ⚙️ 配置
@@ -50,8 +73,18 @@ themes/deeprouter/
 ### 环境变量
 
 ```env
+# 必填
 NOTION_PAGE_ID=你的Notion页面ID
+
+# GEO / AI 搜索优化（可选，以下为默认值）
+NEXT_PUBLIC_LLMS_TXT_ENABLED=true
+NEXT_PUBLIC_LLMS_TXT_POST_LIMIT=80
+NEXT_PUBLIC_GEO_AI_SEARCH_ENABLED=true
+NEXT_PUBLIC_GEO_AI_TRAINING_ENABLED=true
+NEXT_PUBLIC_GEO_REGION=CN
 ```
+
+完整变量见 `.env.example`。
 
 ### blog.config.js
 
@@ -73,11 +106,20 @@ npm run dev
 
 # 构建生产版本
 npm run build
+
+# 静态导出（部署到 Cloudflare Pages）
+npm run build  # next.config.js 中已开启 output: 'export'
 ```
 
 ## 📦 部署
 
-推送到 GitHub 后，Vercel 会自动触发部署。
+构建产物输出到 `out/`，部署到 **Cloudflare Pages**：
+
+1. 在 Cloudflare Pages 创建项目，连接 GitHub 仓库
+2. 构建命令：`npm run build`，输出目录：`out`
+3. 推送到 GitHub 后自动触发部署
+
+> 缓存策略可通过仓库根目录的 `public/_headers` 文件自定义（Cloudflare Pages 原生支持）。
 
 ## 🙏 致谢
 
