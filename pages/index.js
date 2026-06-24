@@ -11,6 +11,7 @@ import { generateRss, shouldGenerateRssForLocale } from '@/lib/utils/rss'
 import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
+import { writeLlmsTxt } from '@/lib/llms-utils'
 
 import pLimit from 'p-limit'
 import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
@@ -115,6 +116,7 @@ export async function getStaticProps(req) {
     }
     // 生成
     generateSitemapXml(props)
+    writeLlmsTxt(props)
 
     if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
       // 生成重定向 JSON

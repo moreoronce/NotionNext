@@ -61,6 +61,7 @@ const SEO = props => {
       <meta charSet='UTF-8' />
       <title>{title}</title>
       <link rel="canonical" href={url} />
+      <link rel='alternate' type='text/plain' href={`${siteConfig('LINK')}/llms.txt`} title='llms.txt' />
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
@@ -91,6 +92,9 @@ const SEO = props => {
       <meta httpEquiv='content-language' content={siteConfig('LANG')} />
       <meta name='geo.region' content={siteConfig('GEO_REGION', 'CN')} />
       <meta name='geo.country' content={siteConfig('GEO_COUNTRY', 'CN')} />
+      {siteConfig('GEO_PLACENAME', '', NOTION_CONFIG) && (
+        <meta name='geo.placename' content={siteConfig('GEO_PLACENAME', '', NOTION_CONFIG)} />
+      )}
       {/* Open Graph 元数据 */}
       <meta property='og:locale' content={lang} />
       <meta property='og:title' content={title} />
@@ -190,7 +194,9 @@ const generateStructuredData = (meta, siteInfo, url, image, author) => {
         '@type': 'ImageObject',
         url: siteInfo?.icon
       }
-    }
+    },
+    inLanguage: siteConfig('LANG'),
+    mainEntityOfPage: siteConfig('LINK')
   }
 
   // 如果是文章页面，添加文章结构化数据
@@ -221,7 +227,9 @@ const generateStructuredData = (meta, siteInfo, url, image, author) => {
         '@id': url
       },
       keywords: meta.tags?.join(', '),
-      articleSection: meta.category
+      articleSection: meta.category,
+      inLanguage: siteConfig('LANG'),
+      isAccessibleForFree: true
     }
   }
 

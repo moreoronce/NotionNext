@@ -1,42 +1,103 @@
-# DeepRouter
+# Deep Router
+> 探索前沿网络技术，网络优化技术分享。路由器配置、OpenWRT、网络监控管理、DNS优化、IPv6优化、游戏性能提升及HomeLab应用，助您打造安全、高效的家庭网络环境与出海体验。详尽的技术文章和应用推荐，提升网络配置能力，推荐最佳工具和应用，分享网络问题解决思路。
+Canonical site: https://deeprouter.org
+Primary language: zh-CN
+Author / publisher: Yawatasensei
+Purpose: help search engines, answer engines, and LLM agents identify canonical public content for citation and retrieval.
+## Core
+- [Home](https://deeprouter.org): Site homepage and latest updates
+- [Sitemap](https://deeprouter.org/sitemap.xml): Complete crawlable URL index
+- [RSS feed](https://deeprouter.org/rss/feed.xml): Fresh public posts when RSS is enabled
+## Content
+- [Hermes Agent 优化：解决GLM-5.2模型429(1305 overloaded)](https://deeprouter.org/article/hermes-agent-optimization-fix-glm-5-2-model-429-1305-overloaded): Hermes Agent 使用 zai/glm-5.2 Coding Plan 后疯狂吃 429？换 key、换 endpoint、降请求长度全没用？本文记录了一次从假限流到真凶（system prompt 内容过滤 + 客户端指纹检测）的完整排查，并给出了不改磁盘、只改请求路径的 Provider-gated 方案。; Category: 技术分享; Tags: 开发, AI, NodeJS, Javascript, LLM, AGENT
+- [解决微信图片加载缓慢：从DNS到OSPF路由的问题排查](https://deeprouter.org/article/debug-wechat-image-slow-ospf-routing): 使用 Dae + OSPF 分流时，绑定国外手机号的微信图片加载异常缓慢？本文记录了一次从应用层到网络层的完整排查过程，揭示了腾讯云海外 CDN 节点被错误路由的隐藏陷阱，并提供了针对性的解决方案。; Category: 技术分享; Tags: 旁路由, DNS, 防火墙, 家庭网络, RouterOS, Dae, 软路由
+- [Windows Alma 太卡？ 我有特殊的使用技巧](https://deeprouter.org/article/fix-alma-typing-lag-windows-electron-optimization): Windows 上使用 Alma 感觉打字不跟手、滚动掉帧？本文分享一套基于 Chromium 底层的启动参数配置（OpenGL 直通 + 8GB 内存解锁），强制绕过 DirectX 转换层，解决 Electron 应用的输入延迟问题，让你的 AI 助手满血复活。; Category: 技术分享; Tags: 工具, AI, NodeJS, Windows, Javascript, Gemini, Claude
+- [Cloudflare SaaS回源 + Worker实现国内域名访问Pages完整指南](https://deeprouter.org/article/cloudflare-saas-worker-custom-domain-pages-proxy-guide): 使用 Cloudflare for SaaS 和 Workers，让国内注册的域名无需备案也能享受 Cloudflare CDN 加速访问 Pages 托管的网站; Category: 技术分享; Tags: 建站, DNS, Cloudflare, Javascript, Notion
+- [摩根士丹利邢自强2026年1月15日最新会议纪要](https://deeprouter.org/article/morgan-stanley-robin-xing-meeting-minutes-20260115): 摩根士丹利中国首席经济学家邢自强在金麒麟论坛发表2026年展望演讲。核心观点包括：（1）中国科创三大优势——产业链集群、理工科人才红利、超大市场规模——使竞争对手难以复制；（2）中美AI发展各有千秋，中国以轻量化模型快速商业化应对算力短板；（3）人形机器人、生物制药等前沿领域中国占据主导；（4）传统行业底牌（稀土、锂电等）确保出口份额持续上升；（5）建议"...; Category: 新闻分享; Tags: 金钱, 财经
+- [摩根士丹利「周期论见」2026年展望会议纪要](https://deeprouter.org/article/morgan-stanley-2026-outlook-finance-transport-commodities): 摩根士丹利2026年1月14日「周期论见」会议要点：(1) 金融板块进入正循环，央行态度从「引导下行」转向「维持低位」，预计三年利率反弹50-70bp；(2) 保险寿险优于财险，险资2026年增配权益1万亿+；(3) 证券关注IPO恢复、机构化、行业整合三大主题；(4) 交运航空/油运上行周期，供给侧约束为核心支撑；(5) 原材料看好铜铝，印尼电解铝受电厂...; Category: 新闻分享; Tags: 金钱, 新闻, 财经
+- [范为（申万宏源）：黄金投资的五大定价模型与未来展望](https://deeprouter.org/article/swhy-fan-wei-gold-investment-strategy): 申万宏源范为详述黄金投资框架：基于全球宏观流动性（马歇尔K值）、经济周期（滞胀）、实际利率（TIPS）及风险事件（CDS/战争）构建五大定价模型。在信用货币体系面临“特里芬难题”的当下，解析黄金作为货币之锚的长期配置价值。; Category: 新闻分享; Tags: 金钱, 财经
+- [如何安全删除Windows 11里的Edge浏览器？](https://deeprouter.org/article/how-to-safely-remove-edge-windows-11): 以前我们为了干掉Edge，往往需要动用一些「暴力手段」：删除系统文件、改注册表权限、或者运行一些不知名作者编写的强力卸载脚本。这些方法虽然有效，但副作用明显——不仅可能破坏系统完整性，导致Windows Update报错，甚至会误删依赖Edge内核（WebView2）的第三方应用。; Category: 工具分享; Tags: 工具, Windows, 浏览器, PowerShell
+- [Alma Plugin: Alma Telegram Bridge](https://deeprouter.org/article/Alma-Telegram-Bridge-plugin): 一款将 Alma 与 Telegram 无缝连接的插件。; Category: 工具分享; Tags: ChatGPT, AIGC, Javascript, LLM, Gemini, Claude
+- [大摩内部闭门会纪要：开门红后的冷思考与新机遇 (2026.01.12)](https://deeprouter.org/article/morgan-stanley-internal-meeting-20260112-insights-and-opportunities): 摩根士丹利（Morgan Stanley）最新闭门会指出，2026年开年市场呈现“开门红”，人民币破7、A股活跃、外资大幅回流（12月净流入140亿美元）。但宏观层面“投资强、消费弱”的格局未变，通缩压力依然挥之不去。最大的亮点在于香港楼市已确立上行周期（预计2026年涨10%），这也为大陆楼市政策（建议大力度贴息）提供了重要启示。; Category: 新闻分享; Tags: 金钱, 财经
+- [漫画《大剑Claymore》典藏版资源](https://deeprouter.org/article/claymore-manga-collectors-edition-mobi): 《大剑 Claymore》典藏版mobi漫画资源，高清黑白全27卷，日本经典黑暗奇幻漫画，八木教广经典之作完整收录。夸克网盘。; Category: 资源分享; Tags: 资源, 漫画
+- [付鹏：投资——逆天改命与守成保值 (2026/1/8 抖音内容整理)](https://deeprouter.org/article/fu-peng-wealth-growth-vs-preservation-20260108): 本文档整理自付鹏先生重回抖音后（2026年1月8日）的深度分析。核心探讨了不同资金体量下的投资策略差异、房地产定价逻辑的根本性转变，以及专业投资者应具备的认知体系。文章内容由Alma进行总结。; Category: 新闻分享; Tags: 金钱, 财经, 文字
+- [Antigravity反向代理指南](https://deeprouter.org/article/antigravity-reverse-proxy-guide): 如果想在 Antigravity 之外的客户端（如Cherry Studio、Alma等Agent）中调用这些模型，该怎么办？本文将介绍 两种反向代理方案，教你把 Antigravity 内置的Gemini / Claude能力「导出」为标准API，供第三方应用自由调用。; Category: 工具分享; Tags: AIGC, Gemini, Claude, LLM, 工具
+- [NotionNext优化：移除 Clerk 组件以提升加载速度](https://deeprouter.org/article/notionnext-remove-clerk-auth): 本文详细介绍如何从代码层面彻底移除NotionNext的Clerk验证模块及个人中心部分相关页面，精简项目依赖和Next.JS生成的Javascript文件大小，显著提升博客在国内的加载速度和访问体验。; Category: 技术分享; Tags: 建站, Javascript, Notion
+- [Realtek瑞昱 RTL9210主控的量产工具下载（夸克网盘）](https://deeprouter.org/article/realtek-rtl9210-usb-controller-mass-production-tool): RTL9210专用固件烧录与控制器配置工具（支持USB转NVMe/SATA协议） ，适用于海康威视MDC1、MD202等使用RTL9210主控的硬盘盒。; Category: 工具分享; Tags: 工具, Windows
+- [Windows Command Palette 添加绿色版软件索引指南](https://deeprouter.org/article/windows-command-palette-portable-apps-indexing-guide): 在Windows Command Palette中，绿色版的软件、单独的可执行文件（*.exe）或者是未写入注册表的软件默认无法在Command Palette中被查找到，这篇文章就是旨在解决这个问题，让绿色版的软件、单独的可执行文件（*.exe）或者是未写入到注册表的软件也可以被Windows Command Palette索引并使用。; Category: 工具分享; Tags: 工具, Windows
+- [Daed 1.5.1版本更新了什么？](https://deeprouter.org/article/whats-new-in-daed-1-5-1): 历经半年没有更新的Daed，在Dae发布1.1.0rc1之后2个月，终于刷了一大波的版本号，在废弃原有版本号的基础上，从0.5.0刷到了1.5.1版本，同步更新了上游Dae-core以及Dae-Wing，让我们来看看具体在功能上都有什么更新内容。; Category: 新闻分享; Tags: Linux, Debian, 旁路由, IPV6, DNS, NAT, Dae, 软路由
+- [EasyTier内网穿透及组网教程](https://deeprouter.org/article/easytier-intranet-penetration-networking-guide): 在外出的时间，家里的网络维护以及内网数据资料的获取成为了一个新的难题。之前我也有尝试过使用Tailscale以及Zerotier等方式进行内网穿透回家，但是由于Zerotier和Tailscale的中心服务器都是在国外，同时父母家那边的网络由于是社区宽带，已经不知道NAT了多少次，所以远程管理的效果还差也很折磨。这次发现了一个新的内网穿透软件：EasyTi...; Category: 技术分享; Tags: Debian, IPV6, 家庭网络, 内网穿透
+- [2025年国内OpenWRT主流固件项目对比](https://deeprouter.org/article/ openwrt-third-party-firmware-china-comparison-guide): 从2018年我开始接触LEDE固件开始，到现在稳定使用ImmortalWRT作为软路由（旁路网关）的生产环境固件，中间也使用过各种OpenWRT的第三方固件。这些固件大多是在官方OpenWRT的基础上进行定制开发，提供更贴合国内用户使用习惯的功能。今天这篇文章，主要是对目前主流的第三方OpenWRT固件进行梳理与介绍，算是一篇OpenWRT入门的文章，提供...; Category: 技术分享; Tags: Openwrt, 旁路由, 软路由
+- [《怪物猎人：荒野》帧数优化指南：通过Config.ini参数调整提升帧数](https://deeprouter.org/article/improve-monster-hunter-wilds-fps-by-modifying-config-ini): 《怪物猎人：荒野》已经发售4天，PC（Steam）版本的优化一言难尽，5600+3070高特效2K分辨率情况下，FPS只有60帧出头，而且还会伴随各种多边形渲染错误。本文将通过修改《怪物猎人：荒野》配置文件config.ini的方式，提高CPU的利用率，以及对渲染参数优化，提高游戏FPS帧数。; Category: 技术分享; Tags: 游戏, Steam
+- [OpenWRT路由动态域名解析(DDNS)配置指南｜no-ip.com实战教程](https://deeprouter.org/article/openwrt-ddns-configuration-noip-tutorial): 手把手教你通过OpenWRT路由器配置no-ip.com动态域名解析，解决家庭宽带动态公网IP远程访问难题。内含DDNS服务原理深度解析、端口转发配置技巧、IP检测异常排查方案，以及NAS/摄像头安全暴露的最佳实践，适用于华硕/小米刷机路由器的网络管理员。; Category: 技术分享; Tags: Openwrt, DDNS, 软路由
+- [MikroTik RouterOS 7.18更新内容](https://deeprouter.org/article/routeros-7-18-update-ipv6-btrfs-5g-hardware-optimizations): MikroTik RouterOS 7.18核心升级详解：IPv6 FastTrack加速、BTRFS高级存储支持、5G/LTE增强与硬件卸载优化实战指南，含性能实测数据/安全更新清单/具体配置样例。; Category: 新闻分享; Tags: RouterOS, IPV6, 旁路由, 家庭网络, 防火墙, 软路由, Docker
+- [Windows下使用Docker自建Vaultwarden密码管理器](https://deeprouter.org/article/self-host-vaultwarden-with-docker-on-windows): 这篇文章主要介绍在Windows环境下，通过使用Docker搭建Vaultwarden密码管理器的方法，以及通过Cloudflare Tunnel实现内网穿透，提供给移动端设备在外使用。同时也涵盖通过使用Onedrive进行Vaultwarden数据库文件备份的方法。; Category: 技术分享; Tags: Docker, Cloudflare, 家庭网络, Windows
+- [Debian 10通过systemd-resolved修改DNS](https://deeprouter.org/article/how-to-change-dns-in-debian-10): 过年时候在CoalCloud的服务器到期忘了续费，结果机器关停。续费之后发现Caddy的反代无论如何都无法生效，查看日志发现是无法申请到域名的证书，无法解析letsencrypt的域名。直接修改/etc/resolve.conf 又无法保存，发现是一个链接文件。尽管直接删除链接文件之后，重新新建一个resolve.conf 可以解决问题，但是还是想在根源上...; Category: 技术分享; Tags: Linux, Debian, DNS
+- [RouterOS如何直接访问光猫](https://deeprouter.org/article/how-to-access-optical-modem-directly-from-routeros): 最近在折腾IPTV的时候发现，每次都需要拔掉PVE上连接电脑端口的网线，插到光猫上才能访问光猫的管理页面，过程太麻烦，所以整理了一下RouterOS(ROS)如何在不插拔网线的情况下，直接访问光猫的管理页面方法，供大家参考。; Category: 技术分享; Tags: 家庭网络, RouterOS, NAT, 防火墙, 软路由
+- [Follow for Android](https://deeprouter.org/article/follow-for-android): 最近一直通过Follow浏览订阅的RSS、Twitter以及Youtube频道等等，真的很方便，有一种重新回到将近20年前，使用Google Reader那种时候的感觉。Follow一直没有推出Android的App，需要使用网页版。但是对于这种高频使用的服务，我天生希望使用App的方式，所以这次又整了个活，用Tauri通过Webview的方式将Follo...; Category: 工具分享; Tags: Android, 开发, 工具
+- [Android免拔SIM卡使用官方TikTok](https://deeprouter.org/article/use-official-tiktok-without-removing-the-sim-card-android): TikTok（抖音国际版或者洋抖）在中国无法正常使用，原因在于TikTok会检测SIM卡的国家代码，若为中国大陆或香港用户则会直接提示“TikTok 网络错误”或无法使用完整功能，即便已经使用纯净IP的家宽节点。目前常见的解决方法包括拔除SIM卡或修改TikTok应用，即所谓的解锁版。今天，我们将介绍一种无需拔卡即可使用官方TikTok的方法。; Category: 工具分享; Tags: Android, 工具, 澎湃OS, MIUI
+- [使用Caddy反向代理加速NotionNext博客图片访问](https://deeprouter.org/article/caddy-reverse-proxy-for-notionnext-image-acceleration): NotionNext默认使用的是Notion图床。Notion在国内没有服务器，所以通过Notion.so域名请求的图片资源文件在国内的访问速度不是很好，访问延迟较高，我们可以通过在自己云服务器使用Caddy反向代理的方式加快Notion.so的图片访问，从而提高使用NotionNext的博客在国内的访问速度与用户体验。; Category: 技术分享; Tags: Linux, 建站, Caddy, Notion
+- [使用Pipedream同步RSS至Twitter(X.com)](https://deeprouter.org/article/pipedream-rss-to-twitter-x-sync): 之前使用过IFTTT和Dlvr.it进行RSS到Twitter的同步，现在这两个平台都已经收费，无法继续白嫖。在尝试同步RSS到BlueSky的时候发现了PipeDream这个网站，允许用户使用Python或者NodeJS搭建简单的工作流，所以理论上也是可以将RSS同步到Twitter，例如个人博客、豆瓣在看在读等等支持通过RSS Feed输出的信息流。在...; Category: 技术分享; Tags: 工具, Twitter, NodeJS, Workflow, Javascript
+- [我订阅的服务](https://deeprouter.org/aff): 这里是我所订阅的服务清单，也算是做推广的一个页面。你可以在这个页面看到我的订阅计划，所选套餐，到期时间以及备注信息等等来决定你是否使用该服务。
+- [OpenWRT配置Bird使用OSPF国内外动态路由分流](https://deeprouter.org/article/openwrt-bird-ospf-traffic-split-china): 之前写过一篇关于RouterOS上使用OSPF进行国内外动态路由分流的文章，当时就在想，国内使用RouterOS作为主路由的人群应该不是很多，大多数的人有这个需要的人，使用的主路由系统应该都是OpenWRT或者其衍生版本。今天的文章就把之前的坑补上，将在OpenWRT系统中，使用Bird实现OSPF动态路由的国内外分流。; Category: 技术分享; Tags: Openwrt, 旁路由, 家庭网络, OpenClash, 软路由
+- [Windows 11 24H2卸载Xbox Game Bar](https://deeprouter.org/article/uninstall-xbox-game-bar-in-windows): 这个月的NextDNS免费额度居然用超了，在有AdGuard Home做过滤，并且已经做DNS分流的情况下，30万次请求25天被用完，这确实有点超过我的意料。查看NextDNS的数据统计，发现请求最多的是catalog.gamepass.com 。查询之后发现这个是Windows里Xbox Game Bar发出的请求。行，今天就卸载了你Xbox Game...; Category: 技术分享; Tags: Windows, DNS, 游戏, PowerShell
+- [NotionNext博客精简优化](https://deeprouter.org/article/optimization-notionnext-blog): 最近几天一直在尝试对博客进行优化。博客是使用NotionNext，部署在Vercel上。NotionNext是我用过最舒服的博客程序之一。但NotionNext为了满足更普遍插件及主题需求，默认情况下需要加载很多的JS，这篇文章主要就是将我的优化过程进行记录，包括博客加载速度与SEO优化。同时也记录一下我这一年写博客的一些感想。; Category: 技术分享; Tags: 建站, 开发, SEO, NodeJS, Javascript, Notion
+- [流放之路2读图卡死解决方案](https://deeprouter.org/article/poe2-windows11-24h2-cpu-freeze-fix): 《流放之路2》Early Access发售一周，游戏体验优秀，但在Windows 11 24H2系统中，加载阶段CPU占用100%导致系统假死问题频发。现有解决方案如使用BES限制CPU占用或减少CPU核心数，虽能缓解问题，但影响游戏性能且需手动操作。Github上的开源工具PoEUncrasher可完美解决此问题，为玩家提供流畅体验，直至GGG官方修复。...; Category: 工具分享; Tags: 游戏, 资源, 工具, Windows, Steam
+- [OpenWRT配置宽带拨号AC指定Bras避免CGNAT](https://deeprouter.org/article/openwrt-configure-broadband-dial-ac-avoid-cgnat): 由于被电信分配100开头的CGNAT地址（大内网地址，NAT等级端口限制），导致PT下载受限、P2P游戏联机不畅。随着运营商逐步将Bras切换为vBras，更多用户被分配CGNAT地址。本文通过OpenWrt配置AC切换回原Bras架构，恢复IPv4 NAT等级，部分用户甚至可借此获取动态公网IPv4地址，彻底解决NAT问题。; Category: 技术分享; Tags: Openwrt, 家庭网络, NAT, 软路由
+- [Android跳广告神器：李跳跳2.4使用指南](https://deeprouter.org/article/android-ad-skipper-guide-li-tiao-tiao-2-4): 发现的有点完了，之前一直有看到李跳跳2.4版本的更新，还有什么蓝色版李跳跳，但是没有找到更新源，担心是第三方修改版本，存在后门，所以就没有更新。最近用Follow，并且订阅了李跳跳的博客，翻阅RSS时候突然发现11月时候李跳跳已经更新了2.4版本，直接下载开整。; Category: 工具分享; Tags: Android, 工具
+- [PVE环境RouterOS开启Container指南](https://deeprouter.org/article/guide-to-enabling-container-in-routeros-on-pve): 这是之前在折腾过程中填的一个小坑，因为PVE环境下的RouterOS与MikroTik的实体路由器不同，所以在开启Container容器的时候出现了一点小插曲，记录一下。; Category: 技术分享; Tags: 家庭网络, RouterOS, Docker, 软路由
+- [使用Pipedream同步RSS至BlueSky](https://deeprouter.org/article/using-pipedream-to-sync-rss-to-bluesky): 随着 X.com（原 Twitter）的商业化内容增多以及马斯克的运营风格引发争议，许多用户开始转向BlueSky。现有的 RSS 与 X.com 自动化同步方案已非常成熟，但针对 BlueSky 的同步方案尚不完善。为此，本文翻译并整理了一位国外博主的解决方案，供有需要的朋友参考，帮助用户实现通过使用Pipedream实现RSS跨平台发布。; Category: 工具分享; Tags: Twitter, BlueSky, 开发, Workflow, 工具, NodeJS, Javascript
+- [Dae安装及配置指南](https://deeprouter.org/article/dae-installation-configuration-guide): 我使用Dae替代OpenClash用于科学上网已经有一段时间，目前整体的运行情况也已经稳定，该踩的坑也都已经踩过。之前也零零散散写过几篇关于Dae的文章，主要是一些进阶的用法，例如搭配AdGuard Home和MosDNS等其他DNS程序使用，但没有更多的涉及到Dae本身的安装以及配置指南，这篇文章就来填这个坑。; Category: 技术分享; Tags: Linux, 旁路由, 家庭网络, Debian, Dae, Openwrt, 软路由
+- [PVE环境下LXC容器安装与配置Tailscale](https://deeprouter.org/article/install-configure-tailscale-lxc-container-pve): 近期将AdGuard Home、Tailscale、DDNS-GO等服务从旁路网关服务器中独立，移植至PVE的LXC容器（运行Alpine系统），减轻了Dae对其他服务的影响，还通过清晰的架构设计提升了网络管理效率。LXC容器在仅分配1vCPU的情况下，CPU占用率不到1%，且所有服务配置完成后，内存占用仅约120MB，显著提升了资源利用率，同时确保系统稳...; Category: 技术分享; Tags: Linux, 旁路由, 内网穿透, PVE, LXC, Debian, 软路由
+- [Dae搭配AdGuard Home使用指南](https://deeprouter.org/article/dae-adguard-home-guide): 原方案采用Dae(大鹅) + MosDNS，Dae负责流量分流与代理，MosDNS实现DNS并发请求、DoH/DoT服务及广告过滤。然而，MosDNS的队列机制与无图形界面导致特殊规则配置复杂，遂引入AdGuard Home专注于广告过滤与自定义规则，同时保留MosDNS作为纯DNS转发器，大幅提升配置效率与使用体验。; Category: 技术分享; Tags: Debian, 旁路由, DNS, 家庭网络, Linux, Dae, 软路由
+- [小米15手机（澎湃OS2）：如何关闭推荐广告](https://deeprouter.org/article/xiaomi-15-close-recommended-ads-tutorial): 最近把服役了3年多的三星S21换成了小米15，整体使用上体验上升了一大截，澎湃OS2的流畅程度也不错，唯一难受的就是无处不在的各种推荐广告的狗皮膏药，用机洁癖的我整理了一下各种推荐广告及乱七八糟后台体验计划的关闭方法。; Category: 技术分享; Tags: Android, 小米, MIUI, 澎湃OS
+- [Now](https://deeprouter.org/now): So a website with a link that says “now” goes to a page that tells you what this person is focused on at this point in their life. For short, we call it a “now page”. 一个带有'Now'链接的...; Tags: NOW
+- [OpenWRT安装WireGuard实现内网穿透](https://deeprouter.org/article/openwrt-install-wireguard-for-nat-traversal): 之前介绍过一些关于OpenWRT内网穿透的内容，例如使用Tailscale、Zerotier等等，但是这些软件都有一个缺点，在外面需要使用特点的客户端才能实现内网穿透，需要频繁的切换VPN软件，很麻烦。今天介绍的Wireguard可以实现在使用大部分代理App的同时，还可以兼顾实现内网穿透回家，不必切换软件。; Category: 技术分享; Tags: Openwrt, 家庭网络, 内网穿透, Linux, 防火墙, DDNS, 软路由
+- [OpenWRT 软件源整理](https://deeprouter.org/article/Compilation-of-OpenWRT-Software-Sources): 这篇文章主要是用于个人记录，在每次重装OpenWRT后都均需要手动去替换软件源，加快软件列表更新速度和软件安装速度，正好整理出来，供网友自行取用。; Category: 资源分享; Tags: Openwrt, 旁路由, 软路由
+- [飞牛OS安装Tailscale实现内网穿透](https://deeprouter.org/article/fnos-tailscale-Installation-Guide): 在这篇文章主要关于配置飞牛OS上的Tailscale，实现NAS的远程访问。不管是同步OpenMediaVault中的密码、相册，还是在外网快速添加种子到qBittorrent，这个指南都能帮到你。通过进行飞牛OS的SSH设置、Tailscale安装和配置，轻松实现内网穿透，享受更安全高效的远程管理体验。; Category: 技术分享; Tags: 家庭网络, NAS, 内网穿透, 内网传统, Debian, Linux
+- [Docker国内加速镜像](https://deeprouter.org/article/Docker-accelerated-mirror): 最近国内使用Docker不是很顺畅，遭遇DNS污染+SNI阻断，在拉取Docker Hub上的docker时无法正常使用。国内的Docker加速镜像又部分关闭，自己手头还有一台闲置的HK小鸡，拿出来做个Docker加速镜像供网友使用。; Category: 资源分享; Tags: Docker, Caddy, 工具, Cloudflare
+- [DAE搭配MosDNS使用配置](https://deeprouter.org/article/daed-with-mosdns): 本篇文章并非DAE及DAED的安装配置入门文章。关于DAE与DAED的安装方法之后会单独编写。本篇文章主要内容为在使用DAE或DAED的情况下，如何搭配MosDNS使用，提供一个高兼容性、高可用性的配置方案。; Category: 技术分享; Tags: Linux, 旁路由, DNS, 家庭网络, Debian, Dae, 软路由
+- [InnerTune，一个第三方Youtue Music客户端](https://deeprouter.org/article/innertune-youtube-music-client-for-android): InnerTune 是一个开源的 YouTube Music Android 客户端，基于 Material 3 设计风格，支持无广告播放、后台播放、歌词同步等多项功能，适合未订阅Youtube Premium 用户提升音乐播放体验，也可以作为网易云音乐的完美替代。; Category: 工具分享; Tags: Android, 推荐, 工具
+- [LobeChat For Android](https://deeprouter.org/article/LobeChat-For-Android): 最近开始研究怎么借助AI做更多的事情，继之前在Cursor的帮助下优化了博客之后，今天我又和ChatGPT一起给Lobe Chat加了个APP的壳，实现通过APP方式使用Lobe Chat。; Category: 工具分享; Tags: 开发, ChatGPT, Android, AIGC
+- [利用Rclone将PVE备份同步到OneDrive](https://deeprouter.org/article/rclone-pve-backup-onedrive): 使用 Rclone 将 Proxmox VE备份自动同步到 OneDrive，充分利用 Office 365 的 1TB 云存储空间，确保All In One（Boom）主机数据安全。通过详细步骤和定时任务实现定时且安全的PVE备份管理。; Category: 技术分享; Tags: Linux, 家庭网络, PVE
+- [RouterOS使用OSPF智能分流国外流量](https://deeprouter.org/article/routeros-ospf-intelligent-traffic-split): 探索RouterOS使用OSPF协议进行智能分流国外流量的详细指南。文章详细介绍了OSPF的工作原理、配置背景、Debian和RouterOS的配置步骤，以及如何避免路由环路。通过实践案例，展示了如何设置旁路由（旁路网关）和主路由器，实现高效的流量管理。; Category: 技术分享; Tags: Linux, Debian, 旁路由, IPV6, RouterOS, 家庭网络, 软路由
+- [RouterOS自动分流方案（支持IPv4 & IPv6）](https://deeprouter.org/article/router-auto-routing-ipv4-ipv6): 随着更换了路由方案，我也用上了MikroTik RouterOS作为主路由,但依然没有更换主路由 + 旁路网关（旁路由）的整体网络拓扑。为了加强国内网站及服务的访问速度，同时减少网关跃点，实现国内和国外IP的自动分流。本文通过CN IP路由表以及防火墙mark routing方式进行分流配置。; Category: 技术分享; Tags: RouterOS, 旁路由, IPV6, 家庭网络, 软路由
+- [OpenWRT从Hper-V迁移至PVE指引](https://deeprouter.org/article/openwrt-hyper-v-to-pve-guide): 本篇文章主要介绍如何将Hyper-V的VHDX虚拟磁盘导入到PVE下，从而实现将OpenWRT直接从Hyper-V平台迁移到PVE平台，避免重新配置的繁琐过程，最大程序保留原OpenWRT系统的可用性。; Category: 技术分享; Tags: Openwrt, Hyper-V, PVE, 软路由
+- [OpenWRT迁移后Zerotier无法连接的解决方案](https://deeprouter.org/article/migrate-openwrt-to-pve-fix-zerotier-issue): 在OpenWRT从Hyper-V迁移到PVE后，解决Zerotier无法获取IP的问题。本文提供详细步骤，包括删除旧身份信息、重启Zerotier服务以及重新加入网络的完整指南，帮助您快速恢复虚拟局域网连接。; Category: 技术分享; Tags: Openwrt, Hyper-V, PVE, 旁路由, 家庭网络, 内网穿透, 软路由
+- [OpenWRT限速插件推荐：QoS Mate](https://deeprouter.org/article/qosmate-installation-openwrt-introduction): 介绍QoSMate插件如何优化OpenWRT家庭局域网的网络性能，包括自动配置、游戏流量优先和与SQM的对比，提供更好的带宽管理和低延迟体验，并介绍安装方法。; Category: 工具分享; Tags: Openwrt, 家庭网络, Qos, 软路由
+- [AdGuard Home配置仅局域网访问](https://deeprouter.org/article/adguard-home-lan-only-access-configuration): "本文详细介绍了如何将AdGuard Home的默认监听配置修改为仅局域网访问，避免因旁路由的IPv6地址暴露而导致外部用户访问DNS服务的风险，提升家庭网络的安全性和隐私保护。”; Category: 技术分享; Tags: Openwrt, 旁路由, IPV6, DNS, 防火墙, 家庭网络
+- [尝试使用Grafana监控家庭网络状态（一）](https://deeprouter.org/article/grafana-home-network-internal-external-connectivity-monitoring): 今天主要分享一下如何在手搓一个监控国内网络连通性和国外网络连通性的Grafana Panel。整体使用Grafana + Loki + Vector + Cron + Shell方案，并支持阈值显示，同时可添加警报; Category: 技术分享; Tags: Openwrt, 家庭网络, Grafana
+- [在OpenWRT旁路网关上通过Caddy实现Homelab反向代理](https://deeprouter.org/article/openwrt-caddy-homelab-reverse-proxy): OpenWRT默认使用uhttpd作为轻量级web服务器，仅能提供基础web服务。但由于家中服务分散在不同主机和端口上，管理困难，我希望通过域名统一管理这些服务，而Caddy是配置反向代理最便捷的工具。; Category: 工具分享; Tags: Openwrt, 旁路由, 家庭网络, Caddy, DNS, 软路由
+- [OpenWRT IPv6防火墙规则：如何放行客户端地址及端口](https://deeprouter.org/article/openwrt-ipv6-firewall-allow-client-address-port): 在开启IPv6之后，默认情况下，流量会经过主路由的防火墙，在非内网环境下，如果想访问家庭局域网内的服务默认是会被防火墙阻断，所以我们需要在主路由的防火墙中增加放行规则，从而使我们可以在非内网环境下使用家庭局域网内的服务，例如WireGuard、Jellyfin、Sunshine远程串流等等。; Category: 技术分享; Tags: Openwrt, IPV6, 防火墙, 家庭网络, 软路由
+- [实验性：OpecClash不使用Dnsmasq绕过中国大陆IP](https://deeprouter.org/article/experimental-bypass-china-ip-without-dnsmasq-mihomo): OpenClash的实验性功能绕过中国大陆IP，利用防火墙规则避免国内IPv4和IPv6流量经过Clash内核，提升直连性能并减少资源占用。对于高级用户，该功能可能与MosDNS和AdGuard Home兼容性较差。我在ChatGPT和Cursor的帮助下，探索无需Dnsmasq绕过中国大陆IP的解决方案。; Category: 技术分享; Tags: Openwrt, 旁路由, 防火墙, 家庭网络, OpenClash, 软路由
+- [国内外DNS服务器推荐列表](https://deeprouter.org/article/dns-servers-guide): 本篇文章介绍了国外无污染DNS服务器的推荐选择，详细列出了支持DoH、DoT、HTTP/3等协议的公共DNS地址，涵盖Cloudflare、NextDNS、Alibaba、Dnspod等，帮助国内用户优化网络解析速度与解析国外网站稳定性。; Category: 资源分享; Tags: DNS, 家庭网络, IPV6, 软路由
+- [云服务器（VPS）购买之后的防火墙配置](https://deeprouter.org/article/cloud-server-firewall-setup-ipv4-ipv6): 从炭云买了一台云服务器，用来放tiny-tiny-rss、监控面板还有跑一些Docker服务，速度稳定性什么的都OK，就是网页功能不提供防火墙配置的相关选项，我安装的系统是Ubuntu 22.04，还使用的是iptables ，我搞一些基础的防火墙规则配置还是没问题的，就自己上手弄一下配置吧。; Category: 技术分享; Tags: 建站, Linux, IPV6, 防火墙
+- [自用无泄露MosDNS规则分享](https://deeprouter.org/article/mosdns-config-with-no-leak): MosDNS作为整个链条的中枢负责分流，类似于一个指挥中枢。我的MosDNS是根据 Jasper-1024/mosdns_docker 的MosDNS V5配置进行二次修改的版本，所以这篇文章也可以说是一个二创文章，对原作者的配置进行了部分修改，并对整体的DNS处理流程进行讲解。; Category: 技术分享; Tags: 旁路由, DNS, Openwrt, 家庭网络, OpenClash, 软路由
+- [黑神话：悟空性能优化MOD分享](https://deeprouter.org/article/black-myth-wukong-performance-optimization-mod-sharing): 黑神话悟空的美术和场景做的都很用心，但是Steam平台版本的游戏存在帧数不稳、帧数低、运行不流畅卡顿等问题。今天分享一个MOD，能够有效的解决这些问题，提升黑神话：悟空的运行稳定性，并最大化优化游戏性能和帧数。; Category: 资源分享; Tags: 游戏, Remote-Play, Steam, Windows
+- [用Cursor帮我优化NotionNext博客SEO](https://deeprouter.org/article/optimize-blog-with-cursor-ai): Notion Next是很棒的博客系统，但依旧在SEO的方面还存在一些问题。我对NextJS一窍不通，无法自己编写代码。最近Cursor火的不行，也就尝试了一下AI编写代码，开始也以为只是Visual Code套壳，但是没想到效果有点出乎预料的好。; Category: 工具分享; Tags: 开发, 工具, 建站, ChatGPT, 编辑器, AI, SEO, Javascript, Notion
+- [如何在Android电视上使用Xbox无线接收器](https://deeprouter.org/article/how-to-use-xbox-wireless-adapter-on-android-tv): 我采用的是Sunshine + Moonlight这种局域网远程串流方式来玩游戏。但是我的手柄是初代的Xbox精英手柄，没有蓝牙功能。之前我一直都是通过Xbox无线接收器连接手柄，但是这个无线接收器不支持Android系统，那就求助一下Google和ChatGPT，然后还真的找到了解决的办法：VirtualHere。; Category: 工具分享; Tags: Remote-Play, 游戏
+- [OpenWRT中为局域网设备配置IPv6 DDNS](https://deeprouter.org/article/configure-openwrt-ipv6-ddns-lan-devices): 大部分的DDNS教程都是如何获得插件所在设备的IPv4及IPv6地址及DDNS域名绑定，今天来分享一下如何在旁路由（旁路网关）上安装配置DDNS-GO，通过IPv6地址为局域网内的设备绑定Cloudflare的DDNS域名。; Category: 技术分享; Tags: Openwrt, 旁路由, IPV6, DDNS, 家庭网络, 内网穿透, 软路由
+- [OpenClash替换使用Mihomo内核](https://deeprouter.org/article/how-to-use-mihomo-on-openclash): OpenClash是OpenWRT上一款用于科学上网的插件，依赖Clash的内核文件使用，在功能的完整性和使用顺手程度上，目前没有可完全替代的选项。，为了使OpenClash支持mihomo内核所带来的一些新的功能，所以有了这篇文章详细的介绍如何替换使用Mihomo内核。; Category: 技术分享; Tags: Openwrt, 旁路由, DNS, 家庭网络, OpenClash, 软路由
+- [借助Cloudflare为网站开启HTTP/3](https://deeprouter.org/article/how-to-enable-h3-for-your-website): 本文介绍了利用Cloudflare为网站启用HTTP/3协议的方法，旨在提升网站性能和用户体验。HTTP/3基于QUIC协议，在网络资源传输和多资源加载场景中表现优异，比HTTP/2速度更快。文章讨论了HTTP/3的技术特点以及与IPv6普及的关系。; Category: 技术分享; Tags: 建站, Cloudflare
+- [在OpenWRT上使用Neovim](https://deeprouter.org/article/build-neovim-on-openwrt): 自己需要通过SSH对家里的网络进行调试，对各种配置文件进行编辑，需要一个舒服的编辑器。我在本地环境中使用的是NeoVim，而在OpenWRT的系统软件仓库中，没有相关的IPK，所以将我自己在OpenWRT上进行编译安装NeoVim的过程以及遇到的坑整理出来。; Category: 技术分享; Tags: Openwrt, Neovim, 旁路由, 编辑器, 软路由
+- [OpenClash + Mosdns + ADG如何防止DNS泄露？](https://deeprouter.org/article/OpenClash-Mosdns如何防止DNS泄露？): DNS泄露作是大多数用户并不关心的部分，但也是小部分用户或者强迫症爱好者会纠结的部分。至于泄露之后真正会造成什么样的后果，现在并没有任何确凿的示例，但是秉承着在这个灰色地带尽量安全的准则，以及为了满足自己无尽的动手欲，今天就来尝试通过对自己的整体网络链路进行入手分析，寻找存在的DNS泄露点，以及进行修复。; Category: 技术分享; Tags: Openwrt, 旁路由, DNS, 家庭网络, IPV6, OpenClash
+- [提升家庭网络稳定性：OpenWRT限制网心云连接数教程](https://deeprouter.org/article/OPENWRT如何限制网心云的连接数量): 因为家里有Hyper-v的虚拟机在挂着网心云赚网费导致网络抖动很大。我之前没有注意过连接数这个问题。而且考虑到运营商也会对连接数量做出限制，所以决定对使用nftable对网心云的Hyper-V虚拟机进行连接数限制，避免占用太多活跃连接，影响家庭网络稳定。; Category: 技术分享; Tags: 开发, Openwrt, 网心云, PCDN, 旁路由, 防火墙, 家庭网络, Qos, 软路由
+- [IPv6与OpenWRT旁路由共存：OpenClash分流与原生地址的完美平衡](https://deeprouter.org/article/bypass-the-routing-proxy-to-proxy-IPV6-with-clash): 家庭局域网拓扑中出现了IPv6相关的问题。本文将介绍在家庭局域网环境下，介绍了如何在不牺牲IPv4功能的前提下，如何使IPv6与旁路由（旁路网关）共存，并可在默认情况下通过旁路由（旁路网关）进行代理，实现原生IPv6地址与策略代理的并存，满足远程串流、BT下载和内网穿透等需求。; Category: 技术分享; Tags: Openwrt, 旁路由, IPV6, 家庭网络, DNS, OpenClash, 软路由
+- [ImmoralWRT软件源分享](https://deeprouter.org/article/immoralwrt-opkg-replace-edu-mirror): 本文详细介绍ImmoralWRT软件源配置方法，包括命令行和Luci界面操作。提供多个国内镜像站点选择，优化下载速度。适用于OpenWRT用户、路由器爱好者和网络管理员，帮助提升系统性能和软件包管理效率。; Category: 资源分享; Tags: Openwrt, 旁路由
+- [Gminer v3.44版本更新](https://deeprouter.org/article/gminer-v344-update): Gminer v3.44更新为Nvidia用户提供了Dero的挖矿支持，以及Dero + ZIL双挖支持，推荐使用RTX3090或RTX4090显卡。更新主要内容包括性能优化、bug修复和在多种挖矿操作系统上的升级命令。; Category: 工具分享; Tags: 加密货币, 工具
+- [可以去掉Youtube Music视频的油猴脚本](https://deeprouter.org/article/script-remove-youtube-music-video): 默认的Youtube Music在播放音乐的同时，默认会播放视频，无形中会浪费很多的流量，而且非常的不Coool，不太像一个曲库的样子。所以找来找去，就找到了这个Tampermonkey（油猴）插件，可以去除youtube music的视频。; Category: 工具分享; Tags: greasyfork, Tampermonkey, 工具, 浏览器, Javascript
+- [解决OpenWRT中VIM报错‘Failed to source defaults.vim’问题](https://deeprouter.org/article/openwrt-vim-failed-to-source-defaults-vim-fix): 本文介绍了在OpenWRT系统中遇到VIM报错‘E1187: Failed to source defaults.vim’的问题，并提供了详细能够完美解决报错的两种解决方法，帮助用户快速修复此问题，提升在OpenWRT中使用Vim编辑器的使用体验。; Category: 技术分享; Tags: Openwrt, 编辑器, Vim, 软路由
+- [解决sudo命令不使用代理问题](https://deeprouter.org/article/fix_sudo_not_use_proxy): 在国内环境下，我们经常需要使用代理来进行一些系统操作，比例apt包管理，比如curl命令或者git命令等等。通常我们通过配置.bashrc或者.zshrc等shell配置文件，增加代理选项就可以正常工作。本文旨在解决sudo命令未使用代理问题，让sudo使用代理。; Category: 技术分享; Tags: Linux
+- [XMRig-6.21.0 for Windows 免费版更新](https://deeprouter.org/article/xmrig-6.21-for-windows-update): XMRig是一款免费的开源软件，它是一个高性能的Monero（$XMR）、Raptoreum（$RTM）等加密货币挖掘程序。XMRig可在Windows，Linux和MacOS等操作系统上运行，是由xmrig开发团队维护的。; Category: 工具分享; Tags: 推荐, 工具
 
-> DeepRouter is a Chinese-language technical blog focused on practical network engineering, home lab reliability, OpenWRT and RouterOS routing, IPv6, DNS, proxy and bypass-gateway setups, Cloudflare deployment, AI tools, Windows optimization, and occasional finance, gaming, and resource notes.
-
-DeepRouter is written as a field notebook: many posts start from a real failure, trace the symptoms through DNS, routing tables, CDN behavior, operating-system quirks, or deployment constraints, and end with reproducible fixes. The most useful content for agents is usually in the technical tutorials, troubleshooting posts, archive, category index, tag index, and feeds.
-
-Agent guidance:
-- Use public pages, article content, RSS feeds, the sitemap, categories, and tags for discovery and citation.
-- Prefer canonical article URLs when referencing content, especially for troubleshooting steps.
-- Respect robots.txt, rate limits, and normal cache behavior.
-- Do not attempt to access private Notion APIs, authentication endpoints, dashboards, or unpublished content.
-- Attribute quoted or summarized content to DeepRouter and link back to the source page.
-
-## Core Pages
-
-- [Home](https://deeprouter.org/): Site entry point and latest published content.
-- [About](https://deeprouter.org/about): Author background, interests, and content scope.
-- [Archive](https://deeprouter.org/archive): Chronological list of posts.
-- [Categories](https://deeprouter.org/category): Topic-based article groups.
-- [Tags](https://deeprouter.org/tag): Tag index for finer-grained discovery.
-- [Search](https://deeprouter.org/search): Site search entry point.
-
-## Representative Technical Posts
-
-- [Hermes agent optimization for GLM 5.2 429 and 1305 overload errors](https://deeprouter.org/article/hermes-agent-optimization-fix-glm-5-2-model-429-1305-overloaded): AI agent and model API troubleshooting.
-- [Cloudflare SaaS origin plus Worker for Pages custom domains](https://deeprouter.org/article/cloudflare-saas-worker-custom-domain-pages-proxy-guide): Deployment and CDN workaround guide.
-- [Use official TikTok on Android without removing the SIM card](https://deeprouter.org/article/use-official-tiktok-without-removing-the-sim-card-android): Android networking and regional behavior workaround.
-- [Dae installation and configuration guide](https://deeprouter.org/article/dae-installation-configuration-guide): Transparent proxy setup and network routing notes.
-- [Compilation of OpenWRT software sources](https://deeprouter.org/article/Compilation-of-OpenWRT-Software-Sources): OpenWRT package source references.
-- [RouterOS OSPF intelligent traffic split](https://deeprouter.org/article/routeros-ospf-intelligent-traffic-split): RouterOS and OSPF routing design.
-- [DNS servers guide](https://deeprouter.org/article/dns-servers-guide): DNS resolver selection and network configuration reference.
-
-## Feeds
-
-- [RSS](https://deeprouter.org/rss/feed.xml): RSS feed for recent posts.
-- [Atom](https://deeprouter.org/rss/atom.xml): Atom feed for recent posts.
-- [JSON Feed](https://deeprouter.org/rss/feed.json): JSON Feed for recent posts.
+## Topics
+- [技术分享](https://deeprouter.org/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB): Content grouped by category
+- [工具分享](https://deeprouter.org/category/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB): Content grouped by category
+- [新闻分享](https://deeprouter.org/category/%E6%96%B0%E9%97%BB%E5%88%86%E4%BA%AB): Content grouped by category
+- [资源分享](https://deeprouter.org/category/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB): Content grouped by category
+- [心情随笔](https://deeprouter.org/category/%E5%BF%83%E6%83%85%E9%9A%8F%E7%AC%94): Content grouped by category
+- [凑数](https://deeprouter.org/category/%E5%87%91%E6%95%B0): Content grouped by category
 
 ## Optional
-
-- [Sitemap](https://deeprouter.org/sitemap.xml): Machine-readable index of public pages.
-- [Robots](https://deeprouter.org/robots.txt): Crawling guidance for automated clients.
+- [Tags](https://deeprouter.org/tag): Tag archive for entity and topic discovery
+- [Archive](https://deeprouter.org/archive): Chronological archive

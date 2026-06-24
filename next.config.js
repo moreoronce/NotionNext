@@ -89,6 +89,12 @@ const preBuild = (function () {
     console.log('Deleted existing sitemap.xml from root directory')
   }
 
+  const llmsPath = path.resolve(__dirname, 'public', 'llms.txt')
+  if (fs.existsSync(llmsPath)) {
+    fs.unlinkSync(llmsPath)
+    console.log('Deleted existing llms.txt from public directory')
+  }
+
   // 构建前删除遗留的静态 RSS 产物，避免与生成逻辑不一致时读到过时 feed（源自 PR #3123 的单一补丁）
   const rssDir = path.resolve(__dirname, 'public', 'rss')
   for (const name of ['feed.xml', 'atom.xml', 'feed.json']) {
@@ -456,6 +462,7 @@ const nextConfig = {
     // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
     const pages = { ...defaultPathMap }
     delete pages['/sitemap.xml']
+    delete pages['/llms.txt']
     delete pages['/auth']
     return pages
   },
