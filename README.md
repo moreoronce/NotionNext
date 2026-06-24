@@ -22,11 +22,15 @@
 #### AI 引擎友好（新增能力）
 - ✅ **`/llms.txt` 生成** - 为 ChatGPT / Perplexity / Claude 等提供精简站点地图（`pages/llms.txt.js`、`lib/llms-utils.js`）
 - ✅ **`robots.txt` AI 策略** - 区分「AI 搜索」与「AI 训练」两类爬虫，可单独开关（`lib/utils/robots.txt.js`）
+- ✅ **Content-Signal 指令** - `robots.txt` 注入 Cloudflare 语义化许可声明（`search` / `ai-input` / `ai-train`），与 AI 开关联动
+- ✅ **Markdown 内容协商** - build 时为每篇文章生成 `.md` 静态文件，配合反代 Worker 实现 `Accept: text/markdown` 内容协商，AI Agent 可直接拿 Markdown 而非 HTML（省 token、更快）（`lib/utils/markdown.js`、`pages/index.js`）
 - ✅ **GEO 配置文件** - 新增 `conf/geo.config.js`，集中管理 llms.txt 与爬虫策略开关
 - ✅ **Meta 地理标签** - `components/SEO.js` 注入 region/country/placename 标签
-- ✅ **环境变量** - `.env.example` 新增 `NEXT_PUBLIC_LLMS_TXT_*`、`NEXT_PUBLIC_GEO_*` 系列变量
+- ✅ **环境变量** - `.env.example` 新增 `NEXT_PUBLIC_LLMS_TXT_*`、`NEXT_PUBLIC_GEO_*`、`NOTION_INTEGRATION_TOKEN` 系列变量
 
 > ℹ️ 说明：`llms.txt` 对 **Google AI Overviews 无效**（[Google 官方明确](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)），主要受益对象是 ChatGPT / Perplexity / Claude 等第三方 AI 引擎的「推理时抓取」。Google AI 搜索仍依赖核心搜索索引 + 基础 SEO。
+>
+> ⚙️ **Markdown 协商前置条件**：需在 Notion 建 Integration 并授权博客根页面，在 Cloudflare Pages 环境变量配置 `NOTION_INTEGRATION_TOKEN`，且反代 Worker 需实现 `Accept: text/markdown` 协商逻辑（参考仓库根目录的 Worker 配置）。
 
 #### 性能优化（PSI / LCP）
 - ✅ **PageFind 按需挂载** - 搜索弹窗改为点击 / `Ctrl+K` 后才加载，减少首屏 JS（`themes/deeprouter/index.js`、`components/PageFindSearchModal.js`）
@@ -82,6 +86,11 @@ NEXT_PUBLIC_LLMS_TXT_POST_LIMIT=80
 NEXT_PUBLIC_GEO_AI_SEARCH_ENABLED=true
 NEXT_PUBLIC_GEO_AI_TRAINING_ENABLED=true
 NEXT_PUBLIC_GEO_REGION=CN
+
+# Markdown 内容协商（可选，需 Notion Integration + 授权页面）
+NOTION_INTEGRATION_TOKEN=ntn_你的Integration_Token
+MARKDOWN_ENABLED=true
+MARKDOWN_CONCURRENCY=3
 ```
 
 完整变量见 `.env.example`。
