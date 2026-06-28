@@ -269,7 +269,7 @@ const LayoutSlug = props => {
                             <TerminalCard title={siteConfig('DEEPROUTER_FOLLOW_CARD_TITLE', 'follow-me.sh', CONFIG)} readonly>
                                 <div className='text-sm font-mono'>
                                     <div className='text-[#666666] mb-3'>$ cat ./notice.txt</div>
-                                    <p className='text-[#6B6B6B] leading-relaxed mb-4'>
+                                    <p className='text-[#ea580c] leading-relaxed mb-4'>
                                         <span className='text-[#666666]'>{'// '}</span>
                                         {siteConfig('DEEPROUTER_FOLLOW_CARD_TEXT', '喜欢这篇文章？在 X 上看更多日常更新', CONFIG)}
                                     </p>
