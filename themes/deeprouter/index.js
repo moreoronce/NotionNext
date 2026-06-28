@@ -186,6 +186,8 @@ const LayoutSlug = props => {
     const showRelated = siteConfig('DEEPROUTER_WIDGET_RELATED', true, CONFIG)
     const sidebarAction = siteConfig('DEEPROUTER_SIDEBAR_ACTION', 'copy-link', CONFIG)
     const sourceLink = post.notionLink || post.link || siteConfig('LINK')
+    const twitterUrl = siteConfig('DEEPROUTER_TWITTER_URL', 'https://x.com/moreoronce', CONFIG)
+    const twitterHandle = (twitterUrl || '').split('?')[0].split('/').filter(Boolean).pop()?.replace(/^@/, '') || 'moreoronce'
 
     return (
         <>
@@ -257,6 +259,32 @@ const LayoutSlug = props => {
                                 <article id='article-wrapper' className='article-content flow-root'>
                                     {post && <NotionPage post={post} />}
                                 </article>
+                            </TerminalCard>
+                        </div>
+                    )}
+
+                    {/* 6. Follow on X 引流卡 - 读完文章的最佳转化时刻 */}
+                    {!lock && (
+                        <div className='mt-8'>
+                            <TerminalCard title={siteConfig('DEEPROUTER_FOLLOW_CARD_TITLE', 'follow-me.sh', CONFIG)} readonly>
+                                <div className='text-sm font-mono'>
+                                    <div className='text-[#666666] mb-3'>$ cat ./notice.txt</div>
+                                    <p className='text-[#6B6B6B] leading-relaxed mb-4'>
+                                        <span className='text-[#666666]'>{'// '}</span>
+                                        {siteConfig('DEEPROUTER_FOLLOW_CARD_TEXT', '喜欢这篇文章？在 X 上看更多日常更新', CONFIG)}
+                                    </p>
+                                    <a
+                                        href={twitterUrl}
+                                        target='_blank'
+                                        rel='noopener noreferrer'
+                                        className='inline-flex items-center gap-2 py-2 px-4 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded transition-colors'
+                                    >
+                                        <span>🐦</span>
+                                        <span className='font-mono'>$ follow --x</span>
+                                        <span className='font-semibold'>@{twitterHandle}</span>
+                                        <span>→</span>
+                                    </a>
+                                </div>
                             </TerminalCard>
                         </div>
                     )}

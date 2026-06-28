@@ -113,6 +113,15 @@ const ShareButtons = ({ post }) => {
     const encodedHashTags = encodeURIComponent(hashTags)
     const appId = siteConfig('FACEBOOK_APP_ID') || ''
 
+    // 从作者配置的 Twitter/X 地址中提取 handle，分享时自动带上 via=@作者
+    const twitterHandle = (siteConfig('CONTACT_TWITTER') || '')
+      .split('?')[0]
+      .split('/')
+      .filter(Boolean)
+      .pop()
+      ?.replace(/^@/, '')
+    const viaParam = twitterHandle ? `&via=${encodeURIComponent(twitterHandle)}` : ''
+
     switch (service) {
       case 'facebook':
         return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&hashtag=${encodedHashTags}`
@@ -125,7 +134,7 @@ const ShareButtons = ({ post }) => {
       case 'email':
         return `mailto:?subject=${encodedTitle}&body=${encodedBody}`
       case 'twitter':
-        return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}&hashtags=${encodeURIComponent(tags.join(','))}`
+        return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}${viaParam}&hashtags=${encodeURIComponent(tags.join(','))}`
       case 'telegram':
         return `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`
       case 'whatsapp':
