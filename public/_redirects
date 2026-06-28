@@ -1,0 +1,4 @@
+/page/1 / 301
+/tag/:tag/page/1 /tag/:tag 301
+/category/:category/page/1 /category/:category 301
+/search/:keyword/page/1 /search/:keyword 301
