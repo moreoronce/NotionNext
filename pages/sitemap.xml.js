@@ -4,6 +4,7 @@ import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import {
   buildSitemapLoc,
+  getUniqueSitemapFields,
   normalizeSitemapBaseUrl,
   normalizeSitemapLocale,
   toSitemapDateString
@@ -33,7 +34,7 @@ export const getServerSideProps = async ctx => {
     fields = fields.concat(localeFields)
   }
 
-  fields = getUniqueFields(fields)
+  fields = getUniqueSitemapFields(fields)
 
   // 缓存
   ctx.res.setHeader(
@@ -50,7 +51,10 @@ function generateLocalesSitemap(link, allPages, locale) {
 
   const defaultFields = [
     {
-      loc: buildSitemapLoc({ baseUrl: normalizedLink, locale: normalizedLocale }),
+      loc: buildSitemapLoc({
+        baseUrl: normalizedLink,
+        locale: normalizedLocale
+      }),
       lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
@@ -111,7 +115,9 @@ function generateLocalesSitemap(link, allPages, locale) {
     allPages
       ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
       // 过滤掉外部链接(http开头)和锚点链接(#开头)
-      ?.filter(p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#'))
+      ?.filter(
+        p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#')
+      )
       ?.map(post => {
         const loc = buildSitemapLoc({
           baseUrl: normalizedLink,
@@ -132,18 +138,4 @@ function generateLocalesSitemap(link, allPages, locale) {
   return defaultFields.concat(postFields)
 }
 
-function getUniqueFields(fields) {
-  const uniqueFieldsMap = new Map()
-
-  fields.forEach(field => {
-    const existingField = uniqueFieldsMap.get(field.loc)
-
-    if (!existingField || new Date(field.lastmod) > new Date(existingField.lastmod)) {
-      uniqueFieldsMap.set(field.loc, field)
-    }
-  })
-
-  return Array.from(uniqueFieldsMap.values())
-}
-
-export default () => { }
+export default () => {}

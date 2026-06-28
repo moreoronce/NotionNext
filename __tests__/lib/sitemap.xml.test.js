@@ -16,8 +16,14 @@ describe('generateSitemapXml', () => {
     siteConfig.mockClear()
   })
 
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   it('does not generate invalid duplicated-domain URLs for external links', () => {
-    const writeSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
+    const writeSpy = jest
+      .spyOn(fs, 'writeFileSync')
+      .mockImplementation(() => {})
 
     generateSitemapXml({
       NOTION_CONFIG: {
@@ -45,9 +51,59 @@ describe('generateSitemapXml', () => {
     expect(xml).toContain('<loc>https://example.com/hello-world</loc>')
     expect(xml).toContain('<loc>https://example.com/internal/page</loc>')
     expect(xml).not.toContain('<loc>https://external.com/landing</loc>')
-    expect(xml).not.toContain('https://example.com/https://external.com/landing')
+    expect(xml).not.toContain(
+      'https://example.com/https://external.com/landing'
+    )
     expect(xml).not.toContain('Invalid Date')
+  })
 
-    writeSpy.mockRestore()
+  it('deduplicates default pages that also exist as Notion pages', () => {
+    const writeSpy = jest
+      .spyOn(fs, 'writeFileSync')
+      .mockImplementation(() => {})
+
+    generateSitemapXml({
+      NOTION_CONFIG: {
+        LINK: 'https://example.com/'
+      },
+      allPages: [
+        {
+          slug: '',
+          publishDay: '2026-02-20'
+        },
+        {
+          slug: 'archive',
+          publishDay: '2026-02-20'
+        },
+        {
+          slug: '/tag',
+          publishDay: '2026-02-20'
+        },
+        {
+          slug: 'about',
+          publishDay: '2026-02-20'
+        },
+        {
+          slug: 'search',
+          publishDay: '2026-02-20'
+        }
+      ]
+    })
+
+    const xml = writeSpy.mock.calls[0][1]
+    const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1])
+
+    expect(locs.filter(loc => loc === 'https://example.com')).toHaveLength(1)
+    expect(
+      locs.filter(loc => loc === 'https://example.com/archive')
+    ).toHaveLength(1)
+    expect(locs.filter(loc => loc === 'https://example.com/tag')).toHaveLength(
+      1
+    )
+    expect(
+      locs.filter(loc => loc === 'https://example.com/about')
+    ).toHaveLength(1)
+    expect(locs).not.toContain('https://example.com/search')
+    expect(new Set(locs).size).toBe(locs.length)
   })
 })

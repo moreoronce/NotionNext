@@ -17,6 +17,7 @@ import ErrorHandler from '@/lib/utils/errorHandler'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
+import DeeprouterSemanticHeading from '@/components/DeeprouterSemanticHeading'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 const AppErrorBoundary = ErrorHandler.createErrorBoundary(
@@ -112,6 +113,11 @@ const MyApp = ({ Component, pageProps }) => {
         `}</style>
         <GLayout {...pageProps}>
           <SEO {...pageProps} />
+          <DeeprouterSemanticHeading
+            pageProps={pageProps}
+            router={route}
+            theme={theme}
+          />
           <Component {...pageProps} />
         </GLayout>
         <ExternalPlugins {...pageProps} />

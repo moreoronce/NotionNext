@@ -10,6 +10,12 @@ import { useEffect } from 'react'
  * @param {*} param0
  * @returns
  */
+const getSiteMetaFallbacks = siteInfo => ({
+  title: siteInfo?.title || siteConfig('TITLE') || '',
+  description: siteInfo?.description || siteConfig('DESCRIPTION') || '',
+  image: siteInfo?.pageCover || siteConfig('HOME_BANNER_IMAGE') || '/bg_image.jpg'
+})
+
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   // 去除 LINK / SUB_PATH 可能存在的首尾斜杠，避免拼接出 // 双斜杠
@@ -46,8 +52,9 @@ const SEO = props => {
 
   const TITLE = siteConfig('TITLE')
   const AUTHOR = siteConfig('AUTHOR')
-  const title = meta?.title || siteConfig('TITLE')
-  const description = meta?.description || `${siteInfo?.description}`
+  const fallbackMeta = getSiteMetaFallbacks(siteInfo)
+  const title = meta?.title || fallbackMeta.title
+  const description = meta?.description || fallbackMeta.description
   const type = meta?.type || 'website'
   const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
@@ -337,104 +344,112 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
 const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page } = props
   const keyword = router?.query?.s
+  const siteMeta = getSiteMetaFallbacks(siteInfo)
+  const nav = locale?.NAV || {}
+  const common = locale?.COMMON || {}
+  const archiveLabel = nav.ARCHIVE || '归档'
+  const searchLabel = nav.SEARCH || '搜索'
+  const notFoundLabel = nav.PAGE_NOT_FOUND || '页面未找到'
+  const categoryLabel = common.CATEGORY || '分类'
+  const tagsLabel = common.TAGS || '标签'
 
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: siteMeta.title,
+        description: siteMeta.description,
+        image: siteMeta.image,
         slug: '',
         type: 'website'
       }
     case '/archive':
       return {
-        title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${locale.NAV.ARCHIVE} | ${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${archiveLabel} | ${siteMeta.title}`,
+        description: `${archiveLabel} | ${siteMeta.description}`,
+        image: siteMeta.image,
         slug: 'archive',
         type: 'website'
       }
     case '/page/[page]':
       return {
-        title: `${page} | Page | ${siteInfo?.title}`,
-        description: `${siteInfo?.description} | ${page}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${page} | Page | ${siteMeta.title}`,
+        description: `${siteMeta.description} | ${page}`,
+        image: siteMeta.image,
         slug: 'page/' + page,
         type: 'website'
       }
     case '/category/[category]':
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
+        title: `${category} | ${categoryLabel} | ${siteMeta.title}`,
+        description: `${category} | ${categoryLabel} | ${siteMeta.description}`,
         slug: 'category/' + category,
-        image: `${siteInfo?.pageCover}`,
+        image: siteMeta.image,
         type: 'website'
       }
     case '/category/[category]/page/[page]':
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
+        title: `${category} | ${categoryLabel} | ${siteMeta.title}`,
+        description: `${category} | ${categoryLabel} | ${siteMeta.description}`,
         slug: 'category/' + category,
-        image: `${siteInfo?.pageCover}`,
+        image: siteMeta.image,
         type: 'website'
       }
     case '/tag/[tag]':
     case '/tag/[tag]/page/[page]':
       return {
-        title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${tag} | ${tagsLabel} | ${siteMeta.title}`,
+        description: `${tag} | ${tagsLabel} | ${siteMeta.description}`,
+        image: siteMeta.image,
         slug: 'tag/' + tag,
         type: 'website'
       }
     case '/search':
       return {
-        title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `使用Algolia提供的搜索服务 | ${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${keyword || ''}${keyword ? ' | ' : ''}${searchLabel} | ${siteMeta.title}`,
+        description: `使用Algolia提供的搜索服务 | ${siteMeta.description}`,
+        image: siteMeta.image,
         slug: 'search',
         type: 'website'
       }
     case '/search/[keyword]':
     case '/search/[keyword]/page/[page]':
       return {
-        title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
+        title: `${keyword || ''}${keyword ? ' | ' : ''}${searchLabel} | ${siteMeta.title}`,
         description: siteConfig('TITLE'),
-        image: `${siteInfo?.pageCover}`,
+        image: siteMeta.image,
         slug: 'search/' + (keyword || ''),
         type: 'website'
       }
     case '/404':
       return {
-        title: `${siteInfo?.title} | ${locale.NAV.PAGE_NOT_FOUND}`,
-        image: `${siteInfo?.pageCover}`
+        title: `${siteMeta.title} | ${notFoundLabel}`,
+        image: siteMeta.image
       }
     case '/tag':
       return {
-        title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.TAGS} | ${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${tagsLabel} | ${siteMeta.title}`,
+        description: `${tagsLabel} | ${siteMeta.description}`,
+        image: siteMeta.image,
         slug: 'tag',
         type: 'website'
       }
     case '/category':
       return {
-        title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${locale.COMMON.CATEGORY} | ${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
+        title: `${categoryLabel} | ${siteMeta.title}`,
+        description: `${categoryLabel} | ${siteMeta.description}`,
+        image: siteMeta.image,
         slug: 'category',
         type: 'website'
       }
     default:
       return {
         title: post
-          ? `${post?.title} | ${siteInfo?.title}`
-          : `${siteInfo?.title} | loading`,
+          ? `${post?.title} | ${siteMeta.title}`
+          : `${siteMeta.title} | loading`,
         description: post?.summary,
         type: post?.type,
         slug: post?.slug,
-        image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
+        image: post?.pageCoverThumbnail || siteMeta.image,
         category: post?.category?.[0],
         tags: post?.tags,
         wordCount: post?.wordCount
@@ -442,4 +457,5 @@ const getSEOMeta = (props, router, locale) => {
   }
 }
 
+export { getSEOMeta }
 export default SEO

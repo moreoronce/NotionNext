@@ -115,11 +115,10 @@ const LayoutIndex = props => {
  * 博客列表
  */
 const LayoutPostList = props => {
-    const { posts, page = 1, postCount, prefix = '', siteInfo, NOTION_CONFIG, category, tag } = props
+    const { posts, page = 1, postCount, prefix = '', NOTION_CONFIG, category, tag } = props
 
     // 计算总页数 (NotionNext 传递 postCount 而不是 totalPage)
-    const globalPostsPerPage = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
-    const POSTS_PER_PAGE = siteConfig('DEEPROUTER_POSTS_PER_PAGE', globalPostsPerPage, CONFIG)
+    const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
     const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
     const showCover = siteConfig('DEEPROUTER_POST_LIST_COVER', false, CONFIG)
     const showPreview = siteConfig('DEEPROUTER_POST_LIST_PREVIEW', true, CONFIG)
@@ -127,27 +126,14 @@ const LayoutPostList = props => {
     const showTags = siteConfig('DEEPROUTER_POST_LIST_TAG', true, CONFIG)
 
     // 确定页面类型和标题
-    const isCategory = prefix?.includes('/category') || category
-    const isTag = prefix?.includes('/tag') || tag
-    const pageTitle = category || tag
+    const paginationPrefix = prefix || (category
+        ? encodedPath('/category', category)
+        : tag
+            ? encodedPath('/tag', tag)
+            : '')
 
     return (
         <>
-            {/* SEO: 页面 H1 */}
-            {isCategory && pageTitle && (
-                <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
-                    <span>📁</span> 分类: {pageTitle}
-                </h1>
-            )}
-            {isTag && pageTitle && (
-                <h1 className='text-2xl font-bold mb-6 flex items-center gap-2'>
-                    <span>🏷️</span> 标签: {pageTitle}
-                </h1>
-            )}
-            {!isCategory && !isTag && page == 1 && (
-                <h1 className='sr-only'>{siteInfo?.title} - {siteInfo?.description}</h1>
-            )}
-
             {/* 文章列表 */}
             <div className='space-y-4'>
                 {posts?.map((post, index) => (
@@ -164,7 +150,7 @@ const LayoutPostList = props => {
             </div>
 
             {/* 分页 */}
-            <Pagination page={parseInt(page)} totalPage={totalPage} prefix={prefix} />
+            <Pagination page={parseInt(page)} totalPage={totalPage} prefix={paginationPrefix} />
         </>
     )
 }
@@ -211,11 +197,6 @@ const LayoutSlug = props => {
                 <div className='flex-1 min-w-0'>
                     {/* 1. 文章基本信息 (无卡片包裹) */}
                     <div>
-                        {/* H1 标题 */}
-                        <h1 className='text-3xl font-bold text-[#cc7a60] mb-3'>
-                            {post.title}
-                        </h1>
-
                         {/* 描述 - 注释风格 */}
                         {post.summary && (
                             <p className='text-[#6B6B6B] mb-4 leading-relaxed'>
@@ -410,12 +391,6 @@ const LayoutSearch = props => {
 
     return (
         <>
-            {/* SEO: 搜索页 H1 */}
-            <h1 className='text-2xl font-bold mb-6'>
-                <span className='text-[#666666]'>{'// '}</span>搜索
-                {keyword && <span className='text-[#ea580c] ml-2'>{`"${keyword}"`}</span>}
-            </h1>
-
             {/* 搜索框 */}
             <div className='mb-8'>
                 <SearchBox keyword={keyword} />
@@ -464,10 +439,7 @@ const LayoutArchive = props => {
 
     return (
         <>
-            <h1 className='text-2xl font-bold mb-6'>
-                <span className='text-[#666666]'>{'// '}</span>归档
-                <span className='text-[#666666] text-base ml-4'>共 {posts?.length || 0} 篇</span>
-            </h1>
+            <div className='text-[#666666] text-base mb-6'>共 {posts?.length || 0} 篇</div>
 
             <div className='space-y-8'>
                 {Object.keys(groups).sort().reverse().map(key => (
@@ -503,9 +475,6 @@ const LayoutCategoryIndex = props => {
 
     return (
         <>
-            {/* SEO: 隐藏的 H1 */}
-            <h1 className='sr-only'>分类目录</h1>
-
             {/* 终端风格标题 */}
             <div className='mb-6'>
                 <div className='font-mono text-sm text-[#666666]'>
@@ -527,9 +496,6 @@ const LayoutTagIndex = props => {
 
     return (
         <>
-            {/* SEO: 隐藏的 H1 */}
-            <h1 className='sr-only'>标签索引</h1>
-
             {/* 终端风格标题 */}
             <div className='mb-6'>
                 <div className='font-mono text-sm text-[#666666]'>
