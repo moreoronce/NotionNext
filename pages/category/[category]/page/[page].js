@@ -15,6 +15,15 @@ export default function Category(props) {
 }
 
 export async function getStaticProps({ params: { category, page } }) {
+  if (Number(page) <= 1) {
+    return {
+      redirect: {
+        destination: `/category/${encodeURIComponent(category)}`,
+        permanent: true
+      }
+    }
+  }
+
   const from = 'category-page-props'
   let props = await fetchGlobalAllData({ from })
 
@@ -50,9 +59,11 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
-    from
-  })
+  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData(
+    {
+      from
+    }
+  )
   const paths = []
 
   categoryOptions?.forEach(category => {
@@ -68,7 +79,7 @@ export async function getStaticPaths() {
       postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
     )
     if (totalPages > 1) {
-      for (let i = 1; i <= totalPages; i++) {
+      for (let i = 2; i <= totalPages; i++) {
         paths.push({ params: { category: category.name, page: '' + i } })
       }
     }

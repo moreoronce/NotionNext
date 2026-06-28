@@ -19,6 +19,15 @@ const Index = props => {
  * @returns
  */
 export async function getStaticProps({ params: { keyword, page }, locale }) {
+  if (Number(page) <= 1) {
+    return {
+      redirect: {
+        destination: `/search/${encodeURIComponent(keyword)}`,
+        permanent: true
+      }
+    }
+  }
+
   const props = await fetchGlobalAllData({
     from: 'search-props',
     pageType: ['Post'],
@@ -54,8 +63,8 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
 
 export function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
-    fallback: true
+    paths: [],
+    fallback: 'blocking'
   }
 }
 

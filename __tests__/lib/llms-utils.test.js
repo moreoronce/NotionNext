@@ -2,7 +2,10 @@ import { createLlmsTxt } from '@/lib/llms-utils'
 
 jest.mock('@/lib/config', () => ({
   siteConfig: jest.fn((key, defaultVal, extendConfig = {}) => {
-    if (extendConfig && Object.prototype.hasOwnProperty.call(extendConfig, key)) {
+    if (
+      extendConfig &&
+      Object.prototype.hasOwnProperty.call(extendConfig, key)
+    ) {
       return extendConfig[key]
     }
     return defaultVal
@@ -40,7 +43,10 @@ describe('createLlmsTxt', () => {
     })
 
     expect(content).toContain('# Example Site')
-    expect(content).toContain('[Hello \\[World\\]](https://example.com/article/hello)')
+    expect(content).toContain('Last updated:')
+    expect(content).toContain(
+      '[Hello \\[World\\]](https://example.com/article/hello)'
+    )
     expect(content).toContain('Tags: AI, Search')
     expect(content).toContain('[Sitemap](https://example.com/sitemap.xml)')
   })
@@ -97,6 +103,8 @@ describe('createLlmsTxt', () => {
       ]
     })
 
-    expect(content.match(/https:\/\/example\.com\/article\/same/g)).toHaveLength(1)
+    expect(
+      content.match(/https:\/\/example\.com\/article\/same/g)
+    ).toHaveLength(1)
   })
 })

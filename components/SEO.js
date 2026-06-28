@@ -13,8 +13,22 @@ import { useEffect } from 'react'
 const getSiteMetaFallbacks = siteInfo => ({
   title: siteInfo?.title || siteConfig('TITLE') || '',
   description: siteInfo?.description || siteConfig('DESCRIPTION') || '',
-  image: siteInfo?.pageCover || siteConfig('HOME_BANNER_IMAGE') || '/bg_image.jpg'
+  image:
+    siteInfo?.pageCover || siteConfig('HOME_BANNER_IMAGE') || '/bg_image.jpg'
 })
+
+const NOINDEX_ROUTES = new Set([
+  '/search',
+  '/search/[keyword]',
+  '/search/[keyword]/page/[page]',
+  '/404',
+  '/500'
+])
+
+const getSEORobots = router =>
+  NOINDEX_ROUTES.has(router?.route)
+    ? 'noindex, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+    : 'follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
@@ -27,8 +41,14 @@ const SEO = props => {
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
   const webFontUrl = siteConfig('FONT_URL')
-  const webFontUrls = Array.isArray(webFontUrl) ? webFontUrl : webFontUrl ? [webFontUrl] : []
-  const usesGoogleFonts = webFontUrls.some(url => url?.includes('fonts.googleapis.com'))
+  const webFontUrls = Array.isArray(webFontUrl)
+    ? webFontUrl
+    : webFontUrl
+      ? [webFontUrl]
+      : []
+  const usesGoogleFonts = webFontUrls.some(url =>
+    url?.includes('fonts.googleapis.com')
+  )
 
   // 基于 router.asPath 计算净化后的 canonical URL：
   // 去除 query/hash，保证 canonical 精确自指；多语言前缀在静态导出下不存在，asPath 即裸路径
@@ -72,14 +92,19 @@ const SEO = props => {
     <Head>
       <meta charSet='UTF-8' />
       <title>{title}</title>
-      <link rel="canonical" href={url} />
-      <link rel='alternate' type='text/plain' href={`${siteConfig('LINK')}/llms.txt`} title='llms.txt' />
+      <link rel='canonical' href={url} />
+      <link
+        rel='alternate'
+        type='text/plain'
+        href={`${siteConfig('LINK')}/llms.txt`}
+        title='llms.txt'
+      />
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
-      <meta name='robots' content='follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1' />
+      <meta name='robots' content={getSEORobots(router)} />
       <meta charSet='UTF-8' />
       <meta name='format-detection' content='telephone=no' />
       <meta name='mobile-web-app-capable' content='yes' />
@@ -105,7 +130,10 @@ const SEO = props => {
       <meta name='geo.region' content={siteConfig('GEO_REGION', 'CN')} />
       <meta name='geo.country' content={siteConfig('GEO_COUNTRY', 'CN')} />
       {siteConfig('GEO_PLACENAME', '', NOTION_CONFIG) && (
-        <meta name='geo.placename' content={siteConfig('GEO_PLACENAME', '', NOTION_CONFIG)} />
+        <meta
+          name='geo.placename'
+          content={siteConfig('GEO_PLACENAME', '', NOTION_CONFIG)}
+        />
       )}
       {/* Open Graph 元数据 */}
       <meta property='og:locale' content={lang} />
@@ -121,16 +149,22 @@ const SEO = props => {
 
       {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content={siteConfig('TWITTER_SITE', '@NotionNext')} />
-      <meta name='twitter:creator' content={siteConfig('TWITTER_CREATOR', '@NotionNext')} />
+      <meta
+        name='twitter:site'
+        content={siteConfig('TWITTER_SITE', '@NotionNext')}
+      />
+      <meta
+        name='twitter:creator'
+        content={siteConfig('TWITTER_CREATOR', '@NotionNext')}
+      />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
       <meta name='twitter:image:alt' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
-      <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-      <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+      <link rel='dns-prefetch' href='https://cdnjs.cloudflare.com' />
+      <link rel='dns-prefetch' href='https://cdn.jsdelivr.net' />
 
       {/* 文章特定元数据 */}
       {meta?.type === 'Post' && (
@@ -148,7 +182,9 @@ const SEO = props => {
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateStructuredData(meta, siteInfo, url, image, AUTHOR, router))
+          __html: JSON.stringify(
+            generateStructuredData(meta, siteInfo, url, image, AUTHOR, router)
+          )
         }}
       />
 
@@ -156,21 +192,27 @@ const SEO = props => {
       <link rel='dns-prefetch' href='//fonts.googleapis.com' />
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
-      {usesGoogleFonts && <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />}
+      {usesGoogleFonts && (
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin='anonymous'
+        />
+      )}
 
       {/* 字体优化：异步加载 CSS，避免阻塞渲染 */}
       {webFontUrls.map((url, index) => (
         <link
           key={index}
-          rel="stylesheet"
+          rel='stylesheet'
           href={url}
-          media="print"
+          media='print'
           onLoad="this.media='all'"
         />
       ))}
       <noscript>
         {webFontUrls.map((url, index) => (
-          <link key={index} rel="stylesheet" href={url} />
+          <link key={index} rel='stylesheet' href={url} />
         ))}
       </noscript>
 
@@ -214,7 +256,15 @@ const buildWebSite = siteInfo => {
     description: siteInfo?.description,
     url: siteConfig('LINK'),
     inLanguage: siteConfig('LANG'),
-    publisher: { '@id': `${siteConfig('LINK')}/#organization` }
+    publisher: { '@id': `${siteConfig('LINK')}/#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteConfig('LINK')}/search?s={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
   }
   return website
 }
@@ -271,6 +321,16 @@ const buildBlogPosting = (meta, siteInfo, url, image, author) => {
   return posting
 }
 
+const buildCollectionPage = (meta, url) => ({
+  '@type': 'CollectionPage',
+  '@id': url,
+  name: meta?.title,
+  description: meta?.description,
+  url,
+  inLanguage: siteConfig('LANG'),
+  isPartOf: { '@id': `${siteConfig('LINK')}/#website` }
+})
+
 /**
  * 生成结构化数据（@graph 数组形式）
  * - 所有页面：Organization / WebSite / Person
@@ -308,7 +368,17 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
     crumbItems.push({ name: meta.title })
     const breadcrumb = buildBreadcrumb(crumbItems)
     if (breadcrumb) graph.push(breadcrumb)
-  } else if (route === '/category/[category]' || route === '/category/[category]/page/[page]') {
+  } else if (
+    route === '/archive' ||
+    route === '/category' ||
+    route === '/tag'
+  ) {
+    graph.push(buildCollectionPage(meta, url))
+  } else if (
+    route === '/category/[category]' ||
+    route === '/category/[category]/page/[page]'
+  ) {
+    graph.push(buildCollectionPage(meta, url))
     // 分类页：面包屑（首页 > 分类）
     const category = meta?.categoryName || router?.query?.category
     if (category) {
@@ -319,6 +389,7 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
       if (breadcrumb) graph.push(breadcrumb)
     }
   } else if (route === '/tag/[tag]' || route === '/tag/[tag]/page/[page]') {
+    graph.push(buildCollectionPage(meta, url))
     // 标签页：面包屑（首页 > 标签）
     const tag = router?.query?.tag
     if (tag) {
@@ -343,7 +414,7 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
  */
 const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page } = props
-  const keyword = router?.query?.s
+  const keyword = router?.query?.keyword || router?.query?.s
   const siteMeta = getSiteMetaFallbacks(siteInfo)
   const nav = locale?.NAV || {}
   const common = locale?.COMMON || {}
@@ -388,19 +459,26 @@ const getSEOMeta = (props, router, locale) => {
       }
     case '/category/[category]/page/[page]':
       return {
-        title: `${category} | ${categoryLabel} | ${siteMeta.title}`,
-        description: `${category} | ${categoryLabel} | ${siteMeta.description}`,
-        slug: 'category/' + category,
+        title: `${category} - 第 ${page} 页 | ${categoryLabel} | ${siteMeta.title}`,
+        description: `${category} - 第 ${page} 页 | ${categoryLabel} | ${siteMeta.description}`,
+        slug: `category/${category}/page/${page}`,
         image: siteMeta.image,
         type: 'website'
       }
     case '/tag/[tag]':
-    case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${tagsLabel} | ${siteMeta.title}`,
         description: `${tag} | ${tagsLabel} | ${siteMeta.description}`,
         image: siteMeta.image,
         slug: 'tag/' + tag,
+        type: 'website'
+      }
+    case '/tag/[tag]/page/[page]':
+      return {
+        title: `${tag} - 第 ${page} 页 | ${tagsLabel} | ${siteMeta.title}`,
+        description: `${tag} - 第 ${page} 页 | ${tagsLabel} | ${siteMeta.description}`,
+        image: siteMeta.image,
+        slug: `tag/${tag}/page/${page}`,
         type: 'website'
       }
     case '/search':
@@ -457,5 +535,5 @@ const getSEOMeta = (props, router, locale) => {
   }
 }
 
-export { getSEOMeta }
+export { generateStructuredData, getSEOMeta, getSEORobots }
 export default SEO

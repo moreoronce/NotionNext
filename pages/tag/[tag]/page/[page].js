@@ -9,6 +9,15 @@ const Tag = props => {
 }
 
 export async function getStaticProps({ params: { tag, page }, locale }) {
+  if (Number(page) <= 1) {
+    return {
+      redirect: {
+        destination: `/tag/${encodeURIComponent(tag)}`,
+        permanent: true
+      }
+    }
+  }
+
   const from = 'tag-page-props'
   const props = await fetchGlobalAllData({ from, locale })
   // 过滤状态、标签
@@ -41,7 +50,9 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tagOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({ from })
+  const { tagOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
+    from
+  })
   const paths = []
   tagOptions?.forEach(tag => {
     // 过滤状态类型
@@ -54,7 +65,7 @@ export async function getStaticPaths() {
       postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
     )
     if (totalPages > 1) {
-      for (let i = 1; i <= totalPages; i++) {
+      for (let i = 2; i <= totalPages; i++) {
         paths.push({ params: { tag: tag.name, page: '' + i } })
       }
     }
