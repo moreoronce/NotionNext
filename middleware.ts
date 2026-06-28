@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'
+import { getPageOneRedirectPath } from '@/lib/page-one-redirects'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
 
@@ -19,6 +20,13 @@ export const config = {
  */
 // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 const defaultMiddleware = async (req: NextRequest, ev: any) => {
+  const pageOneRedirectPath = getPageOneRedirectPath(req.nextUrl.pathname)
+  if (pageOneRedirectPath) {
+    const redirectToUrl = req.nextUrl.clone()
+    redirectToUrl.pathname = pageOneRedirectPath
+    return NextResponse.redirect(redirectToUrl, 301)
+  }
+
   // 处理UUID重定向
   if (BLOG['UUID_REDIRECT']) {
     let redirectJson: Record<string, string> = {}
