@@ -1,6 +1,11 @@
 import { renderToStaticMarkup } from 'react-dom/server.node'
 
-import { ArchiveSeoLinks, getArchiveSeoPosts } from '@/lib/archive-seo-links'
+import {
+  ArchiveSeoHead,
+  ArchiveSeoLinks,
+  getArchiveSeoMeta,
+  getArchiveSeoPosts
+} from '@/lib/archive-seo-links'
 
 jest.mock('@/lib/db/SiteDataApi', () => ({ fetchGlobalAllData: jest.fn() }))
 jest.mock('@/lib/config', () => ({ siteConfig: jest.fn() }))
@@ -56,6 +61,31 @@ describe('archive SEO links', () => {
         props: { pageProps: { posts: [{ href: '/article/one' }] } }
       })
     ).toEqual([])
+  })
+
+  it('renders archive title and description in the document fallback head', () => {
+    const meta = getArchiveSeoMeta({
+      page: '/archive',
+      props: {
+        pageProps: {
+          siteInfo: {
+            title: 'Deep Router',
+            description: 'Network optimization notes.',
+            link: 'https://deeprouter.org'
+          }
+        }
+      }
+    })
+
+    const html = renderToStaticMarkup(<ArchiveSeoHead meta={meta} />)
+
+    expect(html).toContain('<title>归档 | Deep Router</title>')
+    expect(html).toContain(
+      '<meta name="description" content="归档 | Network optimization notes."/>'
+    )
+    expect(html).toContain(
+      '<link rel="canonical" href="https://deeprouter.org/archive"/>'
+    )
   })
 
   it('keeps href data when archive posts are trimmed', () => {
