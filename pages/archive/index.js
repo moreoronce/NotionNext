@@ -27,7 +27,31 @@ const ArchiveIndex = props => {
   }, [])
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
+  return (
+    <>
+      <SeoArchiveLinks posts={props.posts} />
+      <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
+    </>
+  )
+}
+
+const SeoArchiveLinks = ({ posts = [] }) => {
+  const archivePosts = posts.filter(post => post?.href || post?.slug)
+  if (archivePosts.length === 0) {
+    return null
+  }
+
+  return (
+    <nav className='sr-only' aria-label='Archive article links'>
+      <ul>
+        {archivePosts.map(post => (
+          <li key={post.id || post.href || post.slug}>
+            <a href={post.href || `/${post.slug}`}>{post.title}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
 }
 
 export async function getStaticProps({ locale }) {
@@ -75,8 +99,9 @@ export async function getStaticProps({ locale }) {
 }
 
 export default ArchiveIndex
+export { SeoArchiveLinks }
 
-function cleanArchivePost(post) {
+export function cleanArchivePost(post) {
   return {
     id: post.id,
     title: post.title,
