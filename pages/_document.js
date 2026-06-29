@@ -1,5 +1,6 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import BLOG from '@/blog.config'
+import { ArchiveSeoLinks, getArchiveSeoPosts } from '@/lib/archive-seo-links'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 const fontAwesomeLoadScript = BLOG.FONT_AWESOME
@@ -55,6 +56,8 @@ class MyDocument extends Document {
   }
 
   render() {
+    const archiveSeoPosts = getArchiveSeoPosts(this.props.__NEXT_DATA__)
+
     return (
       <Html lang={BLOG.LANG} suppressHydrationWarning>
         <Head>
@@ -120,6 +123,7 @@ class MyDocument extends Document {
 
         <body>
           <Main />
+          <ArchiveSeoLinks posts={archiveSeoPosts} />
           <NextScript />
         </body>
       </Html>
