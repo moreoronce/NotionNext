@@ -140,6 +140,8 @@ npm run build  # next.config.js 中已开启 output: 'export'
 
 MIT License
 
+---
+
 <p align="center">
   <a href="https://x.com/moreoronce">
     <img src="https://img.shields.io/badge/X-Follow_@moreoronce-black?style=for-the-badge&logo=x&logoColor=white" height="40" alt="X @moreoronce">
