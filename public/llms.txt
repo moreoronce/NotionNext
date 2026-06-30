@@ -2,6 +2,7 @@
 > 探索前沿网络技术，网络优化技术分享。路由器配置、OpenWRT、网络监控管理、DNS优化、IPv6优化、游戏性能提升及HomeLab应用，助您打造安全、高效的家庭网络环境与出海体验。详尽的技术文章和应用推荐，提升网络配置能力，推荐最佳工具和应用，分享网络问题解决思路。
 Canonical site: https://deeprouter.org
 Primary language: zh-CN
+Last updated: 2026-06-28
 Author / publisher: Yawatasensei
 Purpose: help search engines, answer engines, and LLM agents identify canonical public content for citation and retrieval.
 ## Core
@@ -9,6 +10,8 @@ Purpose: help search engines, answer engines, and LLM agents identify canonical 
 - [Sitemap](https://deeprouter.org/sitemap.xml): Complete crawlable URL index
 - [RSS feed](https://deeprouter.org/rss/feed.xml): Fresh public posts when RSS is enabled
 ## Content
+- [KixDNS：用Rust重塑旁路网关的DNS分流——从选型到踩坑的记录](https://deeprouter.org/article/kixdns-bypass-gateway-dns-guide): 为什么放弃Singbox自身的DNS，为什么不使用MosDNS或SmartDNS，而选择一个名不见经传的Rust DNS转发器？这不是一篇软件测评，而是一次真实家庭网络的生产环境完整落地记录。; Category: 技术分享; Tags: 旁路由, DNS, 家庭网络, 软路由, Debian
+- [解决Codex Desktop高频TRACE日志写入logs_2.sqlite问题](https://deeprouter.org/article/codex-desktop-trace-logs-sqlite-fix): Codex Desktop 跑着不动，磁盘灯一直在闪，一看 ~/.codex/logs_2.sqlite 被高频 TRACE 日志狂写。官方没有开关，RUST_LOG 也压不住——这篇记录我们怎么用一行 SQLite 触发器把它止住。; Category: 技术分享; Tags: Codex, SQLite, ChatGPT, LLM, 开发
 - [Hermes Agent 优化：解决GLM-5.2模型429(1305 overloaded)](https://deeprouter.org/article/hermes-agent-optimization-fix-glm-5-2-model-429-1305-overloaded): Hermes Agent 使用 zai/glm-5.2 Coding Plan 后疯狂吃 429？换 key、换 endpoint、降请求长度全没用？本文记录了一次从假限流到真凶（system prompt 内容过滤 + 客户端指纹检测）的完整排查，并给出了不改磁盘、只改请求路径的 Provider-gated 方案。; Category: 技术分享; Tags: 开发, AI, NodeJS, Javascript, LLM, AGENT
 - [解决微信图片加载缓慢：从DNS到OSPF路由的问题排查](https://deeprouter.org/article/debug-wechat-image-slow-ospf-routing): 使用 Dae + OSPF 分流时，绑定国外手机号的微信图片加载异常缓慢？本文记录了一次从应用层到网络层的完整排查过程，揭示了腾讯云海外 CDN 节点被错误路由的隐藏陷阱，并提供了针对性的解决方案。; Category: 技术分享; Tags: 旁路由, DNS, 防火墙, 家庭网络, RouterOS, Dae, 软路由
 - [Windows Alma 太卡？ 我有特殊的使用技巧](https://deeprouter.org/article/fix-alma-typing-lag-windows-electron-optimization): Windows 上使用 Alma 感觉打字不跟手、滚动掉帧？本文分享一套基于 Chromium 底层的启动参数配置（OpenGL 直通 + 8GB 内存解锁），强制绕过 DirectX 转换层，解决 Electron 应用的输入延迟问题，让你的 AI 助手满血复活。; Category: 技术分享; Tags: 工具, AI, NodeJS, Windows, Javascript, Gemini, Claude
@@ -87,8 +90,6 @@ Purpose: help search engines, answer engines, and LLM agents identify canonical 
 - [Gminer v3.44版本更新](https://deeprouter.org/article/gminer-v344-update): Gminer v3.44更新为Nvidia用户提供了Dero的挖矿支持，以及Dero + ZIL双挖支持，推荐使用RTX3090或RTX4090显卡。更新主要内容包括性能优化、bug修复和在多种挖矿操作系统上的升级命令。; Category: 工具分享; Tags: 加密货币, 工具
 - [可以去掉Youtube Music视频的油猴脚本](https://deeprouter.org/article/script-remove-youtube-music-video): 默认的Youtube Music在播放音乐的同时，默认会播放视频，无形中会浪费很多的流量，而且非常的不Coool，不太像一个曲库的样子。所以找来找去，就找到了这个Tampermonkey（油猴）插件，可以去除youtube music的视频。; Category: 工具分享; Tags: greasyfork, Tampermonkey, 工具, 浏览器, Javascript
 - [解决OpenWRT中VIM报错‘Failed to source defaults.vim’问题](https://deeprouter.org/article/openwrt-vim-failed-to-source-defaults-vim-fix): 本文介绍了在OpenWRT系统中遇到VIM报错‘E1187: Failed to source defaults.vim’的问题，并提供了详细能够完美解决报错的两种解决方法，帮助用户快速修复此问题，提升在OpenWRT中使用Vim编辑器的使用体验。; Category: 技术分享; Tags: Openwrt, 编辑器, Vim, 软路由
-- [解决sudo命令不使用代理问题](https://deeprouter.org/article/fix_sudo_not_use_proxy): 在国内环境下，我们经常需要使用代理来进行一些系统操作，比例apt包管理，比如curl命令或者git命令等等。通常我们通过配置.bashrc或者.zshrc等shell配置文件，增加代理选项就可以正常工作。本文旨在解决sudo命令未使用代理问题，让sudo使用代理。; Category: 技术分享; Tags: Linux
-- [XMRig-6.21.0 for Windows 免费版更新](https://deeprouter.org/article/xmrig-6.21-for-windows-update): XMRig是一款免费的开源软件，它是一个高性能的Monero（$XMR）、Raptoreum（$RTM）等加密货币挖掘程序。XMRig可在Windows，Linux和MacOS等操作系统上运行，是由xmrig开发团队维护的。; Category: 工具分享; Tags: 推荐, 工具
 
 ## Topics
 - [技术分享](https://deeprouter.org/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB): Content grouped by category
