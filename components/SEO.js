@@ -30,6 +30,11 @@ const getSEORobots = router =>
     ? 'noindex, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
     : 'follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
+const normalizeCategory = category => {
+  if (Array.isArray(category)) return category[0] || ''
+  return category || ''
+}
+
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   // 去除 LINK / SUB_PATH 可能存在的首尾斜杠，避免拼接出 // 双斜杠
@@ -362,7 +367,7 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
     if (meta.category) {
       crumbItems.push({
         name: meta.category,
-        url: `${link}/category/${meta.category}`
+        url: `${link}/category/${encodeURIComponent(meta.category)}`
       })
     }
     crumbItems.push({ name: meta.title })
@@ -528,7 +533,7 @@ const getSEOMeta = (props, router, locale) => {
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || siteMeta.image,
-        category: post?.category?.[0],
+        category: normalizeCategory(post?.category),
         tags: post?.tags,
         wordCount: post?.wordCount
       }

@@ -77,4 +77,49 @@ describe('SEO metadata', () => {
       data['@graph'].some(item => item['@type'] === 'CollectionPage')
     ).toBe(true)
   })
+
+  it('keeps string post category intact for structured data', () => {
+    const meta = getSEOMeta(
+      {
+        siteInfo: {
+          title: 'Deep Router',
+          description: 'Network notes'
+        },
+        post: {
+          title: 'KixDNS Guide',
+          summary: 'DNS notes',
+          type: 'Post',
+          slug: 'article/kixdns-bypass-gateway-dns-guide',
+          category: '技术分享',
+          tags: ['DNS'],
+          wordCount: 1000
+        }
+      },
+      { route: '/[prefix]/[slug]', query: {} },
+      undefined
+    )
+
+    const data = generateStructuredData(
+      meta,
+      {
+        title: 'Deep Router',
+        description: 'Network notes'
+      },
+      'https://deeprouter.org/article/kixdns-bypass-gateway-dns-guide',
+      'https://deeprouter.org/cover.jpg',
+      'Moreo',
+      { route: '/[prefix]/[slug]', query: {} }
+    )
+    const post = data['@graph'].find(item => item['@type'] === 'BlogPosting')
+    const breadcrumb = data['@graph'].find(
+      item => item['@type'] === 'BreadcrumbList'
+    )
+
+    expect(meta.category).toBe('技术分享')
+    expect(post.articleSection).toBe('技术分享')
+    expect(breadcrumb.itemListElement[1].name).toBe('技术分享')
+    expect(breadcrumb.itemListElement[1].item).toBe(
+      'https://test.com/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB'
+    )
+  })
 })
