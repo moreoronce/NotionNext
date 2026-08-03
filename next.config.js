@@ -425,6 +425,11 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@'] = path.resolve(__dirname)
+    config.resolve.alias['@theme-components'] = path.resolve(
+      __dirname,
+      'themes',
+      BLOG.THEME
+    )
     config.resolve.alias['lodash.throttle'] = path.resolve(
       __dirname,
       'lib/utils/throttle.js'
@@ -434,10 +439,14 @@ const nextConfig = {
       console.log(
         '[ThemeResolver][webpack]',
         JSON.stringify({
-          note: 'Layouts load via dynamic import(@/themes/<name>). Theme folder follows runtime NEXT_PUBLIC_THEME / Notion; no compile-time @theme-components alias.',
+          note: 'The build default uses @theme-components for stable hydration; non-default themes still load dynamically.',
           envTheme: process.env.NEXT_PUBLIC_THEME || null,
           configTheme: BLOG.THEME,
-          themeFolderPath: path.resolve(__dirname, 'themes', BLOG.THEME)
+          resolvedDefaultThemePath: path.resolve(
+            __dirname,
+            'themes',
+            BLOG.THEME
+          )
         })
       )
       config.resolve.fallback = {

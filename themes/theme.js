@@ -1,4 +1,5 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
+import * as DefaultThemeComponents from '@theme-components'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -8,7 +9,6 @@ import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
 const baseLayoutCache = new Map()
 const layoutByThemeCache = new Map()
-let domFixTimer = null
 
 const MagzineLayoutLoading = () => (
   <div className='w-full bg-[#f6f6f1] dark:bg-black'>
@@ -25,7 +25,8 @@ const MagzineLayoutLoading = () => (
           {[0, 1].map(item => (
             <div
               key={item}
-              className='flex gap-6 border-t border-gray-300 pt-6 dark:border-gray-800'>
+              className='flex gap-6 border-t border-gray-300 pt-6 dark:border-gray-800'
+            >
               <div className='min-w-0 flex-1 space-y-3'>
                 <div className='h-4 w-24 animate-pulse bg-gray-200 dark:bg-gray-800' />
                 <div className='h-6 w-4/5 animate-pulse bg-gray-200 dark:bg-gray-800' />
@@ -51,17 +52,6 @@ const normalizeThemeName = themeValue => {
   const firstTheme = themeValue.split(',')[0].trim()
   if (!firstTheme) return BLOG.THEME
   return THEMES.includes(firstTheme) ? firstTheme : BLOG.THEME
-}
-
-const scheduleFixThemeDOM = (delay = 120) => {
-  if (!isBrowser) return
-  if (domFixTimer) {
-    clearTimeout(domFixTimer)
-  }
-  domFixTimer = setTimeout(() => {
-    fixThemeDOM()
-    domFixTimer = null
-  }, delay)
 }
 
 async function importThemeConfig(themeFolderName) {
@@ -117,6 +107,13 @@ const getCurrentTheme = (router, fallbackTheme) => {
  */
 export const getBaseLayoutByTheme = theme => {
   const normalizedTheme = normalizeThemeName(theme)
+  if (normalizedTheme === BLOG.THEME) {
+    const Base = DefaultThemeComponents.LayoutBase
+    if (!Base) {
+      throw new Error(`[theme] LayoutBase missing in themes/${normalizedTheme}`)
+    }
+    return Base
+  }
   if (baseLayoutCache.has(normalizedTheme)) {
     return baseLayoutCache.get(normalizedTheme)
   }
@@ -158,8 +155,18 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
   const themeQuery = getCurrentTheme(router, theme)
   const cacheKey = `${themeQuery}:${layoutName}`
 
+  if (themeQuery === BLOG.THEME) {
+    const Selected =
+      DefaultThemeComponents[layoutName] || DefaultThemeComponents.LayoutSlug
+    if (!Selected) {
+      throw new Error(
+        `[theme] Layout "${layoutName}" missing in themes/${themeQuery}`
+      )
+    }
+    return Selected
+  }
+
   if (layoutByThemeCache.has(cacheKey)) {
-    scheduleFixThemeDOM(themeQuery === BLOG.THEME ? 80 : 240)
     return layoutByThemeCache.get(cacheKey)
   }
 
@@ -179,7 +186,6 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
     ? dynamic(loadLayout, { ssr: true, loading: layoutLoading })
     : dynamic(loadLayout, { ssr: true })
   layoutByThemeCache.set(cacheKey, DynamicLayoutComponent)
-  scheduleFixThemeDOM(themeQuery === BLOG.THEME ? 80 : 240)
   return DynamicLayoutComponent
 }
 
@@ -192,28 +198,6 @@ const getLayoutNameByPath = path => {
   const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutSlug'
   //   console.log('path-layout',path,layoutName)
   return layoutName
-}
-
-/**
- * 切换主题时的特殊处理
- * 删除多余的元素
- */
-const fixThemeDOM = () => {
-  if (isBrowser) {
-    const elements = document.querySelectorAll('[id^="theme-"]')
-    if (elements?.length > 1) {
-      for (let i = 0; i < elements.length - 1; i++) {
-        if (
-          elements[i] &&
-          elements[i].parentNode &&
-          elements[i].parentNode.contains(elements[i])
-        ) {
-          elements[i].parentNode.removeChild(elements[i])
-        }
-      }
-      elements[0]?.scrollIntoView()
-    }
-  }
 }
 
 /**
