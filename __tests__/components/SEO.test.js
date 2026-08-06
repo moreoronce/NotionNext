@@ -1,10 +1,23 @@
 import {
+  getCanonicalUrl,
   generateStructuredData,
   getSEOMeta,
   getSEORobots
 } from '@/components/SEO'
 
 describe('SEO metadata', () => {
+  it('uses the current route once when building canonical URLs', () => {
+    expect(
+      getCanonicalUrl(
+        'https://deeprouter.org/',
+        '',
+        '/article/kixdns-bypass-gateway-dns-guide?source=test#intro'
+      )
+    ).toBe(
+      'https://deeprouter.org/article/kixdns-bypass-gateway-dns-guide'
+    )
+  })
+
   it('returns archive title and description even when locale is not available', () => {
     const meta = getSEOMeta(
       {

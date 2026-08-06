@@ -10,6 +10,10 @@ interface NodeError extends Error {
   code?: string
 }
 
+const LOCK_UNLINK_RETRY_CODES = new Set(['EACCES', 'EBUSY', 'EPERM'])
+const LOCK_UNLINK_MAX_ATTEMPTS = 5
+const LOCK_UNLINK_RETRY_DELAY_MS = 50
+
 export class RateLimiter {
   private queue: QueueItem<unknown>[] = []
   private inflight = new Set<string>()
@@ -31,11 +35,9 @@ export class RateLimiter {
       const stats = fs.statSync(this.lockFilePath)
       const age = Date.now() - stats.ctimeMs
       if (age > 30 * 1000) { // 30秒
-        try {
-          fs.unlinkSync(this.lockFilePath)
+        const removed = await this.unlinkLockWithRetry('删除陈旧锁失败')
+        if (removed) {
           console.warn('[限流] 删除陈旧锁文件:', this.lockFilePath)
-        } catch (err) {
-          console.error('[限流] 删除陈旧锁失败:', err)
         }
       }
     }
@@ -51,10 +53,37 @@ export class RateLimiter {
     }
   }
 
-  private releaseLock() {
-    if (!this.lockFilePath) return
-    try { if (fs.existsSync(this.lockFilePath)) fs.unlinkSync(this.lockFilePath) }
-    catch (err) { console.error('释放锁失败', err) }
+  private async unlinkLockWithRetry(errorLabel: string) {
+    if (!this.lockFilePath) return true
+
+    for (let attempt = 1; attempt <= LOCK_UNLINK_MAX_ATTEMPTS; attempt++) {
+      try {
+        fs.unlinkSync(this.lockFilePath)
+        return true
+      } catch (err) {
+        const error = err as NodeError
+        if (error.code === 'ENOENT') return true
+
+        const shouldRetry =
+          error.code &&
+          LOCK_UNLINK_RETRY_CODES.has(error.code) &&
+          attempt < LOCK_UNLINK_MAX_ATTEMPTS
+        if (!shouldRetry) {
+          console.error(errorLabel, err)
+          return false
+        }
+
+        await new Promise(resolve =>
+          setTimeout(resolve, LOCK_UNLINK_RETRY_DELAY_MS * attempt)
+        )
+      }
+    }
+
+    return false
+  }
+
+  private async releaseLock() {
+    await this.unlinkLockWithRetry('释放锁失败')
   }
 
   public enqueue<T>(key: string, requestFunc: () => Promise<T>): Promise<T> {
@@ -121,7 +150,7 @@ export class RateLimiter {
     } catch (err) {
       console.error('限流队列异常', err)
     } finally {
-      this.releaseLock()
+      await this.releaseLock()
       // 显式忽略下一轮的返回 Promise
       setTimeout(() => {
         void this.processQueue()

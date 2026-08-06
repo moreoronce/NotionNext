@@ -35,6 +35,13 @@ const normalizeCategory = category => {
   return category || ''
 }
 
+const getCanonicalUrl = (siteUrl, basePath = '', asPath = '/') => {
+  const link = normalizeSiteUrl(siteUrl).replace(/\/+$/, '')
+  const cleanPath = String(asPath || '/').split('#')[0].split('?')[0]
+  const pathSuffix = cleanPath === '/' ? '' : cleanPath
+  return `${link}${basePath}${pathSuffix}`
+}
+
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   // 去除 LINK / SUB_PATH 可能存在的首尾斜杠，避免拼接出 // 双斜杠
@@ -58,11 +65,8 @@ const SEO = props => {
     url?.includes('fonts.googleapis.com')
   )
 
-  // 基于 router.asPath 计算净化后的 canonical URL：
-  // 去除 query/hash，保证 canonical 精确自指；多语言前缀在静态导出下不存在，asPath 即裸路径
-  const cleanPath = (router?.asPath || '/').split('#')[0].split('?')[0]
-  const pathSuffix = cleanPath === '/' ? '' : cleanPath
-  let url = `${link}${basePath}${pathSuffix}`
+  // router.asPath 已经是当前页面路径；不要再追加 meta.slug，否则文章路径会重复。
+  const url = getCanonicalUrl(link, basePath, router?.asPath)
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
@@ -71,7 +75,6 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    url = createSiteUrl(url, meta.slug) || url
     // 确保 image 是绝对 URL（Twitter/Facebook 需要）
     image = getAbsoluteImageUrl(meta.image || '/bg_image.jpg', link)
   }
@@ -578,5 +581,5 @@ const getSEOMeta = (props, router, locale) => {
   }
 }
 
-export { generateStructuredData, getSEOMeta, getSEORobots }
+export { generateStructuredData, getCanonicalUrl, getSEOMeta, getSEORobots }
 export default SEO
