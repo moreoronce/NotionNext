@@ -8,6 +8,9 @@ import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
  * @constructor
  */
 const SocialButton = () => {
+  const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
+  const CONTACT_ORCID = siteConfig('CONTACT_ORCID')
+  const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
 
@@ -15,7 +18,34 @@ const SocialButton = () => {
 
   return (
     <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 flex-wrap flex justify-center '>
-      {siteConfig('CONTACT_TELEGRAM') && (
+      {CONTACT_GITHUB && (
+        <a
+          target='_blank'
+          rel='noreferrer'
+          title={'github'}
+          href={CONTACT_GITHUB}>
+          <i className='fab fa-github transform hover:scale-125 duration-150 hover:text-green-600' />
+        </a>
+      )}
+      {CONTACT_ORCID && (
+        <a
+          target='_blank'
+          rel='noreferrer'
+          title={'ORCID'}
+          href={CONTACT_ORCID}>
+          <i className='fab fa-orcid transform hover:scale-125 duration-150 hover:text-green-600' />
+        </a>
+      )}
+      {CONTACT_TWITTER && (
+        <a
+          target='_blank'
+          rel='noreferrer'
+          title={'twitter'}
+          href={CONTACT_TWITTER}>
+          <i className='fab fa-twitter transform hover:scale-125 duration-150 hover:text-green-600' />
+        </a>
+      )}
+      {CONTACT_TELEGRAM && (
         <a
           target='_blank'
           rel='noreferrer'

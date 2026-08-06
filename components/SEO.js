@@ -1,9 +1,9 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-// import { loadExternalResource } from '@/lib/utils'
+import { createSiteUrl, normalizeSiteUrl } from '@/lib/sitemap-utils'
+import { isHttpLink } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 /**
  * 页面的Head头，有用于SEO
@@ -38,7 +38,9 @@ const normalizeCategory = category => {
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   // 去除 LINK / SUB_PATH 可能存在的首尾斜杠，避免拼接出 // 双斜杠
-  const link = siteConfig('LINK').replace(/\/+$/, '')
+  const link = normalizeSiteUrl(
+    siteConfig('LINK', siteInfo?.link, NOTION_CONFIG)
+  ).replace(/\/+$/, '')
   const subPath = siteConfig('SUB_PATH', '').replace(/^\/+|\/+$/g, '')
   // 子目录部署时的前缀，例如部署在 example.com/blog/ 时为 /blog
   const basePath = siteConfig('PATH')?.length && subPath ? `/${subPath}` : ''
@@ -51,6 +53,7 @@ const SEO = props => {
     : webFontUrl
       ? [webFontUrl]
       : []
+  const hasWebFontUrl = webFontUrls.length > 0
   const usesGoogleFonts = webFontUrls.some(url =>
     url?.includes('fonts.googleapis.com')
   )
@@ -68,21 +71,20 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    image = meta.image || '/bg_image.jpg'
+    url = createSiteUrl(url, meta.slug) || url
     // 确保 image 是绝对 URL（Twitter/Facebook 需要）
-    if (image && !image.startsWith('http')) {
-      image = `${siteConfig('LINK')}${image}`
-    }
+    image = getAbsoluteImageUrl(meta.image || '/bg_image.jpg', link)
   }
-
   const TITLE = siteConfig('TITLE')
   const AUTHOR = siteConfig('AUTHOR')
   const fallbackMeta = getSiteMetaFallbacks(siteInfo)
   const title = meta?.title || fallbackMeta.title
   const description = meta?.description || fallbackMeta.description
-  const type = meta?.type || 'website'
+  const type = meta?.type === 'Post' ? 'article' : meta?.type || 'website'
   const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
-  const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
+  const language =
+    router?.locale || siteConfig('LANG', 'zh-CN', NOTION_CONFIG)
+  const lang = String(language).replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
@@ -92,12 +94,13 @@ const SEO = props => {
   )
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
+  const TWITTER_SITE = siteConfig('TWITTER_SITE', '', NOTION_CONFIG)
+  const TWITTER_CREATOR = siteConfig('TWITTER_CREATOR', '', NOTION_CONFIG)
 
   return (
     <Head>
       <meta charSet='UTF-8' />
       <title>{title}</title>
-      <link rel='canonical' href={url} />
       <link
         rel='alternate'
         type='text/plain'
@@ -124,13 +127,14 @@ const SEO = props => {
         />
       )}
       {/* 基础SEO元数据 */}
+      <link rel='canonical' href={url} />
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta name='author' content={AUTHOR} />
       <meta name='generator' content='NotionNext' />
 
       {/* 语言和地区 */}
-      <meta httpEquiv='content-language' content={siteConfig('LANG')} />
+      <meta httpEquiv='content-language' content={language} />
       <meta name='geo.region' content={siteConfig('GEO_REGION', 'CN')} />
       <meta name='geo.country' content={siteConfig('GEO_COUNTRY', 'CN')} />
       {siteConfig('GEO_PLACENAME', '', NOTION_CONFIG) && (
@@ -153,14 +157,10 @@ const SEO = props => {
 
       {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta
-        name='twitter:site'
-        content={siteConfig('TWITTER_SITE', '@NotionNext')}
-      />
-      <meta
-        name='twitter:creator'
-        content={siteConfig('TWITTER_CREATOR', '@NotionNext')}
-      />
+      {TWITTER_SITE && <meta name='twitter:site' content={TWITTER_SITE} />}
+      {TWITTER_CREATOR && (
+        <meta name='twitter:creator' content={TWITTER_CREATOR} />
+      )}
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
@@ -173,12 +173,21 @@ const SEO = props => {
       {/* 文章特定元数据 */}
       {meta?.type === 'Post' && (
         <>
-          <meta property='article:published_time' content={meta.publishDay} />
-          <meta property='article:modified_time' content={meta.lastEditedDay} />
+          {meta.publishTime && (
+            <meta property='article:published_time' content={meta.publishTime} />
+          )}
+          {meta.modifiedTime && (
+            <meta
+              property='article:modified_time'
+              content={meta.modifiedTime}
+            />
+          )}
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:tag' content={keywords} />
-          <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          {FACEBOOK_PAGE && (
+            <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          )}
         </>
       )}
 
@@ -193,7 +202,7 @@ const SEO = props => {
       />
 
       {/* DNS预取和预连接 */}
-      <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+      {hasWebFontUrl && <link rel='dns-prefetch' href='//fonts.googleapis.com' />}
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       {usesGoogleFonts && (
@@ -411,6 +420,27 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
   }
 }
 
+const getAbsoluteImageUrl = (image, siteUrl) => {
+  if (typeof image !== 'string') return ''
+
+  const rawImage = image.trim()
+  if (!rawImage) return ''
+  if (isHttpLink(rawImage) || rawImage.startsWith('data:')) {
+    return rawImage
+  }
+
+  return createSiteUrl(siteUrl, rawImage) || rawImage
+}
+
+const getIsoTime = value => {
+  if (!value) return undefined
+
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return undefined
+
+  return date.toISOString()
+}
+
 /**
  * 获取SEO信息
  * @param {*} props
@@ -524,6 +554,9 @@ const getSEOMeta = (props, router, locale) => {
         type: 'website'
       }
     default:
+      const category = Array.isArray(post?.category)
+        ? post?.category?.[0]
+        : post?.category
       return {
         title: post
           ? `${post?.title} | ${siteMeta.title}`
@@ -534,7 +567,13 @@ const getSEOMeta = (props, router, locale) => {
         image: post?.pageCoverThumbnail || siteMeta.image,
         category: normalizeCategory(post?.category),
         tags: post?.tags,
-        wordCount: post?.wordCount
+        wordCount: post?.wordCount,
+        publishDay: post?.publishDay,
+        lastEditedDay: post?.lastEditedDay,
+        publishTime:
+          getIsoTime(post?.publishDate) ||
+          getIsoTime(post?.date?.start_date),
+        modifiedTime: getIsoTime(post?.lastEditedTime || post?.lastEditedDate)
       }
   }
 }

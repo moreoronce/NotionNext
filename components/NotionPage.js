@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/db/notion/mapImage'
+import NotionEmbed from '@/components/NotionEmbed'
 import NotionLink from '@/components/NotionLink'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
@@ -7,6 +8,7 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
+import OriginalityProof from './OriginalityProof'
 
 /**
  * 整个站点的核心组件
@@ -130,6 +132,7 @@ const NotionPage = ({ post, className }) => {
         components={{
           Code,
           Collection,
+          Embed: NotionEmbed,
           Equation,
           Link: NotionLink,
           Modal,
@@ -140,6 +143,7 @@ const NotionPage = ({ post, className }) => {
       />
 
       <AdEmbed />
+      <OriginalityProof proof={post?.originalityProof} />
       {hasCodeBlock(post?.blockMap) && <PrismMac />}
     </div>
   )
@@ -152,7 +156,6 @@ const hasCodeBlock = blockMap => {
     item => item?.value?.type === 'code'
   )
 }
-
 
 /**
  * 页面的数据库链接禁止跳转，只能查看
@@ -291,10 +294,7 @@ const AdEmbed = dynamic(
 )
 
 const Collection = dynamic(
-  () =>
-    import('react-notion-x/build/third-party/collection').then(
-      m => m.Collection
-    ),
+  () => import('@/components/NotionCollection'),
   {
     ssr: true
   }

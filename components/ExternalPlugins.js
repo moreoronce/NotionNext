@@ -8,6 +8,7 @@ import { initGoogleAdsense } from './GoogleAdsense'
 
 import { useGlobal } from '@/lib/global'
 // import IconFont from './IconFont'
+
 /**
  * 各种插件脚本
  * @param {*} props

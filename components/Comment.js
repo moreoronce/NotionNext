@@ -19,6 +19,13 @@ const Comment = ({ frontMatter, className }) => {
 
   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
+  const COMMENT_CUSDIS_APP_ID = siteConfig('COMMENT_CUSDIS_APP_ID')
+  const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
+  const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
+  const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
+  const COMMENT_NOTION_ENABLE =
+    siteConfig('COMMENT_NOTION_ENABLE') === true ||
+    siteConfig('COMMENT_NOTION_ENABLE') === 'true'
 
   useEffect(() => {
     // Check if the component is visible in the viewport
@@ -86,7 +93,8 @@ const Comment = ({ frontMatter, className }) => {
       key={frontMatter?.id}
       id='comment'
       ref={commentRef}
-      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
+      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}
+    >
       {/* 延迟加载评论区 */}
       {!shouldLoad && (
         <div className='text-center'>
@@ -108,11 +116,51 @@ const Comment = ({ frontMatter, className }) => {
               <GiscusComponent className='px-2' />
             </div>
           )}
+
+          {COMMENT_CUSDIS_APP_ID && (
+            <div key='Cusdis'>
+              <CusdisComponent frontMatter={frontMatter} />
+            </div>
+          )}
+
+          {COMMENT_UTTERRANCES_REPO && (
+            <div key='Utterance'>
+              <UtterancesComponent
+                issueTerm={frontMatter.id}
+                className='px-2'
+              />
+            </div>
+          )}
+
+          {COMMENT_GITALK_CLIENT_ID && (
+            <div key='GitTalk'>
+              <GitalkComponent frontMatter={frontMatter} />
+            </div>
+          )}
+
+          {COMMENT_WEBMENTION_ENABLE && (
+            <div key='WebMention'>
+              <WebMentionComponent frontMatter={frontMatter} className='px-2' />
+            </div>
+          )}
+
+          {COMMENT_NOTION_ENABLE && (
+            <div key='Notion'>
+              <NotionCommentsComponent postId={frontMatter.id} />
+            </div>
+          )}
         </Tabs>
       )}
     </div>
   )
 }
+
+const CusdisComponent = dynamic(
+  () => {
+    return import('@/components/CusdisComponent')
+  },
+  { ssr: false }
+)
 
 const TwikooCompenent = dynamic(
   () => {
@@ -121,10 +169,33 @@ const TwikooCompenent = dynamic(
   { ssr: false }
 )
 
+const GitalkComponent = dynamic(
+  () => {
+    return import('@/components/Gitalk')
+  },
+  { ssr: false }
+)
+const UtterancesComponent = dynamic(
+  () => {
+    return import('@/components/Utterances')
+  },
+  { ssr: false }
+)
 const GiscusComponent = dynamic(
   () => {
     return import('@/components/Giscus')
   },
+  { ssr: false }
+)
+const WebMentionComponent = dynamic(
+  () => {
+    return import('@/components/WebMention')
+  },
+  { ssr: false }
+)
+
+const NotionCommentsComponent = dynamic(
+  () => import('@/components/NotionComments'),
   { ssr: false }
 )
 
