@@ -79,6 +79,22 @@ const normalizeThemeName = themeValue => {
   return THEMES.includes(firstTheme) ? firstTheme : BLOG.THEME
 }
 
+const getFallbackThemeName = themeName => {
+  const preferred = normalizeThemeName(BLOG.THEME)
+  if (preferred && preferred !== themeName) return preferred
+  if (THEMES.includes('example') && themeName !== 'example') return 'example'
+  return THEMES.find(item => item !== themeName) || null
+}
+
+const getThemeExport = (mod, exportName) => {
+  if (mod?.[exportName]) return mod[exportName]
+  if (mod?.default?.[exportName]) return mod.default[exportName]
+  if (exportName === 'LayoutBase' && typeof mod?.default === 'function') {
+    return mod.default
+  }
+  return null
+}
+
 async function importThemeConfig(themeFolderName) {
   try {
     const mod = await import(`@/themes/${themeFolderName}`)
