@@ -1,18 +1,17 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import TerminalCard from './TerminalCard'
 
 /**
  * 搜索框组件 - 终端风格 (暖色系)
  */
-export default function SearchBox({ keyword }) {
-    const router = useRouter()
+export default function SearchBox({ keyword, onSearch }) {
     const [searchValue, setSearchValue] = useState(keyword || '')
 
     const handleSearch = (e) => {
         e.preventDefault()
-        if (searchValue.trim()) {
-            router.push(`/search/${encodeURIComponent(searchValue)}`)
+        const query = searchValue.trim()
+        if (query) {
+            onSearch(query)
         }
     }
 

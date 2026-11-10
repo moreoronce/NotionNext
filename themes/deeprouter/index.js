@@ -5,7 +5,7 @@
 
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
 
@@ -46,19 +46,26 @@ const LayoutBase = props => {
     const { fullWidth } = useGlobal()
     const searchModal = useRef(null)
     const [isSearchMounted, setIsSearchMounted] = useState(false)
-    const [shouldOpenSearch, setShouldOpenSearch] = useState(false)
+    const [searchReady, setSearchReady] = useState(false)
+    const [searchRequest, setSearchRequest] = useState(null)
 
-    const openSearch = () => {
+    // 动态模块挂好 ref 后再消费打开请求，避免首次点击丢失。
+    const attachSearchModal = useCallback(modal => {
+        searchModal.current = modal
+        setSearchReady(Boolean(modal))
+    }, [])
+
+    const openSearch = useCallback((query = '') => {
         setIsSearchMounted(true)
-        setShouldOpenSearch(true)
-    }
+        setSearchRequest({ query })
+    }, [])
 
     useEffect(() => {
-        if (shouldOpenSearch && searchModal.current?.openSearch) {
-            searchModal.current.openSearch()
-            setShouldOpenSearch(false)
+        if (searchRequest && searchReady && searchModal.current?.openSearch) {
+            searchModal.current.openSearch(searchRequest.query)
+            setSearchRequest(null)
         }
-    }, [shouldOpenSearch, isSearchMounted])
+    }, [searchRequest, searchReady])
 
     useEffect(() => {
         const handleKeyDown = event => {
@@ -70,12 +77,12 @@ const LayoutBase = props => {
 
         window.addEventListener('keydown', handleKeyDown)
         return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [])
+    }, [openSearch])
 
     return (
-        <ThemeGlobalDeepRouter.Provider value={{ searchModal }}>
+        <ThemeGlobalDeepRouter.Provider value={{ searchModal, openSearch }}>
             {/* 搜索弹窗 - 使用 PageFind */}
-            {isSearchMounted && <PageFindSearchModal cRef={searchModal} />}
+            {isSearchMounted && <PageFindSearchModal cRef={attachSearchModal} />}
 
             {/* CSS样式 */}
             <Style />
@@ -383,6 +390,7 @@ const LayoutSlug = props => {
  * 搜索页
  */
 const LayoutSearch = props => {
+    const { openSearch } = useDeepRouterGlobal()
     const { posts, keyword } = props
     const showCover = siteConfig('DEEPROUTER_POST_LIST_COVER', false, CONFIG)
     const showPreview = siteConfig('DEEPROUTER_POST_LIST_PREVIEW', true, CONFIG)
@@ -393,7 +401,7 @@ const LayoutSearch = props => {
         <>
             {/* 搜索框 */}
             <div className='mb-8'>
-                <SearchBox keyword={keyword} />
+                <SearchBox keyword={keyword} onSearch={openSearch} />
             </div>
 
             {/* 搜索结果 */}

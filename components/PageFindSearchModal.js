@@ -183,22 +183,10 @@ export default function PageFindSearchModal({ cRef }) {
     }, [isModalOpen])
 
     /**
-     * 对外暴露方法
-     **/
-    useImperativeHandle(cRef, () => {
-        return {
-            openSearch: () => {
-                setIsModalOpen(true)
-                void loadPageFind()
-            }
-        }
-    }, [loadPageFind])
-
-    /**
      * 搜索
      * @param {*} query
      */
-    const handleSearch = async (query) => {
+    const handleSearch = useCallback(async (query) => {
         setKeyword(query)
         setSearchResults([])
         setAllResults([])
@@ -278,7 +266,19 @@ export default function PageFindSearchModal({ cRef }) {
             console.error('PageFind search error:', error)
             setIsLoading(false)
         }
-    }
+    }, [pagefind, loadPageFind])
+
+    useImperativeHandle(cRef, () => ({
+        openSearch: (initialQuery = '') => {
+            setIsModalOpen(true)
+            if (initialQuery) {
+                if (inputRef.current) inputRef.current.value = initialQuery
+                void handleSearch(initialQuery)
+            } else {
+                void loadPageFind()
+            }
+        }
+    }), [handleSearch, loadPageFind])
 
     // 修改input的onChange事件处理函数 - 使用简单的防抖
     const handleInputChange = e => {
