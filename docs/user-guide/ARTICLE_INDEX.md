@@ -58,6 +58,7 @@
 | 🛠 站点配置 | `notion-next-mulity-languages` | [config/notion-next-mulity-languages.md](./config/notion-next-mulity-languages.md) |
 | 🛠 站点配置 | `notion-next-site-combine` | [config/notion-next-site-combine.md](./config/notion-next-site-combine.md) |
 | 🛠 站点配置 | `notion-next-api_base_url` | [config/notion-next-api_base_url.md](./config/notion-next-api_base_url.md) |
+| 🛠 站点配置 | `notion-workspace-id` | [config/notion-workspace-id.md](./config/notion-workspace-id.md) |
 | ⭐ 主题参数 | `notion-next-themes` | [themes/overview.md](./themes/overview.md) |
 | ⭐ 主题参数 | `notion-next-theme-console` | [themes/theme-console.md](./themes/theme-console.md) |
 | ⭐ 主题参数 | `notion-next-typography` | [themes/typography.md](./themes/typography.md) |
@@ -91,6 +92,7 @@
 | 🧷 外部扩展 | `notion-next-plugin-music-player` | [plugins/music-player.md](./plugins/music-player.md) |
 | 🧷 外部扩展 | `notion-next-plugin-live2d` | [plugins/notion-next-plugin-live2d.md](./plugins/notion-next-plugin-live2d.md) |
 | 🧷 外部扩展 | `notion-next-algolia` | [config/algolia.md](./config/algolia.md) |
+| 🧷 外部扩展 | `notion-next-ai-chat` | [plugins/notion-next-ai-chat.md](./plugins/notion-next-ai-chat.md) |
 | 🧷 外部扩展 | `notion-next-coze` | [plugins/notion-next-coze.md](./plugins/notion-next-coze.md) |
 | 🧷 外部扩展 | `notion-next-chat-base` | [plugins/notion-next-chat-base.md](./plugins/notion-next-chat-base.md) |
 | 🧷 外部扩展 | `notion-next-facebook-chat-plugn` | [plugins/notion-next-facebook-chat-plugn.md](./plugins/notion-next-facebook-chat-plugn.md) |

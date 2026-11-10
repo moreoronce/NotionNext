@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { getPwaConfig } from '@/lib/pwa'
 import { createSiteUrl, normalizeSiteUrl } from '@/lib/sitemap-utils'
 import { isHttpLink } from '@/lib/utils'
 import Head from 'next/head'
@@ -85,6 +86,12 @@ const SEO = props => {
   const description = meta?.description || fallbackMeta.description
   const type = meta?.type === 'Post' ? 'article' : meta?.type || 'website'
   const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
+  const ENABLE_RSS = siteConfig('ENABLE_RSS')
+  // 订阅文件的绝对地址，与 lib/utils/rss.js 的静态输出路径保持一致
+  const rssUrl = createSiteUrl(
+    subPath ? `${link}/${subPath}` : link,
+    'rss/feed.xml'
+  )
   const language =
     router?.locale || siteConfig('LANG', 'zh-CN', NOTION_CONFIG)
   const lang = String(language).replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
@@ -95,6 +102,7 @@ const SEO = props => {
     null,
     NOTION_CONFIG
   )
+
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
   const TWITTER_SITE = siteConfig('TWITTER_SITE', '', NOTION_CONFIG)
@@ -131,6 +139,15 @@ const SEO = props => {
       )}
       {/* 基础SEO元数据 */}
       <link rel='canonical' href={url} />
+      {/* RSS 自动发现：浏览器地址栏与阅读器依赖此声明 */}
+      {ENABLE_RSS && rssUrl && (
+        <link
+          rel='alternate'
+          type='application/rss+xml'
+          title={`${TITLE} RSS`}
+          href={rssUrl}
+        />
+      )}
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta name='author' content={AUTHOR} />
@@ -205,7 +222,9 @@ const SEO = props => {
       />
 
       {/* DNS预取和预连接 */}
-      {hasWebFontUrl && <link rel='dns-prefetch' href='//fonts.googleapis.com' />}
+      {usesGoogleFonts && (
+        <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+      )}
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       {usesGoogleFonts && (
@@ -421,6 +440,18 @@ const generateStructuredData = (meta, siteInfo, url, image, author, router) => {
     '@context': 'https://schema.org',
     '@graph': graph
   }
+}
+
+const containsGoogleFontsUrl = fontUrl => {
+  const urls = Array.isArray(fontUrl) ? fontUrl : [fontUrl]
+
+  return urls.filter(Boolean).some(url => {
+    try {
+      return new URL(url).hostname === 'fonts.googleapis.com'
+    } catch {
+      return false
+    }
+  })
 }
 
 const getAbsoluteImageUrl = (image, siteUrl) => {

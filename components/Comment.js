@@ -1,5 +1,6 @@
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
+import { hasEnabledComments, isCommentProviderEnabled } from '@/lib/utils/comments'
 import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import { stripTransientQueryParamsFromAsPath } from '@/lib/utils/stripTransientUrlParams'
 import dynamic from 'next/dynamic'
@@ -17,7 +18,10 @@ const Comment = ({ frontMatter, className }) => {
   const [shouldLoad, setShouldLoad] = useState(false)
   const commentRef = useRef(null)
 
+  const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
+  const COMMENT_WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL')
+  const COMMENT_VALINE_APP_ID = siteConfig('COMMENT_VALINE_APP_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
   const COMMENT_CUSDIS_APP_ID = siteConfig('COMMENT_CUSDIS_APP_ID')
   const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
@@ -75,7 +79,7 @@ const Comment = ({ frontMatter, className }) => {
     }
   }, [router.isReady, router.asPath, router.query])
 
-  if (!frontMatter) {
+  if (!frontMatter || !hasEnabledComments(siteConfig)) {
     return null
   }
 
@@ -105,25 +109,43 @@ const Comment = ({ frontMatter, className }) => {
 
       {shouldLoad && (
         <Tabs>
-          {COMMENT_TWIKOO_ENV_ID && (
+          {isCommentProviderEnabled(COMMENT_ARTALK_SERVER) && (
+            <div key='Artalk'>
+              <Artalk />
+            </div>
+          )}
+
+          {isCommentProviderEnabled(COMMENT_TWIKOO_ENV_ID) && (
             <div key='Twikoo'>
               <TwikooCompenent />
             </div>
           )}
 
-          {COMMENT_GISCUS_REPO && (
+          {isCommentProviderEnabled(COMMENT_WALINE_SERVER_URL) && (
+            <div key='Waline'>
+              <WalineComponent />
+            </div>
+          )}
+
+          {isCommentProviderEnabled(COMMENT_VALINE_APP_ID) && (
+            <div key='Valine' name='reply'>
+              <ValineComponent path={frontMatter.id} />
+            </div>
+          )}
+
+          {isCommentProviderEnabled(COMMENT_GISCUS_REPO) && (
             <div key='Giscus'>
               <GiscusComponent className='px-2' />
             </div>
           )}
 
-          {COMMENT_CUSDIS_APP_ID && (
+          {isCommentProviderEnabled(COMMENT_CUSDIS_APP_ID) && (
             <div key='Cusdis'>
               <CusdisComponent frontMatter={frontMatter} />
             </div>
           )}
 
-          {COMMENT_UTTERRANCES_REPO && (
+          {isCommentProviderEnabled(COMMENT_UTTERRANCES_REPO) && (
             <div key='Utterance'>
               <UtterancesComponent
                 issueTerm={frontMatter.id}
@@ -132,13 +154,13 @@ const Comment = ({ frontMatter, className }) => {
             </div>
           )}
 
-          {COMMENT_GITALK_CLIENT_ID && (
+          {isCommentProviderEnabled(COMMENT_GITALK_CLIENT_ID) && (
             <div key='GitTalk'>
               <GitalkComponent frontMatter={frontMatter} />
             </div>
           )}
 
-          {COMMENT_WEBMENTION_ENABLE && (
+          {isCommentProviderEnabled(COMMENT_WEBMENTION_ENABLE) && (
             <div key='WebMention'>
               <WebMentionComponent frontMatter={frontMatter} className='px-2' />
             </div>
@@ -161,6 +183,19 @@ const CusdisComponent = dynamic(
   },
   { ssr: false }
 )
+
+const Artalk = dynamic(() => import('@/components/Artalk'), {
+  ssr: false
+})
+
+const WalineComponent = dynamic(
+  () => import('@/components/WalineComponent'),
+  { ssr: false }
+)
+
+const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
+  ssr: false
+})
 
 const TwikooCompenent = dynamic(
   () => {

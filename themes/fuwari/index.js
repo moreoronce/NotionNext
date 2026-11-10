@@ -23,10 +23,12 @@ import Pagination from './components/Pagination'
 import PostList from './components/PostList'
 import PostListScroll from './components/PostListScroll'
 import RightFloatArea from './components/RightFloatArea'
+import SearchInput from './components/SearchInput'
 import SidePanel from './components/SidePanel'
 import CONFIG from './config'
 import { Style } from './style'
-import { isCommentServiceConfigured } from './utils/commentEnabled'
+import { shouldShowFuwariComments } from './utils/commentEnabled'
+import { shouldHideFuwariSidebar } from './utils/sidebarVisibility'
 
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
@@ -40,14 +42,18 @@ const CursorDot = dynamic(() => import('@/components/CursorDot'), {
 })
 const getLocale = () => generateLocaleDict(siteConfig('LANG', 'zh-CN'))
 
+const shouldShowSidePanel = props => !shouldHideFuwariSidebar(props?.post)
+
 const LayoutBase = props => {
   const { children } = props
   const locale = getLocale()
   const searchModal = useRef(null)
   const router = useRouter()
   const showHomeHero =
+    siteConfig('FUWARI_HERO_ENABLE', true, CONFIG) &&
     !props.post &&
     (router.pathname === '/' || router.pathname === '/page/[page]')
+  const showSidePanel = shouldShowSidePanel(props)
 
   return (
     <div
@@ -66,22 +72,30 @@ const LayoutBase = props => {
       {showHomeHero && <HeroBanner siteInfo={props.siteInfo} />}
 
       <main
-        className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 min-w-0 w-full ${showHomeHero ? 'fuwari-main-overlap' : ''}`}
-      >
-        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'>
-          <div className='hidden lg:block sticky top-4'>
-            <SidePanel {...props} />
-          </div>
-          <section className='min-w-0 w-full max-w-full'>
-            {children}
-            <div className='lg:hidden mt-4'>
+        className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 min-w-0 w-full ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
+        <div
+          className={
+            showSidePanel
+              ? 'grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'
+              : 'min-w-0 w-full'
+          }>
+          {showSidePanel && (
+            <div className='hidden lg:block sticky top-4'>
               <SidePanel {...props} />
             </div>
+          )}
+          <section className='min-w-0 w-full max-w-full'>
+            {children}
+            {showSidePanel && (
+              <div className='lg:hidden mt-4'>
+                <SidePanel {...props} />
+              </div>
+            )}
           </section>
         </div>
       </main>
       <Footer />
-      <RightFloatArea post={props.post} />
+      {(!props.post || props.postUnlockUnavailable) && <RightFloatArea />}
       {siteConfig('FUWARI_EFFECT_LENIS', false, CONFIG) && <Lenis />}
       {siteConfig('FUWARI_EFFECT_CURSOR_DOT', false, CONFIG) && <CursorDot />}
     </div>
@@ -130,9 +144,7 @@ const LayoutSlug = props => {
   const locale = getLocale()
   const { post, lock, validPassword, prev, next } = props
   if (!post) return null
-  const showComments =
-    siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) &&
-    isCommentServiceConfigured()
+  const showComments = shouldShowFuwariComments({ post, lock })
   const articleCoverSrc =
     siteConfig('FUWARI_ARTICLE_COVER_HERO', true, CONFIG) &&
     (post.pageCover || post.pageCoverThumbnail)
@@ -171,28 +183,72 @@ const LayoutSlug = props => {
           )}
         </article>
       )}
+      {/* The slug route owns the current post and lock state, not LayoutBase. */}
+      <RightFloatArea post={post} lock={lock} />
     </>
   )
 }
 
 const LayoutSearch = props => {
-  const { keyword } = props
+  const locale = getLocale()
   const router = useRouter()
+  const keyword =
+    props.keyword || router?.query?.s || router?.query?.keyword || ''
+  const currentSearch = Array.isArray(keyword) ? keyword[0] : keyword
+  const posts = props.posts || []
 
   useEffect(() => {
-    if (isBrowser && keyword) {
+    if (isBrowser && currentSearch) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
-        search: keyword,
+        search: currentSearch,
         target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
         }
       })
     }
-  }, [router, keyword])
+  }, [router, currentSearch])
 
-  return <LayoutPostList {...props} />
+  return (
+    <>
+      <div className='fuwari-card p-5 mb-4'>
+        <p className='text-sm uppercase tracking-widest text-[var(--fuwari-muted)] mb-2'>
+          {locale?.NAV?.SEARCH || '搜索'}
+        </p>
+        <h1 className='fuwari-section-title text-2xl font-bold mb-4'>
+          {currentSearch
+            ? `${locale?.SEARCH?.RESULT || '搜索结果'}：${currentSearch}`
+            : locale?.NAV?.SEARCH || '搜索'}
+        </h1>
+        <SearchInput keyword={currentSearch} />
+      </div>
+
+      {currentSearch ? (
+        posts.length > 0 ? (
+          <div id='posts-wrapper'>
+            {siteConfig('POST_LIST_STYLE', 'page', props.NOTION_CONFIG) ===
+            'page' ? (
+              <>
+                <PostList posts={posts} />
+                <Pagination page={props.page || 1} postCount={posts.length} />
+              </>
+            ) : (
+              <PostListScroll posts={posts} />
+            )}
+          </div>
+        ) : (
+          <div className='fuwari-card p-8 text-center text-sm text-[var(--fuwari-muted)]'>
+            {locale?.COMMON?.NO_MORE || '没有找到相关内容'}
+          </div>
+        )
+      ) : (
+        <div className='fuwari-card p-8 text-center text-sm text-[var(--fuwari-muted)]'>
+          {locale?.SEARCH?.ARTICLES || '输入关键词后回车搜索文章'}
+        </div>
+      )}
+    </>
+  )
 }
 
 const LayoutArchive = props => {

@@ -19,6 +19,7 @@ import ErrorHandler from '@/lib/utils/errorHandler'
 import BLOG from '@/blog.config'
 import DeeprouterSemanticHeading from '@/components/DeeprouterSemanticHeading'
 import ExternalPlugins from '@/components/ExternalPlugins'
+import PWAInstaller from '@/components/PWAInstaller'
 import SEO from '@/components/SEO'
 const AppErrorBoundary = ErrorHandler.createErrorBoundary(
   <div
@@ -120,6 +121,7 @@ const MyApp = ({ Component, pageProps }) => {
           />
           <Component {...pageProps} />
         </GLayout>
+        <PWAInstaller NOTION_CONFIG={pageProps?.NOTION_CONFIG} />
         <ExternalPlugins {...pageProps} />
       </GlobalContextProvider>
     </AppErrorBoundary>

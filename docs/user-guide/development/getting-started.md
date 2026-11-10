@@ -43,7 +43,7 @@ NotionNext操作手册中，有关于自定义脚本和样式的引入方式；�
 
 ## 自行开发
 
-如果上述的配置方式，不能满足您的需要，例如新增组件、深度定制等等。您可以选择在github上[发起issue](https://github.com/tangly1024/NotionNext/issues/new/choose)，提出改进页面的建议，或者遵循此教程，进行您的开发之旅。
+如果上述的配置方式，不能满足您的需要，例如新增组件、深度定制等等。您可以选择在github上[发起issue](https://github.com/notionnext-org/NotionNext/issues/new/choose)，提出改进页面的建议，或者遵循此教程，进行您的开发之旅。
 
 ::: tip 提示
 可选Codespaces云开发，以及本地开发两种方案。
@@ -123,6 +123,7 @@ node是基础运行环境，npm是依赖包的管理组件
 :::
 
 </details>
+
   1. VsCode 编辑器
 <details>
 <summary>安装下载</summary>
@@ -140,6 +141,7 @@ Visual Studio Code is free and available on your favorite platform - Linux, macO
 Visual Studio Code是一款支持多种语言和格式的编辑器，那么，怎么把界面设置成中文的呢？今天就和大家一起把Visual Studio Code界面设置成中文 打开Visual Studio Code 点击"应用"按钮 输入"Chinese (Simplified) Language Pack for Visual Studio Code"并敲回车键 点击第一个选项 点击Install 点击Restart Now 这样就设置完成了 点击下方链接 点击Install 点击Continue 如果浏览器有拦截，请点击打开（各浏览器的界面不同） 点击Install 最后点击Restart Now即可 END 喜欢请点赞+关注
 
 </details>
+
 ::: tip 提示
 相关阅读
     - [NodeJS是什么](http://c.biancheng.net/view/9338.html)
@@ -170,6 +172,7 @@ Checkout branches with pull requests and view CI statuses See all open pull requ
 点击Clone即可下载代码
 
 </details>
+
   1. 用vscode打开项目
 <details>
 <summary>打开项目文件</summary>
@@ -223,13 +226,15 @@ yarn start  # 运行打包后的项目构建服务
 </details>
 
 </details>
+
   1. 访问页面
 <details>
-<summary>浏览器打开 [http://localhost:3000/](http://localhost:3000/) 即可访问你的本地博客</summary>
+<summary>浏览器打开 <a href="http://localhost:3000/">http://localhost:3000/</a> 即可访问你的本地博客</summary>
 
 ![Untitled](/legacy/cf986649cac87c10.png)
 
 </details>
+
 ::: tip 提示
 调试模式下：代码的每次修改会实时影响到你的页面，不需要刷新或重启服务
 :::

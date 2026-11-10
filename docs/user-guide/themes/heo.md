@@ -25,7 +25,7 @@
 
 将代码版本更新到4.0以后
 
-将您的默认主题设置为HEO，相关的所有配置都可以在[ /themes/heo/config.js ](https://github.com/tangly1024/NotionNext/blob/main/themes/heo/config.js)文件中找到。接下来我会介绍这个主题的功能区。
+将您的默认主题设置为HEO，相关的所有配置都可以在[ /themes/heo/config.js ](https://github.com/notionnext-org/NotionNext/blob/main/themes/heo/config.js)文件中找到。接下来我会介绍这个主题的功能区。
 
 ![Untitled](/legacy/c18a66ba4b1525db.png)
 
@@ -66,15 +66,42 @@ HEO_COLOR_ACCENT: '#f59e0b'
 
 ## 1. 顶部横幅
 
-可以滚动当前的通知内容，并且支持点击跳转到指定链接，配置方式 themes/heo/config.js
+顶部通知栏使用 `HEO_NOTICE_BAR` 配置，多条通知按顺序纵向切换。可以在 `themes/heo/config.js` 中修改，也可以在 Notion Config 表中添加同名配置；Notion Config 的值优先于主题配置文件。
 
-```JavaScript
-// 首页顶部通知条滚动内容，如不需要可以留空 []
-  NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: '/user-guide/intro' }
-  ],
+| 配置项 | 默认值 | 说明 |
+| --- | --- | --- |
+| `HEO_NOTICE_BAR` | 两条示例通知 | 通知数组，每项包含 `title` 和可选的 `url`；设为 `[]` 可隐藏通知栏 |
+| `HEO_NOTICE_BAR_INTERVAL` | `3000` | 多条通知的切换间隔，单位为毫秒；例如 `5000` 表示每 5 秒切换一次 |
+
+在 `themes/heo/config.js` 的 `CONFIG` 对象中修改对应配置，例如：
+
+```js
+HEO_NOTICE_BAR_INTERVAL: 5000,
+HEO_NOTICE_BAR: [
+  { title: '欢迎来到我的博客', url: '/' },
+  {
+    title: '文档更新通知：新增了主题配置、部署教程和常见问题说明，点击这条通知查看完整内容。',
+    url: 'https://example.com/announcement'
+  },
+  {
+    title: '站点维护通知：本周六晚上将进行站点维护，期间部分页面可能暂时无法访问。维护完成后会在首页发布通知，感谢您的理解与支持！'
+  }
+],
 ```
+
+请将示例中的 `url` 替换为自己的页面地址。通知内容填写在 `title` 中；不填写 `url` 时，点击通知会在弹层中展示完整的 `title`。
+
+在 Notion Config 表中，`HEO_NOTICE_BAR_INTERVAL` 的值可直接填写 `5000`；`HEO_NOTICE_BAR` 的值需要填写使用双引号的合法 JSON 数组，不包含配置键、注释或尾逗号。具体格式见[如何配置站点](../config-site.md)。
+
+显示与交互规则：
+
+- 手机端（视口宽度小于 `720px`）：标题单行显示，过长时以省略号截断。
+- 桌面端：保留原有的居中显示和纵向切换动画。
+- 配置了 `url`：点击通知在新标签页打开链接，可在目标页面查看详细内容。
+- 未配置 `url`：点击通知打开全文弹层，可使用关闭按钮或 `Escape` 键关闭。弹层打开时暂停轮播，关闭后等待一个完整间隔再切换。
+- 只有一条通知时不自动切换；通知数组为空时隐藏整个通知栏。
+
+`HEO_NOTICE_BAR_INTERVAL` 接受数字或数字字符串。非正数、非有限数、非数字以及大于 `2147483647` 的值会回退到 `3000` 毫秒；`0` 不表示停止轮播。
 
 
 ## 2. 英雄区
@@ -82,7 +109,7 @@ HEO_COLOR_ACCENT: '#f59e0b'
 
 ### 英雄区左侧
 
-1. **左上角的卡牌**点击是随机跳转到一篇文章，此功能无法修改配置，但是可以在源代码[themes/heo/components/Hero.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/components/Hero.js#L58)中看到。
+1. **左上角的卡牌**点击是随机跳转到一篇文章，此功能无法修改配置，但是可以在源代码[themes/heo/components/Hero.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/components/Hero.js#L58)中看到。
 ```JavaScript
 // 跳转到任意文章
   function handleClickBanner() {
@@ -92,7 +119,7 @@ HEO_COLOR_ACCENT: '#f59e0b'
   }
 ```
 
-1. **左上卡牌大标题** [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L12C1-L15C34)
+1. **左上卡牌大标题** [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L12C1-L15C34)
 ![Untitled](/legacy/9db05c53471e735b.png)
 ```JavaScript
 // 英雄区(首页顶部大卡)
@@ -101,7 +128,7 @@ HERO_TITLE_2: '与思维认知',
 HERO_TITLE_3: 'TANGLY1024.COM',
 ```
 
-1. **左上角卡牌背景滚动图**，会循环展示一些技能的图标，可以在 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L38)中配置
+1. **左上角卡牌背景滚动图**，会循环展示一些技能的图标，可以在 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L38)中配置
 <details>
 <summary>展开相关代码</summary>
 
@@ -168,9 +195,10 @@ HERO_TITLE_3: 'TANGLY1024.COM',
 ```
 
 </details>
+
 ![Untitled](/legacy/447da302a4673a35.png)
 
-1. **左下角三个导航标签**，点击跳到特定页面，可以在 [themes/heo/configs.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L20-L23) 中配置
+1. **左下角三个导航标签**，点击跳到特定页面，可以在 [themes/heo/configs.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L20-L23) 中配置
 ![Untitled](/legacy/e35b224d4c228111.png)
 ```JavaScript
 // 英雄区显示三个置顶分类
@@ -185,7 +213,7 @@ HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
 ![Untitled](/legacy/9907a9bffcfe3c0c.png)
 
 ### 英雄区右侧
-显示置顶文章的标题文字，以及跳转链接， 配置方式 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L16-L18)
+显示置顶文章的标题文字，以及跳转链接， 配置方式 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L16-L18)
 ![Untitled](/legacy/965acb63a2b281e2.png)
 ```JavaScript
 HERO_TITLE_4: '新版上线',
@@ -211,7 +239,7 @@ HERO_RECOMMEND_POST_TAG: '推荐',
 ![Untitled](/legacy/ca196d12d53b0565.png)
 https://notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4ff9b53a-b204-4696-8d8c-b4c01bc05e50%2FUntitled.mp4?table=block&id=74bfbeea-9fb8-4208-9399-4b7034d14741
   1. 个人资料卡牌**欢迎语**
-此处的文字点击会发生变化，在 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L26-L34) 中配置
+此处的文字点击会发生变化，在 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L26-L34) 中配置
 ![Untitled](/legacy/9221764faff2cd6d.png)
 ```JavaScript
 INFOCARD_GREETINGS: [
@@ -229,6 +257,10 @@ INFOCARD_GREETINGS: [
 `CONTACT_ORCID` 用于控制 HEO 信息卡中的 ORCID 按钮。填写完整的 ORCID 主页 URL 后，按钮会与现有 GitHub 等社交按钮一起显示；留空时不会渲染。
 
 `HEO_INFO_CARD_ICON_ORCID` 用于覆盖该按钮的 Font Awesome 图标类名，默认值为 `fab fa-orcid`。通常无需修改；如需自定义，可在 Notion Config 中设置同名键，或直接修改 `themes/heo/config.js`。
+
+`CONTACT_CSDN` 和 `CONTACT_JUEJIN` 分别用于控制 HEO 信息卡中的 CSDN、稀土掘金按钮。填写对应个人主页的完整 URL 后显示，留空时不会渲染。
+
+`HEO_INFO_CARD_ICON_CSDN` 和 `HEO_INFO_CARD_ICON_JUEJIN` 可分别覆盖两个按钮的图标类名，默认值为 `fab fa-csdn` 和 `fab fa-juejin`。
 
 
 下方的 Tangly是显示作者名字，在blog.config.js中配置
